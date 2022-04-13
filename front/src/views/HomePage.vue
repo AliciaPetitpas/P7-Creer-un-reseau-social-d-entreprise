@@ -12,6 +12,14 @@
             </button>
         </nav>
     </header>
+
+    <main id="main">
+        <!-- Connexion -->
+        
+
+        <!-- Inscription -->
+    </main>
+
 </div>
     
 </template>
