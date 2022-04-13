@@ -1,8 +1,7 @@
 <template>
 
-  <div class="login">
-    <router-link to="/">Se connecteiir</router-link> |
-    <router-link to="/about">S'inscrire</router-link>
+  <div id="app">
+    <router-view />
   </div>
   
   <router-view/>
