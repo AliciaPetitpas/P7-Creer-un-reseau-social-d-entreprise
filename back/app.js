@@ -5,8 +5,8 @@ const helmet = require('helmet')
 const app = express();
 require('dotenv').config();
 
-//Routes
-// const usersRoutes = require('./routes/users');
+//ROUTES
+const usersRoutes = require('./routes/users');
 // const publicationsRoutes = require('./routes/publications');
 // const commentsRoutes = require('./routes/comments')
 
@@ -33,5 +33,6 @@ app.use((req, res, next) => {
 
 //Accès principaux
 app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/api/auth', usersRoutes);
 
 module.exports = app;

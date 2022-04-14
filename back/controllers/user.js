@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../models/user');
+const db = require('../models');
 
 //Création d'un compte, en hashage et salage du password
 exports.signup = (req, res, next) => {
@@ -10,10 +10,12 @@ exports.signup = (req, res, next) => {
             bcrypt.hash(req.body.password, salt)
                 .then(hash => {
                     //Création utilisateur
-                    const user = new User({
+                    db.User.create({
                         //DATABASE INFO
                         email: req.body.email,
-                        password: hash
+                        password: hash,
+                        first_name: req.body.first_name,
+                        last_name: req.body.last_name,
                     });
                     user.save()
                         .then(() => res.status(201).json({ message: 'User created' }))
