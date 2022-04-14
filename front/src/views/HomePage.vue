@@ -15,8 +15,21 @@
 
     <main id="main">
         <!-- Connexion -->
+        <!-- <div v-if="login" class="login">          
+            <div class="form">
+            <input v-model="password" type="password" class="input-form" placeholder="Mot de passe"/>
+        </div>
+        <div class="form" v-if="mode == 'login' && status == 'error_login'">
+            Adresse mail et/ou mot de passe invalide
+        </div>
+        <div class="form">
+            <button @click="login()" class="button" :class="{'button--disabled' : !validatedFields}" v-if="mode == 'login'">
+                <span v-if="status == 'loading'">Connexion en cours...</span>
+                <span v-else>Connexion</span>
+            </button>
+        </div>
+        </div> -->
         
-
         <!-- Inscription -->
     </main>
 
