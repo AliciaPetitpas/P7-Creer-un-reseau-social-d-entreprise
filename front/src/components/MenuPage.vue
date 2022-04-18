@@ -61,6 +61,12 @@ input {
     margin-left: 5px;
 }
 
+.menu {
+    text-align: right;
+    position: absolute;
+    right: 40px;
+}
+
 /* RESPONSIVE TABLETTE */
 @media (min-width: 768px) and (max-width: 991px) {
     header {
