@@ -6,7 +6,7 @@
         <div class="form">
             <input v-model="email" type="email" class="input-form" placeholder="Adresse mail"/>
             <input v-model="password" type="password" class="input-form" placeholder="Mot de passe"/>
-            <!-- <button @click="login()" class="button"> -->
+            <button @click="login()" class="button">Se connecter</button>
         </div>
 
 </template>
@@ -19,6 +19,11 @@ export default {
     name: 'HomeLogin',
     components: {
         HeaderPage,
+    },
+    methods: {
+        loginWindow(){
+        this.$router.push('/userProfile');
+        }
     }
 }
 
