@@ -13,6 +13,6 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 //MODELS
-db.User = require("./user.models.js")(sequelize, Sequelize);
+db.User = require("../models/user")(sequelize, Sequelize);
 
 module.exports = db
