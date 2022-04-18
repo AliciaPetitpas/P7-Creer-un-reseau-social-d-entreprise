@@ -12,7 +12,7 @@
 }
 
 div {
-  padding: 30px;
+  padding: 20px;
 }
 
 button {
