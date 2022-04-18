@@ -5,7 +5,11 @@
     <img src="../assets/icon-left-font-monochrome-black.svg" alt="Logo Groupomania" class="header-logo">
     <img src="../assets/icon.svg" alt="Logo Groupomania Mobile" class="header-logo_mobile">
 
-    <input type="text" class="search-bar" placeholder="Rechercher...">
+    <div class="search">
+        <input type="text" class="search-bar" placeholder="Rechercher...">
+        <button class="search-btn">Go</button>
+    </div>
+
     <div class="menu">
         <ul class="menu-list">
             <li>Profil</li>
@@ -28,7 +32,7 @@ header {
     border-bottom: 2px solid black;
 }
 
-.nav-bar {
+.nav-bar, .search {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -44,7 +48,17 @@ ul {
 
 input {
     height: 10px;
+    padding: 7px;
     margin-left: 20px;
+    border-radius: 15px;
+}
+
+.search-btn {
+    border: none;
+    background-color: black;
+    color: white;
+    padding: 5px;
+    margin-left: 5px;
 }
 
 /* RESPONSIVE TABLETTE */
