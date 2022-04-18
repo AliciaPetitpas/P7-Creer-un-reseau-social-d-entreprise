@@ -9,13 +9,20 @@
         <div class="user">
             <div class="user-profile-picture">
                 <img src="" alt="user-picture">
+                <!-- Bouton modification image SI modification activée -->
+                <button class="change-picture">Importer un fichier</button>
             </div>
             <div class="user-info">
                 <p class="first_name">First name</p>
                 <p class="last_name">Last name</p>
                 <p class="email">Email</p>
+                <!-- input mail SI modification activée -->
+                <input type="email" class="input-form" placeholder="Adresse mail"/>
             </div>
+            <!-- Bouton à afficher si c'est notre profile -->
             <button class="modify-user-info">Modifier informations</button>
+            <!-- Bouton à afficher SI modification activée -->
+            <button class="new-user-info">Valider</button> 
         </div>
     </div>
 
@@ -70,6 +77,14 @@ button {
     background-color: black;
     color: white;
     font-weight: bold;
+}
+
+.change-picture {
+    width: 200px;
+    padding: 5px;
+    position: absolute;
+    bottom: -35px;
+    left: 0;
 }
 
 /* RESPONSIVE MOBILE */
