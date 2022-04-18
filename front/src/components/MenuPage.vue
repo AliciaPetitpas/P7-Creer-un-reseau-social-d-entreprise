@@ -2,18 +2,15 @@
     
 <header>
     <div class="nav-bar">
-    <img src="../assets/icon-left-font-monochrome-black.svg" alt="Logo Groupomania" class="header-logo">
-    <img src="../assets/icon.svg" alt="Logo Groupomania Mobile" class="header-logo_mobile">
-
-    <div class="search">
-        <input type="text" class="search-bar" placeholder="Rechercher...">
-        <button class="search-btn">Go</button>
+    
+    <div class="main-btn" @click="toMainPage()">
+        <img src="../assets/icon-left-font-monochrome-black.svg" alt="Logo Groupomania" class="header-logo">
+        <img src="../assets/icon.svg" alt="Logo Groupomania Mobile" class="header-logo_mobile">
     </div>
 
     <div class="menu">
         <ul class="menu-list">
-            <li>Profil</li>
-            <li>Paramètres</li>
+            <li @click="toUserProfile()">Profil</li>
         </ul>
     </div>
     </div>
@@ -24,6 +21,18 @@
 
 <script>
 
+export default {
+    name: 'MenuPage',
+    methods: {
+toMainPage(){
+    this.$router.push('/mainPage');
+},
+toUserProfile(){
+    this.$router.push('/userProfile')
+}
+}
+}
+
 </script>
 
 <style scoped>
@@ -32,7 +41,11 @@ header {
     border-bottom: 2px solid black;
 }
 
-.nav-bar, .search {
+.main-btn {
+    margin: 0;
+}
+
+.nav-bar {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -51,14 +64,6 @@ input {
     padding: 7px;
     margin-left: 20px;
     border-radius: 15px;
-}
-
-.search-btn {
-    border: none;
-    background-color: black;
-    color: white;
-    padding: 5px;
-    margin-left: 5px;
 }
 
 .menu {
