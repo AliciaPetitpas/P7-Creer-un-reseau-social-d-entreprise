@@ -1,6 +1,6 @@
 <template>
     
-<HeaderPage/>
+<MenuPage/>
 
 <main class="main">
 
@@ -25,12 +25,12 @@
 
 <script>
 
-import HeaderPage from '../components/HeaderPage.vue'
+import MenuPage from '../components/MenuPage.vue'
 
 export default {
     name: 'UserProfile',
     components: {
-        HeaderPage,
+        MenuPage,
     }
 }
 

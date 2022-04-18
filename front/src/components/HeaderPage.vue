@@ -3,6 +3,7 @@
     <header class="log-header">
         <img src="../assets/icon-left-font-monochrome-black.svg" alt="Logo Groupomania" class="header-logo">
         <img src="../assets/icon.svg" alt="Logo Groupomania Mobile" class="header-logo_mobile">
+        
         <nav class="log-header__nav">
             <button @click="HomePage()">Retourner à l'accueil</button>
         </nav>
