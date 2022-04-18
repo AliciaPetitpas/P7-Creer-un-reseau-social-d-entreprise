@@ -1,6 +1,5 @@
 <template>
 
-<div id="body">
     <HeaderPage />
     <main id="main">
         <div id="home-btn">
@@ -12,7 +11,6 @@
             </button>
         </div>
     </main>
-</div>
     
 </template>
 
@@ -52,12 +50,20 @@ button {
     border-style: none;
     background-color: black;
     color: white;
+    font-weight: bold;
 }
 
 main {
-    background-color: white ;
+    background-color: #fdd7d7 ;
     border: 1px solid black;
     border-radius: 30px;
+}
+
+/* RESPONSIVE MOBILE */
+@media (max-width: 768px) {
+    button {
+        width: 70%;
+    }
 }
 
 </style>

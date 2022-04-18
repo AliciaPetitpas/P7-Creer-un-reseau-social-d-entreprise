@@ -4,8 +4,8 @@
         <!-- Formulaire inscription -->
 
         <div class="form">
-            <input v-model="firstname" type="text" class="input-form" placeholder="Nom"/>
-            <input v-model="lastname" type="text" class="input-form" placeholder="Prénom"/>
+            <input v-model="first_name" type="text" class="input-form" placeholder="Nom"/>
+            <input v-model="last_name" type="text" class="input-form" placeholder="Prénom"/>
             <input v-model="email" type="email" class="input-form" placeholder="Adresse mail"/>
             <input v-model="password" type="password" class="input-form" placeholder="Mot de passe"/>
             <button @click="createAccount()" class="button" :class="{'button--disabled' : !validateForm}">Créer mon compte</button>
@@ -14,27 +14,28 @@
 </template>
 
 <script>
+
 import { mapState } from 'vuex'
 
 import HeaderPage from '../components/HeaderPage.vue'
 
 export default {
-    name: 'HomeLogin',
+    name: 'HomeRegister',
     components: {
         HeaderPage,
     },
     data: function () {
         return {
             mode: 'register',
-            firstname: '',
-            lastname: '',
+            first_name: '',
+            last_name: '',
             email: '',
             password: '',
         }
     },
     computed: {
         validateForm: function() {
-            if (this.firstname != '' && this.lastname != '' && this.email != '' && this.password != '') {
+            if (this.first_name != '' && this.last_name != '' && this.email != '' && this.password != '') {
                 return true;
             } else {
                 return false;
@@ -44,15 +45,15 @@ export default {
     },
     methods: {
         createAccount: function () {
-            // console.log(this.firstname, this.lastname, this.email, this.password);
+            // console.log(this.first_name, this.last_name, this.email, this.password);
             this.$store.dispatch('createAccount', {
-                firstname: this.firstname,
-                lastname: this.lastname,
+                first_name: this.first_name,
+                last_name: this.last_name,
                 email: this.email,
                 password: this.password
             })
         }
-    }    
+    }
 }
 
 </script>
@@ -66,7 +67,7 @@ div {
 }
 
 .form {
-    background-color: white ;
+    background-color: #fdd7d7 ;
     border: 1px solid black;
     border-radius: 30px;
 }
@@ -76,12 +77,20 @@ input {
 }
 
 button {
-    margin-top: 10px;
-    padding: 10px;
-    align-items: center;
+    margin: 10px auto 10px auto;
+    width: 30%;
+    padding: 30px;
     border-style: none;
     background-color: black;
     color: white;
+    font-weight: bold;
+}
+
+/* RESPONSIVE MOBILE */
+@media (max-width: 768px) {
+    button {
+        width: 70%;
+    }
 }
 
 </style>

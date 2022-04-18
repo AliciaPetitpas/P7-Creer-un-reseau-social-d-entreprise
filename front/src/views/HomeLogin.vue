@@ -33,7 +33,7 @@ div {
 }
 
 .form {
-    background-color: white ;
+    background-color: #fdd7d7 ;
     border: 1px solid black;
     border-radius: 30px;
 }
@@ -43,12 +43,20 @@ input {
 }
 
 button {
-    margin-top: 10px;
-    padding: 10px;
-    align-items: center;
+    margin: 10px auto 10px auto;
+    width: 30%;
+    padding: 30px;
     border-style: none;
     background-color: black;
     color: white;
+    font-weight: bold;
+}
+
+/* RESPONSIVE MOBILE */
+@media (max-width: 768px) {
+    button {
+        width: 70%;
+    }
 }
 
 </style>
