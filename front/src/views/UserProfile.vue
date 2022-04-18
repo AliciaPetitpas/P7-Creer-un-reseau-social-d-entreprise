@@ -54,10 +54,6 @@ div {
     width: 80%;
 }
 
-.user-info {
-    flex-direction: row;
-}
-
 .user-profile-picture {
     position: absolute;
     width: 150px;
@@ -74,6 +70,18 @@ button {
     background-color: black;
     color: white;
     font-weight: bold;
+}
+
+/* RESPONSIVE MOBILE */
+@media (max-width: 768px) {
+    /* button {
+        width: 70%;
+    } */
+    .user-profile-picture {
+        width: 80px;
+        height: 80px;
+        border-radius: 80px;
+    }
 }
 
 </style>
