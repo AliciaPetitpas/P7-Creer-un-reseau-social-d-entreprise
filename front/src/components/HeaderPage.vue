@@ -1,7 +1,7 @@
 <template>
     
     <header id="log-header" class="log-header">
-        <h1 class="log-header__title"><img src="../assets/icon-left-font-monochrome-black.svg" alt="Logo Groupomania Blanc" class="log-header__logo"></h1>
+        <img src="../assets/icon-left-font-monochrome-black.svg" alt="Logo Groupomania Blanc" class="log-header__logo">
         <nav class="log-header__nav">
             <button @click="HomePage()">Retourner à l'accueil</button>
         </nav>
@@ -21,3 +21,19 @@ export default {
 }
 
 </script>
+
+<style scoped>
+
+header {
+    padding-bottom: 10px;
+    border-bottom: 2px solid black;
+}
+
+button {
+    padding: 10px;
+    border-style: none;
+    background-color: black;
+    color: white;
+}
+
+</style>

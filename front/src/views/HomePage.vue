@@ -3,15 +3,13 @@
 <div id="body">
     <HeaderPage />
     <main id="main">
-        <div>
-
+        <div id="home-btn">
             <button @click="loginWindow()" class="log-header__nav__login header__btn">
                 Se connecter
             </button>
             <button @click="registerWindow()" class="log-header__nav_signup header__btn">
                 S'inscrire
             </button>
-
         </div>
     </main>
 </div>
@@ -41,15 +39,25 @@ registerWindow(){
 
 <style scoped>
 
-nav, main {
+main, button {
     display: flex;
     flex-direction: column;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 10px auto 10px auto;
 }
 
-nav {
-    width: 200px;
+button {
+    padding: 30px;
+    width: 30%;
+    align-items: center;
+    border-style: none;
+    background-color: black;
+    color: white;
+}
+
+main {
+    background-color: white ;
+    border: 1px solid black;
+    border-radius: 30px;
 }
 
 </style>
