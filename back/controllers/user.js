@@ -4,6 +4,7 @@ const db = require('../models');
 
 //Création d'un compte, en hashage et salage du password
 exports.signup = (req, res, next) => {
+    console.debug("ici");
     //salage du mot de passe
     bcrypt.genSalt(parseInt(process.env.SALT))
         .then(salt => {
