@@ -9,7 +9,7 @@
         <!-- User Info -->
         <div class="user">
             <div class="user-profile-picture">
-                <img src="" alt="user-picture">
+                <img src="" alt="user-picture" class="user-picture">
                 <!-- Bouton modification image SI modification activée -->
                 <button class="change-picture">Importer un fichier</button>
             </div>
@@ -91,14 +91,27 @@ button {
 
 /* RESPONSIVE MOBILE */
 @media (max-width: 768px) {
-    /* button {
-        width: 70%;
-    } */
-    .user-profile-picture {
+    .user {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .user-profile-picture, .user-info {
+        position: relative;
+        margin: 0;
+    }
+
+    button {
+        width: 90%;
+    }
+
+    /* .user-picture {
         width: 80px;
         height: 80px;
-        border-radius: 80px;
-    }
+        border-radius: 70px;
+    } */
 }
 
 </style>

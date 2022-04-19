@@ -1,19 +1,17 @@
 <template>
     
-<header>
-    <div class="nav-bar">
+<header class="nav-header">
+   
     
     <div class="main-btn" @click="toMainPage()">
         <img src="../assets/icon-left-font-monochrome-black.svg" alt="Logo Groupomania" class="header-logo">
         <img src="../assets/icon.svg" alt="Logo Groupomania Mobile" class="header-logo_mobile">
     </div>
 
-    <div class="menu">
-        <ul class="menu-list">
-            <li @click="toUserProfile()">Profil</li>
-        </ul>
-    </div>
-    </div>
+    <nav class="nav-btn">
+        <button @click="toUserProfile()" class="btn-profile">Profil</button>
+    </nav>
+   
 
 </header>
 
@@ -38,38 +36,24 @@ toUserProfile(){
 <style scoped>
 
 header {
+    padding-bottom: 10px;
     border-bottom: 2px solid black;
-}
-
-.main-btn {
-    margin: 0;
-}
-
-.nav-bar {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
 }
 
 .header-logo_mobile {
     display: none;
 }
 
-ul {
-    list-style: none;
+.main-btn {
+    margin: 0;
 }
 
-input {
-    height: 10px;
-    padding: 7px;
-    margin-left: 20px;
-    border-radius: 15px;
-}
-
-.menu {
-    text-align: right;
-    position: absolute;
-    right: 40px;
+button {
+    padding: 10px;
+    border-style: none;
+    background-color: black;
+    color: white;
+    font-weight: bold;
 }
 
 /* RESPONSIVE TABLETTE */

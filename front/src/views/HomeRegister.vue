@@ -62,13 +62,10 @@ export default {
 
 <style scoped>
 
-div {
+.form {
     display: flex;
     flex-direction: column;
     margin: 10px auto 10px auto;
-}
-
-.form {
     background-color: #fdd7d7 ;
     border: 1px solid black;
     border-radius: 30px;

@@ -59,7 +59,7 @@ button {
     border: none;
     background-color: black;
     color: white;
-    padding: 5px;
+    padding: 10px;
     margin-left: 5px;
 }
 
@@ -79,5 +79,17 @@ button {
 .user-info p {
     margin: 20px;
 }
+
+/* RESPONSIVE MOBILE */
+@media (max-width: 768px) {
+    .user-info {
+    flex-direction: column;
+    }
+
+    .add-img, .send-post {
+        margin: 5px;
+    }
+}
+
 
 </style>

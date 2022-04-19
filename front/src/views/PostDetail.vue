@@ -83,15 +83,15 @@ main {
     border: none;
     background-color: black;
     color: white;
-    padding: 5px;
+    padding: 10px;
     margin-left: 5px;
 }
 
 /* RESPONSIVE MOBILE */
 @media (max-width: 768px) {
-.user-info p {
-    margin: 0;
-}
+    .user-info {
+        flex-direction: column;
+    }
 }
 
 </style>
