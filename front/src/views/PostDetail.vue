@@ -1,6 +1,7 @@
 <template>
     
-<MenuPage />
+<div>
+    <MenuPage />
 
 <main class="post-detail">
     <div class="user-info" @click="toUserProfile()">
@@ -21,6 +22,7 @@
         </div>
     </div>
 </main>
+</div>
 
 </template>
 

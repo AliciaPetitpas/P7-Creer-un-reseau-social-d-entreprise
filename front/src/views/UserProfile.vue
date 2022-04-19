@@ -1,6 +1,7 @@
 <template>
     
-<MenuPage/>
+<div>
+    <MenuPage/>
 
 <main class="main">
 
@@ -27,6 +28,7 @@
     </div>
 
 </main>
+</div>
 
 </template>
 

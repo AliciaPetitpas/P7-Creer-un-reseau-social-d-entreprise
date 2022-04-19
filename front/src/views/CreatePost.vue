@@ -1,6 +1,7 @@
 <template>
     
-<MenuPage/>
+<div>
+    <MenuPage/>
 
 <main class="content">
     <div class="create-post">
@@ -16,6 +17,7 @@
         <button class="send-post">Envoyer</button>
     </div>
 </main>
+</div>
 
 </template>
 

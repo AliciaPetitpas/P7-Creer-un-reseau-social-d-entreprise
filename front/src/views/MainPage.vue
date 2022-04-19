@@ -1,5 +1,6 @@
 <template>
 
+<div>
     <MenuPage />
 
     <main class="content">
@@ -9,6 +10,7 @@
         <div @click="toPostDetail()" class="post">Dernier post créé ici</div>
         <div @click="toPostDetail()" class="post">Avant dernier post créé ici</div>
     </main>
+</div>
 
 </template>
 

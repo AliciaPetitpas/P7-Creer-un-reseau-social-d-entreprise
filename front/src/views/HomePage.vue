@@ -1,6 +1,7 @@
 <template>
 
-    <HeaderPage />
+<div>
+        <HeaderPage />
     <main id="main">
         <div id="home-btn">
             <button @click="loginWindow()" class="log-header__nav__login header__btn">
@@ -11,6 +12,7 @@
             </button>
         </div>
     </main>
+</div>
     
 </template>
 

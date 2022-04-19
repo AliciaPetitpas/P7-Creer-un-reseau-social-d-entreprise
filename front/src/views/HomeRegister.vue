@@ -1,5 +1,6 @@
 <template>
-<HeaderPage />
+<div>
+    <HeaderPage />
             
         <!-- Formulaire inscription -->
 
@@ -10,6 +11,7 @@
             <input v-model="password" type="password" class="input-form" placeholder="Mot de passe"/>
             <button @click="createAccount()" class="button" :class="{'button--disabled' : !validateForm}">Créer mon compte</button>
         </div>
+</div>
 
 </template>
 

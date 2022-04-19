@@ -1,5 +1,7 @@
 <template>
-<HeaderPage />
+<div>
+
+    <HeaderPage />
 
             <!-- Connexion -->
 
@@ -8,6 +10,7 @@
             <input v-model="password" type="password" class="input-form" placeholder="Mot de passe"/>
             <button @click="profileWindow()" class="button">Se connecter</button>
         </div>
+</div>
 
 </template>
 
