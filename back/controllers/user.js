@@ -4,7 +4,6 @@ const db = require('../models');
 
 //Création d'un compte, en hashage et salage du password
 exports.signup = (req, res, next) => {
-    console.debug("ici");
     //salage du mot de passe
     bcrypt.genSalt(parseInt(process.env.SALT))
         .then(salt => {
@@ -12,15 +11,13 @@ exports.signup = (req, res, next) => {
                 .then(hash => {
                     //Création utilisateur
                     db.User.create({
-                        //DATABASE INFO
-                        email: req.body.email,
-                        password: hash,
-                        first_name: req.body.first_name,
-                        last_name: req.body.last_name,
-                    });
-                    user.save()
-                        .then(() => res.status(201).json({ message: 'User created' }))
-                        .catch(error => res.status(400).json({ message: 'User already created' }));
+                            email: req.body.email,
+                            password: hash,
+                            first_name: req.body.first_name,
+                            last_name: req.body.last_name
+                        })
+                        .then(() => res.status(201).json({ message: 'User created !' }))
+                        .catch(error => res.status(400).json({ error }))
                 })
                 .catch(error => res.status(500).json({ error }));
         })
@@ -29,7 +26,7 @@ exports.signup = (req, res, next) => {
 
 //Connexion à un compte
 exports.login = (req, res, next) => {
-    User.findOne({ email: req.body.email })
+    db.User.findOne({ where: { email: req.body.email } })
         .then(user => {
             //Si l'utilisateur n'est pas trouvé
             if (!user) {
