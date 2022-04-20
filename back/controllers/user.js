@@ -30,14 +30,14 @@ exports.login = (req, res, next) => {
         .then(user => {
             //Si l'utilisateur n'est pas trouvé
             if (!user) {
-                return res.status(401).json({ error: 'User not found' });
+                return res.status(401).json({ error: 'Utilisateur non trouvé' });
             }
             //Comparaison mot de passe
             bcrypt.compare(req.body.password, user.password)
                 .then(valid => {
                     //Si les mdp ne correspondent pas
                     if (!valid) {
-                        return res.status(401).json({ error: 'Wrong password' });
+                        return res.status(401).json({ error: 'Le mot de passe ne correspond pas' });
                     }
                     res.status(200).json({
                         userId: user.id,

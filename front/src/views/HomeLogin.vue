@@ -27,7 +27,7 @@
 
 import HeaderPage from '../components/HeaderPage.vue';
 import useValidate from "@vuelidate/core";
-import { required, email, minLength, helpers } from "@vuelidate/validators";
+import { required, email, helpers } from "@vuelidate/validators";
 import { reactive, computed } from "vue";
 
 export default {
@@ -47,22 +47,18 @@ export default {
                 input: {
                     email: {
                         required: helpers.withMessage(
-                            "Veuillez renseigner ce champ !",
+                            "Veuillez renseigner ce champ",
                             required
                         ),
                         email: helpers.withMessage(
-                            "Veuillez saisir une adresse mail valide !",
+                            "Veuillez saisir une adresse mail valide",
                             email
                         ),
                     },
                     password: {
                         required: helpers.withMessage(
-                            "Veuillez renseigner ce champ !",
+                            "Veuillez renseigner ce champ",
                             required
-                        ),
-                        minLength: helpers.withMessage(
-                            "Le mot de passe doit comporter 4 caractères minimum !",
-                            minLength(4)
                         ),
                     },
                 },
