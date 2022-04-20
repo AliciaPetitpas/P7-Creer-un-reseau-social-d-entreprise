@@ -11,14 +11,23 @@
             <div class="user-profile-picture">
                 <img src="" alt="user-picture" class="user-picture">
                 <!-- Bouton modification image SI modification activée -->
-                <button class="change-picture">Importer un fichier</button>
+                <input 
+                style="display: none"
+                type="file" 
+                @change="onFileSelected"
+                ref="fileInput">
+                <button @click="$refs.fileInput.click()">Choisir un fichier</button>
+                <button @click="onUpload()" class="add-img">Importer un fichier</button>
             </div>
             <div class="user-info">
-                <p class="first_name">First name</p>
-                <p class="last_name">Last name</p>
-                <p class="email">Email</p>
-                <!-- input mail SI modification activée -->
+                <!-- <p class="last_name">{{ last_name }}</p>
+                <p class="first_name">{{ first_name }}</p> 
+                <p class="email">{{ email }}</p> -->
+
+                <!-- inputs SI modification activée -->
                 <input type="email" class="input-form" placeholder="Adresse mail"/>
+                <input type="password" class="input-form" placeholder="Mot de passe"/>
+                <input type="password" class="input-form" placeholder="Confirmer le mot de passe"/>
             </div>
             <!-- Bouton à afficher si c'est notre profile -->
             <button class="modify-user-info">Modifier informations</button>
@@ -35,11 +44,36 @@
 <script>
 
 import MenuPage from '../components/MenuPage.vue'
+import axios from 'axios'
 
 export default {
     name: 'UserProfile',
     components: {
         MenuPage,
+    },
+    data: function() {
+        return {
+            // last_name: this.$store.user.last_name,
+            // first_name: this.$store.user.first_name,
+            // email: this.$store.user.email,
+        }
+    },
+    methods: {
+        onFileSelected(event) {
+            this.selectedFile = event.target.files[0]
+        },
+        onUpload() {
+            const fd = FormData();
+            fd.append('image', this.selectedFile, this.selectedFile.name)
+            axios.post('', fd, {
+                onUploadProgress: uploadEvent => {
+                    console.log('Upload progress: ' + Math.round(uploadEvent.loaded / uploadEvent.total * 100) + '%')
+                }
+            })
+            .then (res => {
+                console.log(res)
+            })
+        }
     }
 }
 
@@ -81,12 +115,16 @@ button {
     font-weight: bold;
 }
 
-.change-picture {
+.add-img {
     width: 200px;
     padding: 5px;
     position: absolute;
     bottom: -35px;
     left: 0;
+}
+
+input {
+    margin: 5px;
 }
 
 /* RESPONSIVE MOBILE */

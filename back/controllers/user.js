@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require('../models');
+const fs = require('fs');
 
 //Création d'un compte, en hashage et salage du password
 exports.signup = (req, res, next) => {
@@ -51,3 +52,30 @@ exports.login = (req, res, next) => {
         })
         .catch(error => res.status(500).json({ error }));
 };
+
+// Mdification image utilisateur
+exports.updateImage = (req, res) => {
+    db.User.findOne({ where: { id: req.body.userId } })
+        .then(user => {
+            // Si l'image de profil est modifiée
+            if (req.file) {
+                const filename = user.imageUrl.split('/images/')[1];
+                // Suppression de l'ancienne image
+                if (filename != "image_profil_default.jpg") {
+                    fs.unlink(`images/${filename}`, (err) => {
+                        if (err) throw err;
+                    });
+                }
+                // On ajoute la nouvelle image et on met à jour la DB
+                const newImage = {
+                    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+                };
+                db.User.update(
+                        newImage, { where: { id: req.body.userId } }
+                    )
+                    .then(() => res.status(201).json({ message: 'Image modifiée' }))
+                    .catch(error => res.status(500).json({ error }));
+            };
+        })
+        .catch(error => res.status(500).json({ error }));
+}
