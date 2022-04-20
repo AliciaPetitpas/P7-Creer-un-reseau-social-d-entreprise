@@ -10,6 +10,7 @@
 
     <nav class="nav-btn">
         <button @click="toUserProfile()" class="btn-profile">Profil</button>
+        <button @click="logout()" class="btn-logout">Se déconnecter</button>
     </nav>
    
 
@@ -26,7 +27,15 @@ toMainPage(){
     this.$router.push('/mainPage');
 },
 toUserProfile(){
-    this.$router.push('/userProfile')
+    this.$router.push('/userProfile');
+},
+// logout(){
+//     this.$router.push('/');
+// }
+logout: function() {
+    localStorage.removeItem('user')
+    // console.log(localStorage.getItem('user'))
+    this.$router.push('/');
 }
 }
 }
@@ -44,12 +53,18 @@ header {
     display: none;
 }
 
+.nav-btn {
+    display: flex;
+    flex-direction: column;
+}
+
 .main-btn {
     margin: 0;
 }
 
 button {
     padding: 10px;
+    margin: 5px;
     border-style: none;
     background-color: black;
     color: white;
