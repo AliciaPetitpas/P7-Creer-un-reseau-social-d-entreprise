@@ -21,6 +21,10 @@
             <span v-if="v$.input.password.$error" class="error">
                 {{ v$.input.password.$errors[0].$message }}
             </span>
+            <input v-model="state.input.passwordconfirmed" type="password" class="input-form" placeholder="Confirmer le mot de passe"/>
+            <span v-if="v$.input.passwordconfirmed.$error" class="error">
+                {{ v$.input.passwordconfirmed.$errors[0].$message }}
+            </span>
             <button @click="createAccount()" class="button">Créer mon compte</button>
             <span class="error">
                 {{ error }}
@@ -34,7 +38,7 @@
 
 import HeaderPage from '../components/HeaderPage.vue'
 import useValidate from "@vuelidate/core";
-import { required, email, minLength, helpers } from "@vuelidate/validators";
+import { required, email, minLength, helpers, maxLength, sameAs } from "@vuelidate/validators";
 import { reactive, computed } from "vue";
 
 export default {
@@ -49,6 +53,7 @@ export default {
                 first_name: "",
                 email: "",
                 password: "",
+                passwordconfirmed: "",
             }
         });
         const rules = computed(() => {
@@ -56,36 +61,58 @@ export default {
                 input: {
                     last_name: {
                         required: helpers.withMessage(
-                            "Veuillez renseigner ce champ !",
+                            "Veuillez renseigner ce champ",
                             required
-                        )
+                        ),
+                        minLength: helpers.withMessage(
+                            "Le nom de peut comporter qu'une seule lettre",
+                            minLength(2)
+                        ),
                     },
                     first_name: {
                         required: helpers.withMessage(
-                            "Veuillez renseigner ce champ !",
+                            "Veuillez renseigner ce champ",
                             required
-                        )
+                        ),
+                        minLength: helpers.withMessage(
+                            "Le prénom de peut comporter qu'une seule lettre",
+                            minLength(2)
+                        ),
                     },
                     email: {
                         required: helpers.withMessage(
-                            "Veuillez renseigner ce champ !",
+                            "Veuillez renseigner ce champ",
                             required
                         ),
                         email: helpers.withMessage(
-                            "Veuillez saisir une adresse mail valide !",
+                            "Veuillez saisir une adresse mail valide",
                             email
                         ),
                     },
                     password: {
                         required: helpers.withMessage(
-                            "Veuillez renseigner ce champ !",
+                            "Veuillez renseigner ce champ",
                             required
                         ),
                         minLength: helpers.withMessage(
-                            "Le mot de passe doit comporter 4 caractères minimum !",
+                            "Le mot de passe doit comporter 4 caractères minimum",
                             minLength(4)
                         ),
+                        maxLength: helpers.withMessage(
+                            "Le mot de passe ne peut comporter que 100 caractères maximum",
+                            maxLength(100)
+                        ),
                     },
+                    passwordconfirmed: {
+                        required: helpers.withMessage(
+                            "Veuillez renseigner ce champ",
+                            required
+                        ),
+                        sameAs: helpers.withMessage(
+                            "Les mots de passe de correspondent pas",
+                            sameAs(state.input.password)
+                        ),
+                    }
                 },
             };
         });
@@ -122,7 +149,8 @@ export default {
                 last_name: this.state.input.last_name,
                 first_name: this.state.input.first_name,
                 email: this.state.input.email,
-                password: this.state.input.password
+                password: this.state.input.password,
+                passwordconfirmed: this.state.input.passwordconfirmed,
             }).then(function() {
                 self.login();
             },function (error) {
