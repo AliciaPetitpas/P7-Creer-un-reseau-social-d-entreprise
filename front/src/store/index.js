@@ -34,6 +34,9 @@ export default createStore({
             instance.defaults.headers.common['Authorization'] = user.toker;
             localStorage.setItem('user', JSON.stringify(user));
             state.user = user;
+        },
+        UPDATE_USER_INFO: function(state, userInfo) {
+            state.userInfo = userInfo;
         }
     },
     actions: {
@@ -62,6 +65,18 @@ export default createStore({
                         reject(error);
                     })
             });
-        }
+        },
+        getUserInfo: ({ commit }, userId) => {
+            return new Promise((resolve, reject) => {
+                instance.get('/auth/getUserInfo/' + userId)
+                    .then(function(response) {
+                        commit('UPDATE_USER_INFO', response.data);
+                        resolve(response);
+                    })
+                    .catch(function(error) {
+                        reject(error);
+                    })
+            });
+        },
     }
 })
