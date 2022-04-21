@@ -9,16 +9,22 @@
         <!-- User Info -->
         <div class="user">
             <div class="user-profile-picture">
-                <img src="" alt="user-picture" class="user-picture">
+                <img scr="" alt="Photo de profil" class="user-picture">
+                <!-- :src="userProfile.imageURL" -->
+
                 <!-- Bouton modification image SI modification activée -->
+
                 <input 
-                style="display: none"
-                type="file" 
-                @change="onFileSelected"
-                ref="fileInput">
-                <button @click="$refs.fileInput.click()">Choisir un fichier</button>
-                <button @click="onUpload()" class="add-img">Importer un fichier</button>
+                    style="display: none"
+                    type="file" 
+                    accept=".png, .jpg, .jpeg"
+                    @change="onFileSelected"
+                    ref="fileInput">
+                <button @click="$refs.fileInput.click()" class="add-file">Choisir une image</button>
+                <button @click="onUpload()" class="add-img">Importer</button>
+
             </div>
+
             <div class="user-info">
                 <!-- <p class="last_name">{{ last_name }}</p>
                 <p class="first_name">{{ first_name }}</p> 
@@ -45,6 +51,7 @@
 
 import MenuPage from '../components/MenuPage.vue'
 import axios from 'axios'
+import { mapState } from 'vuex'
 
 export default {
     name: 'UserProfile',
@@ -53,28 +60,37 @@ export default {
     },
     data: function() {
         return {
+            selectedFile: null
             // last_name: this.$store.user.last_name,
             // first_name: this.$store.user.first_name,
             // email: this.$store.user.email,
         }
+    },
+    mounted() {
+        if(this.$store.state.user.userId == -1) {
+            this.$router.push('/');
+            return
+        }
+    },
+    computed: {
+        ...mapState({
+            user:'user'
+        })
     },
     methods: {
         onFileSelected(event) {
             this.selectedFile = event.target.files[0]
         },
         onUpload() {
-            const fd = FormData();
-            fd.append('image', this.selectedFile, this.selectedFile.name)
-            axios.post('', fd, {
-                onUploadProgress: uploadEvent => {
-                    console.log('Upload progress: ' + Math.round(uploadEvent.loaded / uploadEvent.total * 100) + '%')
-                }
-            })
+            const fd = new FormData();
+            fd.append('image', this.selectedFile, this.selectedFile.name);
+
+            axios.post('/users/image', fd)
             .then (res => {
                 console.log(res)
             })
         }
-    }
+    },
 }
 
 </script>
@@ -119,6 +135,14 @@ button {
     width: 200px;
     padding: 5px;
     position: absolute;
+    bottom: -65px;
+    left: 0;
+}
+
+.add-file {
+    width: 200px;
+    padding: 5px;
+    position: absolute;
     bottom: -35px;
     left: 0;
 }
@@ -139,6 +163,10 @@ input {
     .user-profile-picture, .user-info {
         position: relative;
         margin: 0;
+    }
+
+    .user-info {
+        bottom: -35px;
     }
 
     button {
