@@ -9,7 +9,8 @@
         <!-- User Info -->
         <div class="user">
             <div class="user-profile-picture">
-                <img scr="" alt="Photo de profil" class="user-picture">
+                <img :scr="userInfo.imageUrl" ref="photoProfil" alt="Photo de profil" class="user-picture">
+                <img ref="filePreview" src="" alt="">
                 <!-- :src="userProfile.imageURL" -->
 
                 <!-- Bouton modification image SI modification activée -->
@@ -50,7 +51,6 @@
 <script>
 
 import MenuPage from '../components/MenuPage.vue'
-import axios from 'axios'
 import { mapState } from 'vuex'
 
 export default {
@@ -60,7 +60,8 @@ export default {
     },
     data: function() {
         return {
-            selectedFile: null
+            selectedFile: null,
+            error,
             // last_name: this.$store.user.last_name,
             // first_name: this.$store.user.first_name,
             // email: this.$store.user.email,
@@ -69,25 +70,44 @@ export default {
     mounted() {
         if(this.$store.state.user.userId == -1) {
             this.$router.push('/');
-            return
+            return;
         }
+        const self = this;
+        this.$store.dispatch('getUserInfo', this.$store.state.user.userId)
+        .then(function() {
+            document.getElementById("email").value = self.userInfo.email;
+        }, function () {
+            // self.logout();
+        })
     },
     computed: {
         ...mapState({
-            user:'user'
+            user:'user',
+            userInfo: 'userInfo'
         })
     },
-    methods: {
+    methods: { //logout method
         onFileSelected(event) {
-            this.selectedFile = event.target.files[0]
+            this.selectedFile = event.target.files[0];
+            let reader = new FileReader();
+            reader.onload = () => {
+                this.$refs.filePreview.src = reader.result;
+                this.$refs.photoProfil.style.display = "none";
+            }
+            reader.readAsDataURL(this.selectedFile);
         },
         onUpload() {
             const fd = new FormData();
-            fd.append('image', this.selectedFile, this.selectedFile.name);
-
-            axios.post('/users/image', fd)
-            .then (res => {
-                console.log(res)
+            fd.append('image_profil', this.selectedFile);
+            this.$store.dispatch('updateImage', {
+                fdImage: fd,
+                userId: this.user.userId
+            })
+            .then(function (response) {
+                console.log(response);
+            }, function (error) {
+                // console.log(error);
+                this.error = error.response.data.error;
             })
         }
     },
