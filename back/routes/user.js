@@ -4,6 +4,7 @@ const router = express.Router();
 const multer = require('../middleware/multer-config');
 const userCtrl = require('../controllers/user');
 const limitMax = require('../middleware/limit');
+// const auth = require('../middleware/auth');
 
 router.post('/signup', userCtrl.signup);
 router.post('/login', limitMax.limiter, userCtrl.login);

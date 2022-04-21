@@ -23,7 +23,7 @@ module.exports = (sequelize, Sequelize) => {
         },
         imageUrl: {
             type: Sequelize.STRING,
-        }
+        },
     })
     return User;
 };
