@@ -5,7 +5,7 @@
 
             <!-- Connexion -->
 
-        <div class="form">
+        <div id="main" class="form">
             <input v-model="state.input.email" type="email" class="input-form" placeholder="Adresse mail"/>
             <span v-if="v$.input.email.$error" class="error">
                 {{ v$.input.email.$errors[0].$message }}
@@ -95,37 +95,3 @@ export default {
 }
 
 </script>
-
-<style scoped>
-
-.form {
-    display: flex;
-    flex-direction: column;
-    margin: 10px auto 10px auto;
-    background-color: #fdd7d7 ;
-    border: 1px solid black;
-    border-radius: 30px;
-}
-
-input {
-    margin: 5px;
-}
-
-button {
-    margin: 10px auto 10px auto;
-    width: 30%;
-    padding: 30px;
-    border-style: none;
-    background-color: black;
-    color: white;
-    font-weight: bold;
-}
-
-/* RESPONSIVE MOBILE */
-@media (max-width: 768px) {
-    button {
-        width: 70%;
-    }
-}
-
-</style>

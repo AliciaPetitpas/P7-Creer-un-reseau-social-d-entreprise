@@ -3,7 +3,7 @@
 <div>
     <MenuPage/>
 
-<main class="content">
+<main id="main" class="content">
     <div class="create-post">
             <div class="user-info">
                 <img src="" alt="user-picture">
@@ -36,33 +36,6 @@ export default {
 
 <style scoped>
 
-.content {
-    display: flex;
-    flex-direction: column;
-    margin: 10px auto 10px auto;
-}
-
-input {
-    width: 100%;
-    height: 300px;
-    margin-bottom: 10px;
-}
-
-.create-post {
-    background-color: #fdd7d7 ;
-    border: 1px solid black;
-    border-radius: 30px;
-    margin-bottom: 10px;
-}
-
-button {
-    border: none;
-    background-color: black;
-    color: white;
-    padding: 10px;
-    margin-left: 5px;
-}
-
 .user-info {
     align-items: center;
     display: flex;
@@ -76,20 +49,20 @@ button {
     border: 1px solid black;
 }
 
-.user-info p {
-    margin: 20px;
+.create-post {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 30px;
+    margin: 10px;
 }
 
-/* RESPONSIVE MOBILE */
-@media (max-width: 768px) {
-    .user-info {
-    flex-direction: column;
-    }
-
-    .add-img, .send-post {
-        margin: 5px;
-    }
+::placeholder {
+    position: absolute;
 }
 
+input {
+    width: 95%;
+    height: 100px;
+}
 
 </style>

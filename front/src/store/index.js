@@ -79,6 +79,19 @@ export default createStore({
                     })
             });
         },
+        updateUserInfo: ({ commit }, userInfo) => {
+            commit;
+            return new Promise((resolve, reject) => {
+                instance.post('/auth/updateInfo/', userInfo)
+                    .then(function(response) {
+                        commit('UPDATE_USER_INFO', response.data);
+                        resolve(response);
+                    })
+                    .catch(function(error) {
+                        reject(error);
+                    })
+            })
+        },
         updateImage: ({ commit }, user) => {
             commit;
             return new Promise((resolve, reject) => {

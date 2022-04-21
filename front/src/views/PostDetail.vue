@@ -3,7 +3,7 @@
 <div>
     <MenuPage />
 
-<main class="post-detail">
+<main id="main" class="post-detail">
     <div class="user-info" @click="toUserProfile()">
         <img src="" alt="user-picture">
         <p class="first_name">First name</p>
@@ -46,18 +46,6 @@ export default {
 
 <style scoped>
 
-main {
-    display: flex;
-    flex-direction: column;
-    margin: 10px auto 10px auto;
-}
-
-.post-detail {
-    background-color: #fdd7d7 ;
-    border: 1px solid black;
-    border-radius: 30px;
-}
-
 .user-info {
     align-items: center;
     display: flex;
@@ -76,22 +64,15 @@ main {
 }
 
 .post, .comments, .add-comment {
-    border: 1px solid black
-}
-
-.new-comment {
-    border: none;
-    background-color: black;
-    color: white;
-    padding: 10px;
-    margin-left: 5px;
+    border: 1px solid black;
+    margin: 2px;
 }
 
 /* RESPONSIVE MOBILE */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     .user-info {
         flex-direction: column;
     }
-}
+} */
 
 </style>

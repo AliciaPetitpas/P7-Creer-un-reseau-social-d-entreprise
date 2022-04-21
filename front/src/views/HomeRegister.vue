@@ -4,7 +4,7 @@
             
         <!-- Formulaire inscription -->
 
-        <div class="form">
+        <div id="main" class="form">
             <input v-model="state.input.last_name" type="text" class="input-form" placeholder="Nom"/>
             <span v-if="v$.input.last_name.$error" class="error">
                 {{ v$.input.last_name.$errors[0].$message }}
@@ -138,7 +138,6 @@ export default {
                 }, function (error) {
                     self.error = error.response.data.error;
                 })
-            
         },
         createAccount: function () {
             const self = this;
@@ -162,37 +161,3 @@ export default {
 }
 
 </script>
-
-<style scoped>
-
-.form {
-    display: flex;
-    flex-direction: column;
-    margin: 10px auto 10px auto;
-    background-color: #fdd7d7 ;
-    border: 1px solid black;
-    border-radius: 30px;
-}
-
-input {
-    margin: 5px;
-}
-
-button {
-    margin: 10px auto 10px auto;
-    width: 30%;
-    padding: 30px;
-    border-style: none;
-    background-color: black;
-    color: white;
-    font-weight: bold;
-}
-
-/* RESPONSIVE MOBILE */
-@media (max-width: 768px) {
-    button {
-        width: 70%;
-    }
-}
-
-</style>

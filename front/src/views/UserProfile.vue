@@ -3,7 +3,7 @@
 <div>
     <MenuPage/>
 
-<main class="main">
+<main id="main" class="main">
 
     <div class="profile">
         <!-- User Info -->
@@ -33,11 +33,10 @@
             </div>
 
             <!-- Inputs modifications -->
-            <div class="user-info-input">
-                <input v-model="state.input.oldpassword" type="password" class="input-form" placeholder="Ancien mot de passe">
-                <input v-model="state.input.newpassword" type="password" class="input-form" placeholder="Nouveau mot de passe"/>
-                <input v-model="state.input.newpasswordconfirmed" type="password" class="input-form" placeholder="Confirmer le mot de passe"/>
-            </div>
+            <p>Modifier le mot de passe :</p>
+            <input v-model="state.input.newpassword" type="password" class="input-form" placeholder="Nouveau mot de passe"/>
+            <input v-model="state.input.newpasswordconfirmed" type="password" class="input-form" placeholder="Confirmer le mot de passe"/>
+            
                
                 <!-- Bouton modification profil -->
             <button @click="modifyUser()" class="modify-user-info">Modifier informations</button>
@@ -72,7 +71,6 @@ export default {
     setup() {
         const state = reactive({
             input: {
-                oldpassword: "",
                 newpassword: "",
                 newpasswordconfirmed: "",
             }
@@ -80,10 +78,11 @@ export default {
         const rules = computed(() => {
             return {
                 input: {
-                    oldpassword: {
-
-                    },
                     newpassword: {
+                        required: helpers.withMessage(
+                            "Veuillez renseigner ce champ",
+                            required
+                        ),
                         minLength: helpers.withMessage(
                             "Le mot de passe doit comporter 4 caractères minimum",
                             minLength(4)
@@ -100,7 +99,7 @@ export default {
                         ),
                         sameAs: helpers.withMessage(
                             "Les mots de passe de correspondent pas",
-                            sameAs(state.input.password)
+                            sameAs(state.input.newpassword)
                         ),
                     }
                 }
@@ -154,9 +153,19 @@ export default {
                 console.log(error);
             })
         },
-        modifyUser() {
+        modifyUser: function () {
+            const self = this;
             this.v$.$validate();
-            console.log(this.state.input.oldpassword, this.state.input.newpassword, this.state.input.newpasswordconfirmed);
+            // console.log(this.state.input.newpassword, this.state.input.newpasswordconfirmed);
+            if (!this.v$.$error) {
+                this.$store.dispatch('updateUserInfo', {
+                    password: this.state.input.newpassword,
+                }).then(function() {
+                }, function (error) {
+                    self.error = error.response.data.error;
+                }
+                )
+            }
         }
     },
 }
@@ -165,109 +174,16 @@ export default {
 
 <style scoped>
 
-div {
-    display: flex;
-    flex-direction: column;
-    margin: 10px auto 10px auto;
-}
-
-.profile {
-    background-color: #fdd7d7 ;
-    border: 1px solid black;
-    border-radius: 30px;
-    height: 100%;
-}
-
-.user {
-    width: 80%;
-}
-
-.user-profile-picture {
-    position: absolute;
+/* .user-profile-picture img {
     width: 150px;
     height: 150px;
     border: 1px solid black;
     border-radius: 150px;
-}
-
-button {
-    margin: 10px 0 10px auto;
-    width: 30%;
-    padding: 30px;
-    border-style: none;
-    background-color: black;
-    color: white;
-    font-weight: bold;
-}
-
-.add-img {
-    width: 200px;
-    padding: 5px;
-    position: absolute;
-    bottom: -50px;
-    left: 0;
-}
-
-.add-file {
-    width: 200px;
-    padding: 5px;
-    position: absolute;
-    bottom: -20px;
-    left: 0;
-}
-
-input {
-    margin: 5px;
-}
-
-p {
-    margin: 5px;
-}
-
-.user-info {
-    display: flex;
-    flex-direction: row;
-    margin-right: 0;
-    font-weight: bold;
-}
-
-.user-info-input {
-    display: flex;
-    flex-direction: column;
-    margin-right: 0;
-}
+} */
 
 /* RESPONSIVE MOBILE */
 @media (max-width: 768px) {
-    .user {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
 
-    .user-profile-picture, .user-info {
-        position: relative;
-        margin: 0;
-    }
-
-    .user-info {
-        bottom: -35px;
-    }
-
-    button {
-        width: 90%;
-    }
-
-    .user-info-input {
-        margin-left: 0;
-    }
-
-    /* .user-picture {
-        width: 80px;
-        height: 80px;
-        border-radius: 70px;
-    } */
 }
 
 </style>

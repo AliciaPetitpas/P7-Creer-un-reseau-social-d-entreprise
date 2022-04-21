@@ -3,7 +3,7 @@
 <div>
     <MenuPage />
 
-    <main class="content">
+    <main id="main" class="content">
         <div class="post">
             <button @click="toCreatePost()" class="createPost">Créer une publication</button>
         </div>
@@ -37,25 +37,11 @@ export default {
 
 <style scoped>
 
-.content {
-    display: flex;
-    flex-direction: column;
-    margin: 10px auto 10px auto;
-}
-
 .post {
-    background-color: #fdd7d7 ;
+    background-color: white;
     border: 1px solid black;
     border-radius: 30px;
-    margin-bottom: 10px;
-}
-
-.createPost {
-    border: none;
-    background-color: black;
-    color: white;
-    padding: 5px;
-    margin-left: 5px;
+    margin: 10px;
 }
 
 </style>
