@@ -16,6 +16,13 @@ module.exports = (sequelize, Sequelize) => {
         last_name: {
             type: Sequelize.STRING,
             allowNull: false,
+        },
+        enabled: {
+            type: Sequelize.BOOLEAN,
+            defaultvalue: true
+        },
+        imageUrl: {
+            type: Sequelize.STRING,
         }
     })
     return User;
