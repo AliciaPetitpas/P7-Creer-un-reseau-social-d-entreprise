@@ -19,7 +19,7 @@ module.exports = (sequelize, Sequelize) => {
         },
         enabled: {
             type: Sequelize.BOOLEAN,
-            defaultvalue: true
+            defaultValue: true,
         },
         imageUrl: {
             type: Sequelize.STRING,

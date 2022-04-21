@@ -61,7 +61,6 @@ export default {
     data: function() {
         return {
             selectedFile: null,
-            error,
             // last_name: this.$store.user.last_name,
             // first_name: this.$store.user.first_name,
             // email: this.$store.user.email,
@@ -106,8 +105,7 @@ export default {
             .then(function (response) {
                 console.log(response);
             }, function (error) {
-                // console.log(error);
-                this.error = error.response.data.error;
+                console.log(error);
             })
         }
     },

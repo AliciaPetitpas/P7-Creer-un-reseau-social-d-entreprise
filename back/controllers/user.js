@@ -2,7 +2,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require('../models');
 const fs = require('fs');
-const res = require('express/lib/response');
 
 //Création d'un compte, en hashage et salage du password
 exports.signup = (req, res, next) => {
@@ -65,17 +64,18 @@ exports.getUserInfo = (req, res, next) => {
 exports.updateImage = (req, res) => {
     db.User.findOne({ where: { id: req.params.id } })
         .then(user => {
-
             // Si l'image de profil est modifiée
             if (req.file) {
-                // const filename = user.imageUrl.split('/images/profils/')[1];
-                // if (filename !== "") {
+                //const filename = user.imageUrl.split('/images/profils/')[1];
+                // if (filename != "") {
                 //     fs.unlink(`images/profils/${filename}`, (err) => {
                 //         if (err) throw err;
                 //     });
                 // }
                 let imageUrl = `${req.protocol}://${req.get('host')}/images/profils/${req.file.filename}`;
-                // On ajoute la nouvelle image et on met à jour la DB
+                console.debug(imageUrl);
+
+                //On ajoute la nouvelle image et on met à jour la DB
                 db.User.update({ imageUrl: imageUrl }, { where: { id: req.params.id } })
                     .then(() => res.status(201).json({ message: 'Image modifiée' }))
                     .catch(error => res.status(500).json({ error }));
