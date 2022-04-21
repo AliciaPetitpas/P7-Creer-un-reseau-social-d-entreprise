@@ -42,6 +42,16 @@ button {
     border-radius: 20px;
 }
 
+button:hover {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+}
+
+span {
+  color: red;
+}
+
 div {
   padding: 20px;
 }
