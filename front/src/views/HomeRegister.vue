@@ -129,8 +129,6 @@ export default {
      },
     methods: {
         login: function () {
-            this.v$.$validate();
-            if (!this.v$.$error) {
                 const self = this;
                 this.$store.dispatch('loginAccount', {
                     email: this.state.input.email,
@@ -140,11 +138,13 @@ export default {
                 }, function (error) {
                     self.error = error.response.data.error;
                 })
-            }
+            
         },
         createAccount: function () {
-            // console.log(this.state.input.last_name, this.state.input.first_name, this.state.input.email, this.state.input.password);
             const self = this;
+            this.v$.$validate();
+            // console.log(this.state.input.last_name, this.state.input.first_name, this.state.input.email, this.state.input.password);
+            if (!this.v$.$error) {
             this.$store.dispatch('createAccount', {           
                 last_name: this.state.input.last_name,
                 first_name: this.state.input.first_name,
@@ -157,7 +157,7 @@ export default {
                 self.error = error.response.data.error;
             }
             )
-        }
+        }}
     }
 }
 
