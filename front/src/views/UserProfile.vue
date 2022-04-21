@@ -27,19 +27,21 @@
             </div>
 
             <div class="user-info">
-                <!-- <p class="last_name">{{ last_name }}</p>
-                <p class="first_name">{{ first_name }}</p> 
-                <p class="email">{{ email }}</p> -->
-
-                <!-- inputs SI modification activée -->
-                <input type="email" class="input-form" placeholder="Adresse mail"/>
-                <input type="password" class="input-form" placeholder="Mot de passe"/>
-                <input type="password" class="input-form" placeholder="Confirmer le mot de passe"/>
+                <p class="last_name">{{ this.userInfo.last_name }}</p>
+                <p class="first_name">{{ this.userInfo.first_name }}</p> 
+                <p class="email">{{ this.userInfo.email }}</p>
             </div>
-            <!-- Bouton à afficher si c'est notre profile -->
-            <button class="modify-user-info">Modifier informations</button>
-            <!-- Bouton à afficher SI modification activée -->
-            <button class="new-user-info">Valider</button> 
+
+            <!-- Inputs modifications -->
+            <div class="user-info-input">
+                <input v-model="state.input.oldpassword" type="password" class="input-form" placeholder="Ancien mot de passe">
+                <input v-model="state.input.newpassword" type="password" class="input-form" placeholder="Nouveau mot de passe"/>
+                <input v-model="state.input.newpasswordconfirmed" type="password" class="input-form" placeholder="Confirmer le mot de passe"/>
+            </div>
+               
+                <!-- Bouton modification profil -->
+            <button @click="modifyUser()" class="modify-user-info">Modifier informations</button>
+            
         </div>
     </div>
 
@@ -52,6 +54,9 @@
 
 import MenuPage from '../components/MenuPage.vue'
 import { mapState } from 'vuex'
+import { required, minLength, helpers, maxLength, sameAs } from '@vuelidate/validators'
+import useValidate from '@vuelidate/core';
+import { reactive, computed } from "vue";
 
 export default {
     name: 'UserProfile',
@@ -61,20 +66,61 @@ export default {
     data: function() {
         return {
             selectedFile: null,
-            // last_name: this.$store.user.last_name,
-            // first_name: this.$store.user.first_name,
-            // email: this.$store.user.email,
+            error: "",
         }
+    },
+    setup() {
+        const state = reactive({
+            input: {
+                oldpassword: "",
+                newpassword: "",
+                newpasswordconfirmed: "",
+            }
+        });
+        const rules = computed(() => {
+            return {
+                input: {
+                    oldpassword: {
+
+                    },
+                    newpassword: {
+                        minLength: helpers.withMessage(
+                            "Le mot de passe doit comporter 4 caractères minimum",
+                            minLength(4)
+                        ),
+                        maxLength: helpers.withMessage(
+                            "Le mot de passe ne peut comporter que 100 caractères maximum",
+                            maxLength(100)
+                        ),
+                    },
+                    newpasswordconfirmed: {
+                        required: helpers.withMessage(
+                            "Veuillez renseigner ce champ",
+                            required
+                        ),
+                        sameAs: helpers.withMessage(
+                            "Les mots de passe de correspondent pas",
+                            sameAs(state.input.password)
+                        ),
+                    }
+                }
+            }
+        });
+        const v$ = useValidate(rules, state);
+        return {
+            state,
+            v$,
+        };
     },
     mounted() {
         if(this.$store.state.user.userId == -1) {
             this.$router.push('/');
-            return;
+            return; 
         }
-        const self = this;
+        // const self = this; 
         this.$store.dispatch('getUserInfo', this.$store.state.user.userId)
         .then(function() {
-            document.getElementById("email").value = self.userInfo.email;
+            // document.getElementById("email").input = self.userInfo.email;
         }, function () {
             // self.logout();
         })
@@ -107,6 +153,10 @@ export default {
             }, function (error) {
                 console.log(error);
             })
+        },
+        modifyUser() {
+            this.v$.$validate();
+            console.log(this.state.input.oldpassword, this.state.input.newpassword, this.state.input.newpasswordconfirmed);
         }
     },
 }
@@ -125,6 +175,7 @@ div {
     background-color: #fdd7d7 ;
     border: 1px solid black;
     border-radius: 30px;
+    height: 100%;
 }
 
 .user {
@@ -140,7 +191,7 @@ div {
 }
 
 button {
-    margin: 10px auto 10px auto;
+    margin: 10px 0 10px auto;
     width: 30%;
     padding: 30px;
     border-style: none;
@@ -153,7 +204,7 @@ button {
     width: 200px;
     padding: 5px;
     position: absolute;
-    bottom: -65px;
+    bottom: -50px;
     left: 0;
 }
 
@@ -161,12 +212,29 @@ button {
     width: 200px;
     padding: 5px;
     position: absolute;
-    bottom: -35px;
+    bottom: -20px;
     left: 0;
 }
 
 input {
     margin: 5px;
+}
+
+p {
+    margin: 5px;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: row;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+.user-info-input {
+    display: flex;
+    flex-direction: column;
+    margin-right: 0;
 }
 
 /* RESPONSIVE MOBILE */
@@ -189,6 +257,10 @@ input {
 
     button {
         width: 90%;
+    }
+
+    .user-info-input {
+        margin-left: 0;
     }
 
     /* .user-picture {
