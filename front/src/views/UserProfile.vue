@@ -9,9 +9,11 @@
         <!-- User Info -->
         <div class="user">
             <div class="user-profile-picture">
-                <img :scr="userInfo.imageUrl" ref="photoProfil" alt="Photo de profil" class="user-picture">
+                <img src="" ref="photoProfil" alt="Photo de profil" class="user-picture">
                 <img ref="filePreview" src="" alt="">
-                <!-- :src="userProfile.imageURL" -->
+                <!-- :src="userProfile.imageUrl" -->
+                <p>{{ this.user.imageUrl }}</p>
+                
 
                 <!-- Bouton modification image SI modification activée -->
 
@@ -35,7 +37,13 @@
             <!-- Inputs modifications -->
             <p>Modifier le mot de passe :</p>
             <input v-model="state.input.newpassword" type="password" class="input-form" placeholder="Nouveau mot de passe"/>
+            <span v-if="v$.input.newpassword.$error" class="error">
+                {{ v$.input.newpassword.$errors[0].$message }}
+            </span>
             <input v-model="state.input.newpasswordconfirmed" type="password" class="input-form" placeholder="Confirmer le mot de passe"/>
+            <span v-if="v$.input.newpasswordconfirmed.$error" class="error">
+                {{ v$.input.newpasswordconfirmed.$errors[0].$message }}
+            </span>
             
                
                 <!-- Bouton modification profil -->
@@ -53,20 +61,14 @@
 
 import MenuPage from '../components/MenuPage.vue'
 import { mapState } from 'vuex'
-import { required, minLength, helpers, maxLength, sameAs } from '@vuelidate/validators'
 import useValidate from '@vuelidate/core';
+import { required, minLength, helpers, maxLength, sameAs } from '@vuelidate/validators'
 import { reactive, computed } from "vue";
 
 export default {
     name: 'UserProfile',
     components: {
         MenuPage,
-    },
-    data: function() {
-        return {
-            selectedFile: null,
-            error: "",
-        }
     },
     setup() {
         const state = reactive({
@@ -111,6 +113,12 @@ export default {
             v$,
         };
     },
+    data: function() {
+        return {
+            selectedFile: null,
+            error: "",
+        }
+    },
     mounted() {
         if(this.$store.state.user.userId == -1) {
             this.$router.push('/');
@@ -153,20 +161,36 @@ export default {
                 console.log(error);
             })
         },
+        login: function () {
+            const self = this;
+            this.$store.dispatch('loginAccount', {
+                email: this.userInfo.email,
+                password: this.state.input.newpassword
+            }).then(function () {
+                self.$router.push('/userProfile');
+            }, function (error) {
+                self.error = error.response.data.error;
+            })
+        },
         modifyUser: function () {
             const self = this;
             this.v$.$validate();
             // console.log(this.state.input.newpassword, this.state.input.newpasswordconfirmed);
             if (!this.v$.$error) {
-                this.$store.dispatch('updateUserInfo', {
+                // console.log(this.state.input.newpassword);
+                this.$store.dispatch('getUserInfo', {
                     password: this.state.input.newpassword,
-                }).then(function() {
+                })
+                .then(function() {
+                    self.login();
                 }, function (error) {
                     self.error = error.response.data.error;
                 }
                 )
-            }
-        }
+            } // else {
+            //     console.log('validation didnt work')
+            // }
+        },
     },
 }
 
@@ -182,8 +206,8 @@ export default {
 } */
 
 /* RESPONSIVE MOBILE */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
 
-}
+} */
 
 </style>
