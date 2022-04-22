@@ -33,7 +33,7 @@ button {
     flex-direction: column;
     margin: 10px auto 10px auto;
     padding: 5px;
-    width: 30%;
+    width: 40%;
     align-items: center;
     border-style: none;
     background-color: black;
