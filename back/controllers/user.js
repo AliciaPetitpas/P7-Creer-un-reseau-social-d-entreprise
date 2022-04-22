@@ -1,16 +1,17 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require('../models');
+// const limitMax = require('../middleware/limit');
 const fs = require('fs');
 
-//Création d'un compte, en hashage et salage du password
+// Création d'un compte, en hashage et salage du password
 exports.signup = (req, res, next) => {
-    //salage du mot de passe
+    // salage du mot de passe
     bcrypt.genSalt(parseInt(process.env.SALT))
         .then(salt => {
             bcrypt.hash(req.body.password, salt)
                 .then(hash => {
-                    //Création utilisateur
+                    // Création utilisateur
                     db.User.create({
                             email: req.body.email,
                             password: hash,
@@ -18,31 +19,33 @@ exports.signup = (req, res, next) => {
                             last_name: req.body.last_name
                         })
                         .then(() => res.status(201).json({ message: 'User created !' }))
-                        .catch(error => res.status(400).json({ error })) //Erreur à catch sequelize (email unique)
+
+                    // Erreur à catch sequelize (email unique)
+                    return res.status(400).json({ error: "Email déjà utilisée! " })
                 })
                 .catch(error => res.status(500).json({ error }));
         })
         .catch(error => res.status(500).json({ error }));
 };
 
-//Connexion à un compte
+// Connexion à un compte
 exports.login = (req, res, next) => {
     db.User.findOne({ where: { email: req.body.email } })
         .then(user => {
-            //Si l'utilisateur n'est pas trouvé
+            // Si l'utilisateur n'est pas trouvé
             if (!user) {
                 return res.status(401).json({ error: 'Utilisateur non trouvé' });
             }
-            //Comparaison mot de passe
+            // Comparaison mot de passe
             bcrypt.compare(req.body.password, user.password)
                 .then(valid => {
-                    //Si les mdp ne correspondent pas
+                    // Si les mdp ne correspondent pas
                     if (!valid) {
                         return res.status(401).json({ error: 'Le mot de passe ne correspond pas' });
                     }
                     res.status(200).json({
                         userId: user.id,
-                        //Création d'un token de connexion
+                        // Création d'un token de connexion
                         token: jwt.sign({ userId: user.id },
                             process.env.TOKEN_USER, { expiresIn: '24h' }
                         )
@@ -53,7 +56,7 @@ exports.login = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
-//Récupérer information utilisateur
+// Récupérer information utilisateur
 exports.getUserInfo = (req, res, next) => {
     db.User.findOne({ where: { id: req.params.id } })
         .then(user => res.status(200).json(user))
@@ -75,7 +78,7 @@ exports.updateImage = (req, res) => {
                 let imageUrl = `${req.protocol}://${req.get('host')}/images/profils/${req.file.filename}`;
                 console.debug(imageUrl);
 
-                //On ajoute la nouvelle image et on met à jour la DB
+                // On ajoute la nouvelle image et on met à jour la DB
                 db.User.update({ imageUrl: imageUrl }, { where: { id: req.params.id } })
                     .then(() => res.status(201).json({ message: 'Image modifiée' }))
                     .catch(error => res.status(500).json({ error }));
