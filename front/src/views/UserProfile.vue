@@ -28,9 +28,9 @@
             </div>
 
             <div class="user-info">
-                <p class="last_name">{{ this.userInfo.last_name }}</p>
-                <p class="first_name">{{ this.userInfo.first_name }}</p> 
-                <p class="email">{{ this.userInfo.email }}</p>
+                <p id="last_name" class="last_name"></p>
+                <p id="first_name" class="first_name"></p> 
+                <p id="email" class="email"></p>
             </div>
 
             <!-- Inputs modifications -->
@@ -123,10 +123,12 @@ export default {
             this.$router.push('/');
             return; 
         }
-        // const self = this; 
+        const self = this; 
         this.$store.dispatch('getUserInfo', this.$store.state.user.userId)
         .then(function() {
-            // document.getElementById("email").input = self.userInfo.email;
+            document.getElementById("last_name").textContent = self.userInfo.last_name;
+            document.getElementById("first_name").textContent = self.userInfo.first_name;
+            document.getElementById("email").textContent = self.userInfo.email;
         }, function () {
             // self.logout();
         })
@@ -163,7 +165,6 @@ export default {
         login: function () {
             const self = this;
             this.$store.dispatch('loginAccount', {
-                // email: this.userInfo.email,
                 password: this.state.input.newpassword
             }).then(function () {
                 self.$router.push('/userProfile');
