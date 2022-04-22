@@ -162,31 +162,38 @@ export default {
                 console.log(error);
             })
         },
-        login: function () {
+        // login: function () {
+        //     const self = this;
+        //     this.$store.dispatch('loginAccount', {
+        //         password: this.state.input.newpassword
+        //     }).then(function () {
+        //         self.$router.push('/userProfile');
+        //     }, function (error) {
+        //         self.error = error.response.data.error;
+        //     })
+        // },
+        modifyUser: function () {
             const self = this;
-            this.$store.dispatch('loginAccount', {
+            this.v$.$validate();
+            console.log(this.state.input.newpassword);
+            if (!this.v$.$error) {
+                console.log(this.state.input.newpassword);
+                this.$store.dispatch('loginAccount', {
                 password: this.state.input.newpassword
             }).then(function () {
                 self.$router.push('/userProfile');
             }, function (error) {
                 self.error = error.response.data.error;
             })
-        },
-        modifyUser: function () {
-            const self = this;
-            this.v$.$validate();
-            // console.log(this.state.input.newpassword, this.state.input.newpasswordconfirmed);
-            if (!this.v$.$error) {
-                // console.log(this.state.input.newpassword);
-                this.$store.dispatch('getUserInfo', {
-                    password: this.state.input.newpassword,
-                })
-                .then(function() {
-                    self.login();
-                }, function (error) {
-                    self.error = error.response.data.error;
-                }
-                )
+                // this.$store.dispatch('getUserInfo', {
+                //     password: this.state.input.newpassword,
+                // })
+                // .then(function() {
+                //     self.login();
+                // }, function (error) {
+                //     self.error = error.response.data.error;
+                // }
+                // )
             } // else {
             //     console.log('validation didnt work')
             // }
