@@ -8,12 +8,13 @@
     <div class="profile">
         <!-- User Info -->
         <div class="user">
+            <button @click="goAdmin()" class="user-admin">Administrateur</button>
+            
             <div class="user-profile-picture">
                 <img src="" ref="photoProfil" alt="Photo de profil" class="user-picture">
                 <img ref="filePreview" src="" alt="">
                 <!-- :src="userId.fdImage" -->
                 
-
                 <!-- Bouton modification image SI modification activée -->
 
                 <input 
@@ -48,6 +49,8 @@
                 <!-- Bouton modification profil -->
             <button @click="modifyUser()" class="modify-user-info">Modifier informations</button>
             
+            <button @click="deactivate()" class="deactivate">Désactiver mon compte</button>
+
         </div>
     </div>
 
@@ -198,6 +201,9 @@ export default {
             //     console.log('validation didnt work')
             // }
         },
+        deactivate() {
+            console.log('This is the deactivation btn');
+        }
     },
 }
 
