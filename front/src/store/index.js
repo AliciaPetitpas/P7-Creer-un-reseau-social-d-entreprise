@@ -31,12 +31,15 @@ export default createStore({
     },
     mutations: {
         LOGIN: function(state, user) {
-            instance.defaults.headers.common['Authorization'] = user.toker;
+            instance.defaults.headers.common['Authorization'] = user.token;
             localStorage.setItem('user', JSON.stringify(user));
             state.user = user;
         },
         UPDATE_USER_INFO: function(state, userInfo) {
             state.userInfo = userInfo;
+        },
+        UPDATE_IMAGE: function(state, user) {
+            state.user.fdImage = user;
         }
     },
     actions: {
@@ -79,18 +82,18 @@ export default createStore({
                     })
             });
         },
-        // updateImage: ({ commit }, user) => {
-        //     commit;
-        //     return new Promise((resolve, reject) => {
-        //         instance.put('/auth/updateImage/' + user.userId, user.fdImage)
-        //             .then(function(response) {
-        //                 commit('UPDATE_USER_INFO', response.data);
-        //                 resolve(response);
-        //             })
-        //             .catch(function(error) {
-        //                 reject(error);
-        //             })
-        //     });
-        // },
+        updateImage: ({ commit }, user) => {
+            commit;
+            return new Promise((resolve, reject) => {
+                instance.put('/auth/updateImage/' + user.userId, user.fdImage)
+                    .then(function(response) {
+                        commit('UPDATE_IMAGE', response.data);
+                        resolve(response);
+                    })
+                    .catch(function(error) {
+                        reject(error);
+                    })
+            });
+        },
     }
 })

@@ -21,7 +21,7 @@ exports.signup = (req, res, next) => {
                         .then(() => res.status(201).json({ message: 'User created !' }))
 
                     // Erreur à catch sequelize (email unique)
-                    return res.status(400).json({ error: "Email déjà utilisée! " })
+                    return res.status(400).json({ error: "Email déjà utilisée !" })
                 })
                 .catch(error => res.status(500).json({ error }));
         })
@@ -36,6 +36,7 @@ exports.login = (req, res, next) => {
             if (!user) {
                 return res.status(401).json({ error: 'Utilisateur non trouvé' });
             }
+            // Message erreur limiter 
             // Comparaison mot de passe
             bcrypt.compare(req.body.password, user.password)
                 .then(valid => {
@@ -76,7 +77,7 @@ exports.updateImage = (req, res) => {
                 //     });
                 // }
                 let imageUrl = `${req.protocol}://${req.get('host')}/images/profils/${req.file.filename}`;
-                console.debug(imageUrl);
+                console.log(imageUrl);
 
                 // On ajoute la nouvelle image et on met à jour la DB
                 db.User.update({ imageUrl: imageUrl }, { where: { id: req.params.id } })

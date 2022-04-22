@@ -9,10 +9,8 @@
         <!-- User Info -->
         <div class="user">
             <div class="user-profile-picture">
-                <img src="" ref="photoProfil" alt="Photo de profil" class="user-picture">
+                <img :src="userId.fdImage" ref="photoProfil" alt="Photo de profil" class="user-picture">
                 <img ref="filePreview" src="" alt="">
-                <!-- :src="userProfile.imageUrl" -->
-                <p>{{ this.user.imageUrl }}</p>
                 
 
                 <!-- Bouton modification image SI modification activée -->
@@ -164,7 +162,7 @@ export default {
         login: function () {
             const self = this;
             this.$store.dispatch('loginAccount', {
-                email: this.userInfo.email,
+                // email: this.userInfo.email,
                 password: this.state.input.newpassword
             }).then(function () {
                 self.$router.push('/userProfile');
