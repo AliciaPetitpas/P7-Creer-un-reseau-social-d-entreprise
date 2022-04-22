@@ -37,6 +37,11 @@ exports.login = (req, res, next) => {
                 return res.status(401).json({ error: 'Utilisateur non trouvé' });
             }
             // Message erreur limiter 
+            // Si l'utilisateur a désactivé son compte
+            // if (user.userInfo.enabled == true) {
+            //     console.log(user.userInfo.enabled)
+            //     return res.status(400).json({ error: 'Compte désactivé' });
+            // } 
             // Comparaison mot de passe
             bcrypt.compare(req.body.password, user.password)
                 .then(valid => {

@@ -202,7 +202,12 @@ export default {
             // }
         },
         deactivate() {
-            console.log('This is the deactivation btn');
+            console.log("before click: " + this.$store.state.userInfo.enabled)
+            if(this.$store.state.userInfo.enabled == true) {
+                this.$store.state.userInfo.enabled = false;
+                console.log("after click: " + this.$store.state.userInfo.enabled)
+                return this.$router.push('/'); 
+        }
         }
     },
 }
