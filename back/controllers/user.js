@@ -70,12 +70,12 @@ exports.updateImage = (req, res) => {
         .then(user => {
             // Si l'image de profil est modifiée
             if (req.file) {
-                //const filename = user.imageUrl.split('/images/profils/')[1];
-                // if (filename != "") {
-                //     fs.unlink(`images/profils/${filename}`, (err) => {
-                //         if (err) throw err;
-                //     });
-                // }
+                const filename = user.imageUrl.split('/images/profils/')[1];
+                if (filename != "") {
+                    fs.unlink(`images/profils/${filename}`, (err) => {
+                        if (err) throw err;
+                    });
+                }
                 let imageUrl = `${req.protocol}://${req.get('host')}/images/profils/${req.file.filename}`;
                 console.log(imageUrl);
 
