@@ -9,8 +9,9 @@
         <!-- User Info -->
         <div class="user">
             <div class="user-profile-picture">
-                <img :src="userId.fdImage" ref="photoProfil" alt="Photo de profil" class="user-picture">
+                <img src="" ref="photoProfil" alt="Photo de profil" class="user-picture">
                 <img ref="filePreview" src="" alt="">
+                <!-- :src="userId.fdImage" -->
                 
 
                 <!-- Bouton modification image SI modification activée -->
