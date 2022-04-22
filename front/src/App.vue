@@ -40,12 +40,12 @@ button {
     color: white;
     font-weight: bold;
     border-radius: 20px;
+    border: 1px solid black; 
 }
 
 button:hover {
   background-color: white;
   color: black;
-  border: 1px solid black;
 }
 
 span {
