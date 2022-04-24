@@ -13,7 +13,7 @@
             <div class="user-profile-picture">
                 <img src="" ref="photoProfil" alt="Photo de profil" class="user-picture">
                 <img ref="filePreview" src="" alt="">
-                <!-- :src="userId.fdImage" -->
+                <!-- userId.fdImage -->
                 
                 <!-- Bouton modification image SI modification activée -->
 
@@ -119,6 +119,7 @@ export default {
         return {
             selectedFile: null,
             error: "",
+            enabled: "",
         }
     },
     mounted() {
@@ -165,16 +166,6 @@ export default {
                 console.log(error);
             })
         },
-        // login: function () {
-        //     const self = this;
-        //     this.$store.dispatch('loginAccount', {
-        //         password: this.state.input.newpassword
-        //     }).then(function () {
-        //         self.$router.push('/userProfile');
-        //     }, function (error) {
-        //         self.error = error.response.data.error;
-        //     })
-        // },
         modifyUser: function () {
             const self = this;
             this.v$.$validate();
@@ -188,26 +179,17 @@ export default {
             }, function (error) {
                 self.error = error.response.data.error;
             })
-                // this.$store.dispatch('getUserInfo', {
-                //     password: this.state.input.newpassword,
-                // })
-                // .then(function() {
-                //     self.login();
-                // }, function (error) {
-                //     self.error = error.response.data.error;
-                // }
-                // )
-            } // else {
-            //     console.log('validation didnt work')
-            // }
+            }
         },
         deactivate() {
-            console.log("before click: " + this.$store.state.userInfo.enabled)
-            if(this.$store.state.userInfo.enabled == true) {
-                this.$store.state.userInfo.enabled = false;
-                console.log("after click: " + this.$store.state.userInfo.enabled)
-                return this.$router.push('/'); 
-        }
+            // console.log("before click: " + this.$store.state.userInfo.enabled);
+            // if(this.$store.state.userInfo.enabled == true) {
+            //     this.$store.dispatch('getUserInfo', {
+            //         enabled: false
+            //     })
+                // console.log("after click: " + this.$store.state.userInfo.enabled)
+                // return this.$router.push('/'); 
+        //}
         }
     },
 }
