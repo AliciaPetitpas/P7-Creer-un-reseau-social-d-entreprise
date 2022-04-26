@@ -21,7 +21,8 @@ exports.signup = (req, res, next) => {
                         .then(() => res.status(201).json({ message: 'User created !' }))
 
                     // Erreur à catch sequelize (email unique)
-                    return res.status(400).json({ error: "Email déjà utilisée !" })
+                    //return res.status(400).json({ error: "Email déjà utilisée !" })
+                    .catch(error => res.status(400).json({ error }));
                 })
                 .catch(error => res.status(500).json({ error }));
         })
@@ -38,10 +39,10 @@ exports.login = (req, res, next) => {
             }
             // Message erreur limiter 
             // Si l'utilisateur a désactivé son compte
-            // if (user.userInfo.enabled == true) {
-            //     console.log(user.userInfo.enabled)
-            //     return res.status(400).json({ error: 'Compte désactivé' });
-            // } 
+            if (user.enabled == 0) {
+                console.log(user.enabled)
+                return res.status(400).json({ error: 'Compte désactivé' });
+            }
             // Comparaison mot de passe
             bcrypt.compare(req.body.password, user.password)
                 .then(valid => {
@@ -75,11 +76,13 @@ exports.updateImage = (req, res) => {
         .then(user => {
             // Si l'image de profil est modifiée
             if (req.file) {
-                const filename = user.imageUrl.split('/images/profils/')[1];
-                if (filename != "") {
-                    fs.unlink(`images/profils/${filename}`, (err) => {
-                        if (err) throw err;
-                    });
+                if (user.imageUrl != "" && user.imageUrl != null) {
+                    const filename = user.imageUrl.split('/images/profils/')[1];
+                    if (filename != "") {
+                        fs.unlink(`images/profils/${filename}`, (err) => {
+                            if (err) throw err;
+                        });
+                    }
                 }
                 let imageUrl = `${req.protocol}://${req.get('host')}/images/profils/${req.file.filename}`;
                 console.log(imageUrl);
@@ -92,3 +95,38 @@ exports.updateImage = (req, res) => {
         })
         .catch(error => res.status(500).json({ error }));
 }
+
+// Désactivation de compte
+exports.desactivateAccount = (req, res) => {
+    db.User.findOne({ where: { id: req.params.id } })
+        .then(user => {
+            // Rend la valeur 0 à enabled
+            db.User.update({ enabled: 0 }, { where: { id: req.params.id } })
+                .then(() => res.status(201).json({ message: 'Compte désactivé' }))
+                .catch(error => res.status(500).json({ error }));
+        })
+        .catch(error => res.status(500).json({ error }));
+}
+
+// Update les information de l'utilisateur 
+exports.updateUser = (req, res) => {
+    db.User.findOne({ where: { id: req.params.id } })
+        .then(user => {
+            bcrypt.genSalt(parseInt(process.env.SALT))
+                .then(salt => {
+                    bcrypt.hash(req.body.user.password, salt)
+                        .then(hash => {
+                            // On met le mdp à jour dans la base de données
+                            db.User.update({
+                                    password: hash,
+                                    // Informations supplémentaires si besoin
+                                }, { where: { id: req.params.id } })
+                                .then(() => res.status(201).json({ message: 'Informations modifiées' }))
+                                .catch(error => res.status(500).json({ error }));
+                        })
+                        .catch(error => res.status(500).json({ error }));
+                })
+                .catch(error => res.status(500).json({ error }));
+        })
+        .catch(error => res.status(500).json({ error }));
+};
