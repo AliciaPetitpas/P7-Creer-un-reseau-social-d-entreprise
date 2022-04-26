@@ -7,7 +7,7 @@ require('dotenv').config();
 
 //ROUTES
 const usersRoutes = require('./routes/user');
-// const publicationsRoutes = require('./routes/publications');
+const postRoutes = require('./routes/post');
 // const commentsRoutes = require('./routes/comments')
 
 app.use(helmet())
@@ -27,7 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 //Accès principaux
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/auth', usersRoutes);
-
+app.use('api/posts', postRoutes);
 app.get("/", (req, res) => {
     res.json({ message: "Welcome to my application!" })
 });
