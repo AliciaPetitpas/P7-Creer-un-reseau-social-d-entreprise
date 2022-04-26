@@ -40,7 +40,14 @@ export default createStore({
         },
         UPDATE_IMAGE: function(state, user) {
             state.user.fdImage = user;
-        }
+            //REVOIR
+        },
+        DELETE_USER: function(state) {
+            state.userInfo = {
+                ...state.userInfo,
+                enabled: 0,
+            }
+        },
     },
     actions: {
         //Récupère les données du formulaire d'inscription dans le store
@@ -88,6 +95,33 @@ export default createStore({
                 instance.put('/auth/updateImage/' + user.userId, user.fdImage)
                     .then(function(response) {
                         commit('UPDATE_IMAGE', response.data);
+                        resolve(response);
+                    })
+                    .catch(function(error) {
+                        reject(error);
+                    })
+            });
+        },
+        deactivateAccount: ({ commit }, userId) => {
+            // console.log(userId);
+            commit;
+            return new Promise((resolve, reject) => {
+                instance.put('/auth/deactivateAccount/' + userId)
+                    .then(function(response) {
+                        commit('DELETE_USER', response.data);
+                        resolve(response);
+                    })
+                    .catch(function(error) {
+                        reject(error);
+                    })
+            });
+        },
+        updateUser: ({ commit }, user) => {
+            commit;
+            return new Promise((resolve, reject) => {
+                instance.put('/auth/updateUser/' + user.userId, user)
+                    .then(function(response) {
+                        commit('UPDATE_USER_INFO', response.data);
                         resolve(response);
                     })
                     .catch(function(error) {
