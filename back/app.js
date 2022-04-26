@@ -27,7 +27,8 @@ app.use(express.urlencoded({ extended: true }));
 //Accès principaux
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/auth', usersRoutes);
-app.use('api/posts', postRoutes);
+app.use('/api/posts', postRoutes);
+
 app.get("/", (req, res) => {
     res.json({ message: "Welcome to my application!" })
 });
