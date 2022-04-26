@@ -13,7 +13,7 @@
             <div class="user-profile-picture">
                 <img src="" ref="photoProfil" alt="Photo de profil" class="user-picture">
                 <img ref="filePreview" src="" alt="">
-                <!-- userId.fdImage -->
+                <!-- src="userInfo.imageUrl" -->
                 
                 <!-- Bouton modification image SI modification activée -->
 
@@ -25,6 +25,8 @@
                     ref="fileInput">
                 <button @click="$refs.fileInput.click()" class="add-file">Choisir une image</button>
                 <button @click="onUpload()" class="add-img">Importer</button>
+                <p>{{ error }}</p>
+                <p>{{ success }}</p>
 
             </div>
 
@@ -32,6 +34,7 @@
                 <p id="last_name" class="last_name"></p>
                 <p id="first_name" class="first_name"></p> 
                 <p id="email" class="email"></p>
+                <!-- <p>{{ userInfo }}</p> -->
             </div>
 
             <!-- Inputs modifications -->
@@ -50,6 +53,7 @@
             <button @click="modifyUser()" class="modify-user-info">Modifier informations</button>
             
             <button @click="deactivate()" class="deactivate">Désactiver mon compte</button>
+            <!-- span erreur -->
 
         </div>
     </div>
@@ -119,7 +123,7 @@ export default {
         return {
             selectedFile: null,
             error: "",
-            enabled: "",
+            success: '',
         }
     },
     mounted() {
@@ -134,7 +138,7 @@ export default {
             document.getElementById("first_name").textContent = self.userInfo.first_name;
             document.getElementById("email").textContent = self.userInfo.email;
         }, function () {
-            // self.logout();
+            self.logout();
         })
     },
     computed: {
@@ -143,7 +147,12 @@ export default {
             userInfo: 'userInfo'
         })
     },
-    methods: { //logout method
+    methods: {
+        logout: function() {
+        localStorage.removeItem('user')
+        // console.log(localStorage.getItem('user'))
+        this.$router.push('/');
+        },
         onFileSelected(event) {
             this.selectedFile = event.target.files[0];
             let reader = new FileReader();
@@ -154,6 +163,7 @@ export default {
             reader.readAsDataURL(this.selectedFile);
         },
         onUpload() {
+            const self = this;
             const fd = new FormData();
             fd.append('image_profil', this.selectedFile);
             this.$store.dispatch('updateImage', {
@@ -161,9 +171,9 @@ export default {
                 userId: this.user.userId
             })
             .then(function (response) {
-                console.log(response);
+                self.success = response.data.message;
             }, function (error) {
-                console.log(error);
+                self.error = error.response.data.error;
             })
         },
         modifyUser: function () {
@@ -171,10 +181,16 @@ export default {
             this.v$.$validate();
             console.log(this.state.input.newpassword);
             if (!this.v$.$error) {
+                const userObjet = {
+                    userId: this.user.userId,
+                    user: {
+                        password: this.state.input.newpassword,
+                        // Possibilités d'ajouter d'autres éléments
+                    }
+                }
                 console.log(this.state.input.newpassword);
-                this.$store.dispatch('loginAccount', {
-                password: this.state.input.newpassword
-            }).then(function () {
+                this.$store.dispatch('updateUser', userObjet
+                ).then(function () {
                 self.$router.push('/userProfile');
             }, function (error) {
                 self.error = error.response.data.error;
@@ -182,17 +198,15 @@ export default {
             }
         },
         deactivate() {
-            // console.log("before click: " + this.$store.state.userInfo.enabled);
-            // if(this.$store.state.userInfo.enabled == true) {
-            //     this.$store.dispatch('getUserInfo', {
-            //         enabled: false
-            //     })
-                // console.log("after click: " + this.$store.state.userInfo.enabled)
-                // return this.$router.push('/'); 
-        //}
-        }
+            const self = this;
+            this.$store.dispatch('deactivateAccount', this.$store.state.user.userId 
+                ).then(function () {
+                self.logout();
+            }, function (error) {
+                self.error = error.response.data.error;
+            })
     },
-}
+}}
 
 </script>
 
