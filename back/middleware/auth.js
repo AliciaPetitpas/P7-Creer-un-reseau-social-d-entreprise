@@ -10,13 +10,13 @@ module.exports = (req, res, next) => {
         const userId = decodedToken.userId;
 
         if (req.body.userId && req.body.userId !== userId) {
-            res.status(403).json({ message: 'Unauthorized request' });
+            res.status(403).json({ message: 'Requête non autorisée' });
         } else {
             next();
         }
     } catch (error) {
         res.status(401).json({
-            error: new Error('Invalid request')
+            error: new Error('Requête invalide')
         });
     }
 };
