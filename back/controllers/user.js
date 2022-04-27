@@ -19,10 +19,9 @@ exports.signup = (req, res, next) => {
                             last_name: req.body.last_name
                         })
                         .then(() => res.status(201).json({ message: 'User created !' }))
-
-                    // Erreur à catch sequelize (email unique)
-                    //return res.status(400).json({ error: "Email déjà utilisée !" })
-                    .catch(error => res.status(400).json({ error }));
+                        // Erreur à catch sequelize (email unique)
+                        //return res.status(400).json({ error: "Email déjà utilisée !" })
+                        .catch(error => res.status(400).json({ error }));
                 })
                 .catch(error => res.status(500).json({ error }));
         })
@@ -35,12 +34,12 @@ exports.login = (req, res, next) => {
         .then(user => {
             // Si l'utilisateur n'est pas trouvé
             if (!user) {
-                return res.status(401).json({ error: 'Utilisateur non trouvé' });
+                return res.status(404).json({ error: 'Utilisateur non trouvé' });
             }
             // Si l'utilisateur a désactivé son compte
             if (user.enabled == 0) {
                 console.log(user.enabled)
-                return res.status(400).json({ error: 'Compte désactivé' });
+                return res.status(403).json({ error: 'Compte désactivé' });
             }
             // Comparaison mot de passe
             bcrypt.compare(req.body.password, user.password)
