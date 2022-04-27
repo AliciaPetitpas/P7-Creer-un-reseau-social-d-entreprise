@@ -40,16 +40,16 @@
             <!-- Inputs modifications -->
             <p>Modifier Informations :</p>
             <input v-model="state.input.newlast_name" type="text" class="input-form" placeholder="Nom"/>
-            <span v-if="v$.input.last_name.$error" class="error">
-                {{ v$.input.last_name.$errors[0].$message }}
+            <span v-if="v$.input.newlast_name.$error" class="error">
+                {{ v$.input.newlast_name.$errors[0].$message }}
             </span>
             <input v-model="state.input.newfirst_name" type="text" class="input-form" placeholder="Prénom"/>
-            <span v-if="v$.input.first_name.$error" class="error">
-                {{ v$.input.first_name.$errors[0].$message }}
+            <span v-if="v$.input.newfirst_name.$error" class="error">
+                {{ v$.input.newfirst_name.$errors[0].$message }}
             </span>
             <input v-model="state.input.newemail" type="email" class="input-form" placeholder="Adresse mail"/>
-            <span v-if="v$.input.email.$error" class="error">
-                {{ v$.input.email.$errors[0].$message }}
+            <span v-if="v$.input.newemail.$error" class="error">
+                {{ v$.input.newemail.$errors[0].$message }}
             </span>
             <input v-model="state.input.newpassword" type="password" class="input-form" placeholder="Nouveau mot de passe"/>
             <span v-if="v$.input.newpassword.$error" class="error">
@@ -100,7 +100,7 @@ export default {
         const rules = computed(() => {
             return {
                 input: {
-                    last_name : {
+                    newlast_name : {
                         required: helpers.withMessage(
                             "Veuillez renseigner ce champ",
                             required
@@ -110,7 +110,7 @@ export default {
                             minLength(2)
                         ),
                     },
-                    first_name: {
+                    newfirst_name: {
                         required: helpers.withMessage(
                             "Veuillez renseigner ce champ",
                             required
@@ -120,7 +120,7 @@ export default {
                             minLength(2)
                         ),
                     },
-                    email: {
+                    newemail: {
                         required: helpers.withMessage(
                             "Veuillez renseigner ce champ",
                             required
@@ -236,8 +236,7 @@ export default {
                 }
                 this.$store.dispatch('updateUser', userObjet
                 ).then(function () {
-                self.$router.push('/userProfile');
-                console.log('Opération réussie');
+                self.$router.push('/UserProfile');
             }, function (error) {
                 self.error = error.response.data.error;
             })
