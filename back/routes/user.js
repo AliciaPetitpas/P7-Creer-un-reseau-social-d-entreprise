@@ -9,7 +9,6 @@ const userCtrl = require('../controllers/user');
 router.post('/signup', userCtrl.signup);
 router.post('/login', limitMax.limiter, userCtrl.login);
 router.get('/getUserInfo/:id', userCtrl.getUserInfo);
-// router.post('/images', multer, userCtrl.updateImage);
 router.put('/updateImage/:id', multer.single('image_profil'), userCtrl.updateImage);
 router.put('/deactivateAccount/:id', userCtrl.desactivateAccount);
 router.put('/updateUser/:id', userCtrl.updateUser);

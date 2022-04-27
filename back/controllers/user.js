@@ -115,7 +115,7 @@ exports.updateUser = (req, res) => {
                 .then(salt => {
                     bcrypt.hash(req.body.user.password, salt)
                         .then(hash => {
-                            // On met le mdp à jour dans la base de données
+                            // On met les informations à jour dans la base de données
                             db.User.update({
                                     email: req.body.email,
                                     password: hash,
