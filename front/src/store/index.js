@@ -129,5 +129,18 @@ export default createStore({
                     })
             });
         },
+        goAdmin: ({ commit }, info) => {
+            commit;
+            return new Promise((resolve, reject) => {
+                instance.put('/auth/goAdmin/' + info.userId, info)
+                    .then(function(response) {
+                        commit('UPDATE_USER_INFO', response.data);
+                        resolve(response);
+                    })
+                    .catch(function(error) {
+                        reject(error);
+                    })
+            });
+        },
     }
 })

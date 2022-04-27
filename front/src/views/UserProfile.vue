@@ -8,7 +8,15 @@
     <div class="profile">
         <!-- User Info -->
         <div class="user">
-            <button @click="goAdmin()" class="user-admin">Administrateur</button>
+            <p v-if="statutUser">Ce compte appartient à un chargé de communication</p>
+            <p v-else>Ce compte appartient à un employé</p>
+            <div v-if="!statutUser">
+                <input v-model="state.input.passwordadmin" type="password" class="input-form" placeholder="Mot de passe admin"/>
+                <span v-if="v$admin.input.passwordadmin.$error" class="error">
+                    {{ v$admin.input.passwordadmin.$errors[0].$message }}
+                </span>
+                <button @click="goAdmin()" class="user-admin">Administrateur</button>
+            </div>
             
             <div class="user-profile-picture">
                 <img src="" ref="photoProfil" alt="Photo de profil" class="user-picture">
@@ -30,15 +38,8 @@
 
             </div>
 
-            <div class="user-info">
-                <p id="last_name" class="last_name"></p>
-                <p id="first_name" class="first_name"></p> 
-                <p id="email" class="email"></p>
-                <!-- <p>{{ userInfo }}</p> -->
-            </div>
-
             <!-- Inputs modifications -->
-            <p>Modifier Informations :</p>
+            <p>Modifier informations :</p>
             <input v-model="state.input.newlast_name" type="text" class="input-form" placeholder="Nom"/>
             <span v-if="v$.input.newlast_name.$error" class="error">
                 {{ v$.input.newlast_name.$errors[0].$message }}
@@ -51,7 +52,10 @@
             <span v-if="v$.input.newemail.$error" class="error">
                 {{ v$.input.newemail.$errors[0].$message }}
             </span>
-            <input v-model="state.input.newpassword" type="password" class="input-form" placeholder="Nouveau mot de passe"/>
+
+
+            <!-- BTN NOUVEAU MDP ? -->
+            <input v-model="state.input.newpassword" type="password" class="input-form" placeholder="Mot de passe"/>
             <span v-if="v$.input.newpassword.$error" class="error">
                 {{ v$.input.newpassword.$errors[0].$message }}
             </span>
@@ -95,6 +99,7 @@ export default {
                 newemail: "",
                 newpassword: "",
                 newpasswordconfirmed: "",
+                passwordadmin: "",
             }
         });
         const rules = computed(() => {
@@ -153,14 +158,30 @@ export default {
                             "Les mots de passe de correspondent pas",
                             sameAs(state.input.newpassword)
                         ),
-                    }
+                    },
                 }
+                
+            }
+        });
+        const rulesAdmin = computed(() => {
+            return {
+                input: {
+                    passwordadmin: {
+                        required: helpers.withMessage(
+                            "Veuillez renseigner ce champ",
+                            required
+                        ),
+                    },
+                }
+                
             }
         });
         const v$ = useValidate(rules, state);
+        const v$admin = useValidate(rulesAdmin, state);
         return {
             state,
             v$,
+            v$admin,
         };
     },
     data: function() {
@@ -178,14 +199,18 @@ export default {
         const self = this; 
         this.$store.dispatch('getUserInfo', this.$store.state.user.userId)
         .then(function() {
-            document.getElementById("last_name").textContent = self.userInfo.last_name;
-            document.getElementById("first_name").textContent = self.userInfo.first_name;
-            document.getElementById("email").textContent = self.userInfo.email;
+            self.state.input.newlast_name = self.userInfo.last_name;
+            self.state.input.newfirst_name = self.userInfo.first_name;
+            self.state.input.newemail = self.userInfo.email;
         }, function () {
             self.logout();
         })
     },
     computed: {
+        statutUser: function() {
+            // console.log(this.userInfo.admin);
+            return this.userInfo.admin;
+        },
         ...mapState({
             user:'user',
             userInfo: 'userInfo'
@@ -231,12 +256,11 @@ export default {
                         first_name: this.state.input.newfirst_name,
                         email: this.state.input.newemail,
                         password: this.state.input.newpassword,
-                        passwordconfirmed: this.state.input.newpasswordconfirmed,
                     }
                 }
                 this.$store.dispatch('updateUser', userObjet
                 ).then(function () {
-                self.$router.push('/UserProfile');
+                self.$router.push('/userProfile');
             }, function (error) {
                 self.error = error.response.data.error;
             })
@@ -250,7 +274,23 @@ export default {
             }, function (error) {
                 self.error = error.response.data.error;
             })
-    },
+        },
+        goAdmin: function () {
+            const self = this;
+            this.v$admin.$validate();
+            if (!this.v$admin.$error) {
+                const info = {
+                    userId: this.user.userId,
+                    passwordadmin: this.state.input.passwordadmin,
+                }
+                this.$store.dispatch('goAdmin', info
+                ).then(function () {
+                self.$router.push('/userProfile');
+            }, function (error) {
+                self.error = error.response.data.error;
+            })
+            }
+        },
 }}
 
 </script>

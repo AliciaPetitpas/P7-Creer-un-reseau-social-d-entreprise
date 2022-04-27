@@ -116,10 +116,10 @@ exports.updateUser = (req, res) => {
                         .then(hash => {
                             // On met les informations à jour dans la base de données
                             db.User.update({
-                                    email: req.body.email,
+                                    email: req.body.user.email,
                                     password: hash,
-                                    first_name: req.body.first_name,
-                                    last_name: req.body.last_name
+                                    first_name: req.body.user.first_name,
+                                    last_name: req.body.user.last_name
                                 }, { where: { id: req.params.id } })
                                 .then(() => res.status(201).json({ message: 'Informations modifiées' }))
                                 .catch(error => res.status(500).json({ error }));
@@ -127,6 +127,23 @@ exports.updateUser = (req, res) => {
                         .catch(error => res.status(500).json({ error }));
                 })
                 .catch(error => res.status(500).json({ error }));
+        })
+        .catch(error => res.status(500).json({ error }));
+};
+
+// Fonction administarteur
+exports.goAdmin = (req, res) => {
+    db.User.findOne({ where: { id: req.params.id } })
+        .then(user => {
+            console.log()
+            if (req.body.passwordadmin == process.env.ADMIN_PASSWORD) {
+                // Rend la valeur 1 à admin
+                db.User.update({ admin: 1 }, { where: { id: req.params.id } })
+                    .then(() => res.status(201).json({ message: 'Vous êtes désormais en compte chargé de communciation' }))
+                    .catch(error => res.status(500).json({ error }));
+            } else {
+                return res.status(401).json({ error: 'Mot de passe administrateur incorrect' });
+            }
         })
         .catch(error => res.status(500).json({ error }));
 };
