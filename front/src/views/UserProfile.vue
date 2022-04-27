@@ -38,7 +38,19 @@
             </div>
 
             <!-- Inputs modifications -->
-            <p>Modifier le mot de passe :</p>
+            <p>Modifier Informations :</p>
+            <input v-model="state.input.newlast_name" type="text" class="input-form" placeholder="Nom"/>
+            <span v-if="v$.input.last_name.$error" class="error">
+                {{ v$.input.last_name.$errors[0].$message }}
+            </span>
+            <input v-model="state.input.newfirst_name" type="text" class="input-form" placeholder="Prénom"/>
+            <span v-if="v$.input.first_name.$error" class="error">
+                {{ v$.input.first_name.$errors[0].$message }}
+            </span>
+            <input v-model="state.input.newemail" type="email" class="input-form" placeholder="Adresse mail"/>
+            <span v-if="v$.input.email.$error" class="error">
+                {{ v$.input.email.$errors[0].$message }}
+            </span>
             <input v-model="state.input.newpassword" type="password" class="input-form" placeholder="Nouveau mot de passe"/>
             <span v-if="v$.input.newpassword.$error" class="error">
                 {{ v$.input.newpassword.$errors[0].$message }}
@@ -46,11 +58,10 @@
             <input v-model="state.input.newpasswordconfirmed" type="password" class="input-form" placeholder="Confirmer le mot de passe"/>
             <span v-if="v$.input.newpasswordconfirmed.$error" class="error">
                 {{ v$.input.newpasswordconfirmed.$errors[0].$message }}
-            </span>
-            
+            </span>            
                
                 <!-- Bouton modification profil -->
-            <button @click="modifyUser()" class="modify-user-info">Modifier informations</button>
+            <button @click="modifyUser()" class="modify-user-info">Valider informations</button>
             
             <button @click="deactivate()" class="deactivate">Désactiver mon compte</button>
             <!-- span erreur -->
@@ -68,7 +79,7 @@
 import MenuPage from '../components/MenuPage.vue'
 import { mapState } from 'vuex'
 import useValidate from '@vuelidate/core';
-import { required, minLength, helpers, maxLength, sameAs } from '@vuelidate/validators'
+import { required, minLength, helpers, maxLength, sameAs, email } from '@vuelidate/validators'
 import { reactive, computed } from "vue";
 
 export default {
@@ -79,6 +90,9 @@ export default {
     setup() {
         const state = reactive({
             input: {
+                newlast_name: "",
+                newfirst_name: "",
+                newemail: "",
                 newpassword: "",
                 newpasswordconfirmed: "",
             }
@@ -86,6 +100,36 @@ export default {
         const rules = computed(() => {
             return {
                 input: {
+                    last_name : {
+                        required: helpers.withMessage(
+                            "Veuillez renseigner ce champ",
+                            required
+                        ),
+                        minLength: helpers.withMessage(
+                            "Le nom de peut comporter qu'une seule lettre",
+                            minLength(2)
+                        ),
+                    },
+                    first_name: {
+                        required: helpers.withMessage(
+                            "Veuillez renseigner ce champ",
+                            required
+                        ),
+                        minLength: helpers.withMessage(
+                            "Le prénom de peut comporter qu'une seule lettre",
+                            minLength(2)
+                        ),
+                    },
+                    email: {
+                        required: helpers.withMessage(
+                            "Veuillez renseigner ce champ",
+                            required
+                        ),
+                        email: helpers.withMessage(
+                            "Veuillez saisir une adresse mail valide",
+                            email
+                        ),
+                    },
                     newpassword: {
                         required: helpers.withMessage(
                             "Veuillez renseigner ce champ",
@@ -179,19 +223,21 @@ export default {
         modifyUser: function () {
             const self = this;
             this.v$.$validate();
-            console.log(this.state.input.newpassword);
             if (!this.v$.$error) {
                 const userObjet = {
                     userId: this.user.userId,
                     user: {
+                        last_name: this.state.input.newlast_name,
+                        first_name: this.state.input.newfirst_name,
+                        email: this.state.input.newemail,
                         password: this.state.input.newpassword,
-                        // Possibilités d'ajouter d'autres éléments
+                        passwordconfirmed: this.state.input.newpasswordconfirmed,
                     }
                 }
-                console.log(this.state.input.newpassword);
                 this.$store.dispatch('updateUser', userObjet
                 ).then(function () {
                 self.$router.push('/userProfile');
+                console.log('Opération réussie');
             }, function (error) {
                 self.error = error.response.data.error;
             })

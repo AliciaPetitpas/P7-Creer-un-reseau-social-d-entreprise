@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require('../models');
-// const limitMax = require('../middleware/limit');
+const limitMax = require('../middleware/limit');
 const fs = require('fs');
 
 // Création d'un compte, en hashage et salage du password
@@ -37,7 +37,6 @@ exports.login = (req, res, next) => {
             if (!user) {
                 return res.status(401).json({ error: 'Utilisateur non trouvé' });
             }
-            // Message erreur limiter 
             // Si l'utilisateur a désactivé son compte
             if (user.enabled == 0) {
                 console.log(user.enabled)
@@ -118,8 +117,10 @@ exports.updateUser = (req, res) => {
                         .then(hash => {
                             // On met le mdp à jour dans la base de données
                             db.User.update({
+                                    email: req.body.email,
                                     password: hash,
-                                    // Informations supplémentaires si besoin
+                                    first_name: req.body.first_name,
+                                    last_name: req.body.last_name
                                 }, { where: { id: req.params.id } })
                                 .then(() => res.status(201).json({ message: 'Informations modifiées' }))
                                 .catch(error => res.status(500).json({ error }));
