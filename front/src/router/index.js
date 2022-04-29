@@ -6,6 +6,7 @@ import UserProfile from '../views/UserProfile.vue'
 import MainPage from '../views/MainPage.vue'
 import PostDetail from '../views/PostDetail.vue'
 import CreatePost from '../views/CreatePost.vue'
+import ModifyPassword from '../views/ModifyPassword.vue'
 
 const routes = [{
         path: '/',
@@ -39,8 +40,13 @@ const routes = [{
     },
     {
         path: '/createPost',
-        came: 'createPost',
+        name: 'createPost',
         component: CreatePost
+    },
+    {
+        path: '/modifyPassword',
+        name: 'modifyPassword',
+        component: ModifyPassword
     }
 ]
 

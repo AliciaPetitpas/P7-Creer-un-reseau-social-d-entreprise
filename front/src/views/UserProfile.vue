@@ -32,13 +32,13 @@
                     ref="fileInput">
                 <button @click="$refs.fileInput.click()" class="add-file">Choisir une image</button>
                 <button @click="onUpload()" class="add-img">Importer</button>
-                <p>{{ error }}</p>
-                <p>{{ success }}</p>
+                <p class="msg-img">{{ error }}</p>
+                <p class="msg-img">{{ success }}</p>
 
             </div>
 
             <!-- Inputs modifications -->
-            <p>Modifier informations :</p>
+            <p>Informations utilisateur</p>
             <input v-model="state.input.newlast_name" type="text" class="input-form" placeholder="Nom"/>
             <span v-if="v$.input.newlast_name.$error" class="error">
                 {{ v$.input.newlast_name.$errors[0].$message }}
@@ -51,20 +51,11 @@
             <span v-if="v$.input.newemail.$error" class="error">
                 {{ v$.input.newemail.$errors[0].$message }}
             </span>
-
-
-            <!-- BTN NOUVEAU MDP ? -->
-            <input v-model="state.input.newpassword" type="password" class="input-form" placeholder="Mot de passe"/>
-            <span v-if="v$.input.newpassword.$error" class="error">
-                {{ v$.input.newpassword.$errors[0].$message }}
-            </span>
-            <input v-model="state.input.newpasswordconfirmed" type="password" class="input-form" placeholder="Confirmer le mot de passe"/>
-            <span v-if="v$.input.newpasswordconfirmed.$error" class="error">
-                {{ v$.input.newpasswordconfirmed.$errors[0].$message }}
-            </span>            
-               
+            
                 <!-- Bouton modification profil -->
-            <button @click="modifyUser()" class="modify-user-info">Valider informations</button>
+            <button @click="modifyUser()" class="modify-user-info">Modifier informations</button>
+
+            <button @click="modifyPassword()" class="modify-password">Changer le mot de passe ici</button>
             
             <button @click="deactivate()" class="deactivate">Désactiver mon compte</button>
             <!-- span erreur -->
@@ -290,6 +281,9 @@ export default {
             })
             }
         },
+        modifyPassword() {
+            this.$router.push('/modifyPassword');
+        }
 }}
 
 </script>
@@ -302,6 +296,12 @@ export default {
     border: 1px solid black;
     border-radius: 150px;
     margin: 0;
+}
+
+.msg-img {
+    color: red;
+    font-size: 14px;
+    font-style: italic;
 }
 
 /* RESPONSIVE MOBILE */
