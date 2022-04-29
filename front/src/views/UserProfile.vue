@@ -73,7 +73,7 @@
 import MenuPage from '../components/MenuPage.vue'
 import { mapState } from 'vuex'
 import useValidate from '@vuelidate/core';
-import { required, minLength, helpers, maxLength, sameAs, email } from '@vuelidate/validators'
+import { required, minLength, helpers, email } from '@vuelidate/validators'
 import { reactive, computed } from "vue";
 
 export default {
@@ -87,8 +87,6 @@ export default {
                 newlast_name: "",
                 newfirst_name: "",
                 newemail: "",
-                newpassword: "",
-                newpasswordconfirmed: "",
                 passwordadmin: "",
             }
         });
@@ -123,30 +121,6 @@ export default {
                         email: helpers.withMessage(
                             "Veuillez saisir une adresse mail valide",
                             email
-                        ),
-                    },
-                    newpassword: {
-                        required: helpers.withMessage(
-                            "Veuillez renseigner ce champ",
-                            required
-                        ),
-                        minLength: helpers.withMessage(
-                            "Le mot de passe doit comporter 4 caractères minimum",
-                            minLength(4)
-                        ),
-                        maxLength: helpers.withMessage(
-                            "Le mot de passe ne peut comporter que 100 caractères maximum",
-                            maxLength(100)
-                        ),
-                    },
-                    newpasswordconfirmed: {
-                        required: helpers.withMessage(
-                            "Veuillez renseigner ce champ",
-                            required
-                        ),
-                        sameAs: helpers.withMessage(
-                            "Les mots de passe de correspondent pas",
-                            sameAs(state.input.newpassword)
                         ),
                     },
                 }
