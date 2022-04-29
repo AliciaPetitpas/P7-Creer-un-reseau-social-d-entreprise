@@ -19,9 +19,8 @@
             </div>
             
             <div class="user-profile-picture">
-                <img src="" ref="photoProfil" alt="Photo de profil" class="user-picture">
+                <img :src="userInfo.imageUrl" ref="photoProfil" alt="Photo de profil" class="user-picture">
                 <img ref="filePreview" src="" alt="">
-                <!-- src="userInfo.imageUrl" -->
                 
                 <!-- Bouton modification image SI modification activée -->
 
@@ -297,16 +296,20 @@ export default {
 
 <style scoped>
 
-/* .user-profile-picture img {
+.user-picture {
     width: 150px;
     height: 150px;
     border: 1px solid black;
     border-radius: 150px;
-} */
+    margin: 0;
+}
 
 /* RESPONSIVE MOBILE */
-/* @media (max-width: 768px) {
-
-} */
+@media (max-width: 768px) {
+    .user-picture {
+        width: 100px;
+        height: 100px;
+    }
+}
 
 </style>
