@@ -17,6 +17,10 @@ var corsOptions = {
     origin: "*"
 };
 app.use(cors(corsOptions));
+app.use((req, res, next) => {
+    res.setHeader('Cross-Origin-Resource-Policy', '*')
+    next();
+});
 
 //parse requests of content-type - application/json
 app.use(express.json());
