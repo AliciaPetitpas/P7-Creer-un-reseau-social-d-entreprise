@@ -5,6 +5,7 @@
     <img src="../assets/icon.svg" alt="Logo Groupomania Mobile" class="header-logo_mobile">
 
     <nav class="nav-btn">
+        <button @click="toMainPage()" class="btn-mainpage">Accueil</button>
         <button @click="toUserProfile()" class="btn-profile">Profil</button>
         <button @click="logout()" class="btn-logout">Se déconnecter</button>
     </nav>
@@ -17,20 +18,17 @@
 export default {
     name: 'MenuPage',
     methods: {
-toMainPage(){
-    this.$router.push('/mainPage');
-},
-toUserProfile(){
-    this.$router.push('/userProfile');
-},
-// logout(){
-//     this.$router.push('/');
-// }
-logout: function() {
-    localStorage.removeItem('user')
-    // console.log(localStorage.getItem('user'))
-    this.$router.push('/');
-}
+        toMainPage(){
+            this.$router.push('/mainPage');
+        },
+        toUserProfile(){
+            this.$router.push('/userProfile');
+        },
+        logout: function() {
+            localStorage.removeItem('user')
+            // console.log(localStorage.getItem('user'))
+            this.$router.push('/');
+        }
 }
 }
 
