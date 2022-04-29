@@ -6,7 +6,6 @@ const multer = require('../middleware/multer-config');
 const limitMax = require('../middleware/limit');
 const userCtrl = require('../controllers/user');
 const auth = require('../middleware/auth');
-const req = require('express/lib/request');
 
 router.post('/signup', userCtrl.signup);
 router.post('/login', limitMax.limiter, userCtrl.login);
@@ -18,13 +17,14 @@ router.put('/goAdmin/:id', auth, userCtrl.goAdmin);
 
 router.post("/new", (req, res) => {
     db.User.create({
-        first_name: req.body.first_name
+        first_name: req.body.first_name,
+        last_name: req.body.last_name
     }).then(newUser => res.send(newUser));
 });
 
 router.get("/all", (req, res) => {
     db.User.findAll({
-        include: [db.Post]
+        include: [db.Post, db.Comment]
     }).then(allUsers => res.send(allUsers));
 });
 
