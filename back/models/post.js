@@ -1,10 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
     const Post = sequelize.define('posts', {
-        content: {
+        title: {
             type: DataTypes.TEXT,
             allowNull: false
         },
-        title: {
+        content: {
             type: DataTypes.TEXT,
             allowNull: false
         },
@@ -26,7 +26,18 @@ module.exports = (sequelize, DataTypes) => {
         //     allowNull: false,
         //     defaultValue: 0
         // }
-    }, );
+    });
+
+    Post.associate = models => {
+        Post.belongsTo(models.User, {
+            foreignKey: {
+                allowNull: false
+            }
+        })
+        Post.hasMany(models.Comment, {
+
+        });
+    };
 
     return Post;
 };

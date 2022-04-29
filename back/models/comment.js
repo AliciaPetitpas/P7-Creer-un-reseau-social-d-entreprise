@@ -6,5 +6,13 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, );
 
+    Comment.associate = models => {
+        Comment.belongsTo(models.Post, {
+            foreignKey: {
+                allowNull: false
+            }
+        })
+    };
+
     return Comment;
 };
