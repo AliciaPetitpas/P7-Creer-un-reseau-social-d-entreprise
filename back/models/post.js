@@ -4,10 +4,13 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT,
             allowNull: false
         },
-        // TITRE PUBLI
-        // imageUrl: {
-        //     type: DataTypes.STRING
-        // },
+        title: {
+            type: DataTypes.TEXT,
+            allowNull: false
+        },
+        imageUrl: {
+            type: DataTypes.STRING
+        },
         // publicationDate: {
         //     type: DataTypes.DATE,
         //     allowNull: false,
