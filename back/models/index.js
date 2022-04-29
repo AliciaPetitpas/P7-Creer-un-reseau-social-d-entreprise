@@ -15,5 +15,6 @@ db.sequelize = sequelize;
 //MODELS
 db.User = require("../models/user")(sequelize, Sequelize);
 db.Post = require("../models/post")(sequelize, DataTypes);
+db.Comment = require("../models/comment")(sequelize, DataTypes);
 
 module.exports = db
