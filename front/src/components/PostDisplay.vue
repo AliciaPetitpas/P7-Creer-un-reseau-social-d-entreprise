@@ -77,9 +77,9 @@ export default {
 
 <style scoped>
 
-.displayPost {
+#main {
+    border: none;
     background-color: white;
-    border-radius: 30px;
 }
 
 </style>
