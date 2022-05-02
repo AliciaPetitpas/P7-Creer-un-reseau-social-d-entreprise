@@ -13,7 +13,10 @@
             </div>
 
         <!-- Contenu de la publication -->
-        <textarea type="text" class="new-post" placeholder="Créer une nouvelle publication" required></textarea>
+        <input type="text" v-model="state.input.newpost" class="new-post" placeholder="Créer une nouvelle publication">
+        <span v-if="v$.input.newpost.$error" class="error">
+                {{ v$.input.newpost.$errors[0].$message }}
+            </span>
         <!-- Ajout média ici -->
         <div class="post-img">
                 <img src="" ref="photoPublication" alt="Photo de la publication" class="post-picture">
@@ -33,7 +36,7 @@
             </div>
 
         <!-- Envoi de la publication -->
-        <button class="send-post">Envoyer</button>
+        <button @click="sendPost()" class="send-post">Envoyer</button>
     </div>
 </main>
 </div>
@@ -44,11 +47,47 @@
 
 import MenuPage from '../components/MenuPage.vue'
 import { mapState } from 'vuex'
+import useValidate from '@vuelidate/core';
+import { required, minLength, maxLength, helpers } from '@vuelidate/validators'
+import { reactive, computed } from "vue";
 
 export default {
     name: 'CreatePost',
     components: {
         MenuPage,
+    },
+    setup() {
+        const state = reactive({
+            input: {
+                newpost: "",
+            }
+        });
+        const rules = computed(() => {
+            return {
+                input: {
+                    newpost: {
+                        required: helpers.withMessage(
+                            "Veuillez renseigner ce champ",
+                            required
+                        ),
+                        minLength: helpers.withMessage(
+                            "La publication doit contenir au moins 2 caractères",
+                            minLength(2)
+                        ),
+                        maxLength: helpers.withMessage(
+                            "La publication doit contenir au plus 400 caractères",
+                            maxLength(400)
+                        ),
+                    },
+                }
+                
+            }
+        });
+        const v$ = useValidate(rules, state);
+        return {
+            state,
+            v$,
+        };
     },
     data: function() {
         return {
@@ -93,6 +132,13 @@ export default {
             //     self.error = error.response.data.error;
             // })
         },
+        sendPost() {
+            //const self = this;
+            this.v$.$validate();
+            if (!this.v$.$error) {
+                console.log("Pas d'erreur")
+                }
+        }, 
     },
 }
 
