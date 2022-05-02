@@ -48,6 +48,9 @@ export default createStore({
                 enabled: 0,
             }
         },
+        CREATE_POST: function(state, userInfo) {
+            state.userInfo = userInfo;
+        },
     },
     actions: {
         //Récupère les données du formulaire d'inscription dans le store
@@ -135,6 +138,19 @@ export default createStore({
                 instance.put('/auth/goAdmin/' + info.userId, info)
                     .then(function(response) {
                         commit('UPDATE_USER_INFO', response.data);
+                        resolve(response);
+                    })
+                    .catch(function(error) {
+                        reject(error);
+                    })
+            });
+        },
+        createPost: ({ commit }) => {
+            commit;
+            return new Promise((resolve, reject) => {
+                instance.get('/auth/createPost/')
+                    .then(function(response) {
+                        commit('CREATE_POST', response.data);
                         resolve(response);
                     })
                     .catch(function(error) {
