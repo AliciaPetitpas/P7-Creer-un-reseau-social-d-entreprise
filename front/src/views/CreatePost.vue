@@ -8,8 +8,7 @@
             <!-- Information user -->
             <div class="user-info">
                 <img :src="userInfo.imageUrl" alt="user-picture">
-                <p class="first_name">{{ userInfo.first_name }}</p>
-                <p class="last_name">{{ userInfo.last_name }}</p>
+                <p class="user_name">{{ userInfo.first_name }} {{ userInfo.last_name }}</p>
             </div>
 
         <!-- Contenu de la publication -->
@@ -167,6 +166,7 @@ export default {
 }
 
 .user-info img {
+    margin: 10px;
     width: 80px;
     height: 80px;
     border-radius: 80px;
