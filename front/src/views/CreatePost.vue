@@ -5,15 +5,34 @@
 
 <main id="main" class="content">
     <div class="create-post">
+            <!-- Information user -->
             <div class="user-info">
-                <img src="" alt="user-picture">
-                <p class="first_name">First name</p>
-                <p class="last_name">Last name</p>
+                <img :src="userInfo.imageUrl" alt="user-picture">
+                <p class="first_name">{{ userInfo.first_name }}</p>
+                <p class="last_name">{{ userInfo.last_name }}</p>
             </div>
 
-        <input type="text" class="new-post" placeholder="Créer une nouvelle publication">
+        <!-- Contenu de la publication -->
+        <textarea type="text" class="new-post" placeholder="Créer une nouvelle publication" required></textarea>
         <!-- Ajout média ici -->
-        <button class="add-img">Ajouter une image</button>
+        <div class="post-img">
+                <img src="" ref="photoPublication" alt="Photo de la publication" class="post-picture">
+                <!-- :src="post.imageUrl" -->
+                <img ref="filePreview" src="" alt="">
+                
+                <input 
+                    style="display: none"
+                    type="file" 
+                    accept=".png, .jpg, .jpeg" 
+                    @change="onFileSelected"
+                    ref="fileInput">
+                <button @click="$refs.fileInput.click()" class="add-file">Choisir une image</button>
+                <button @click="onUpload()" class="add-img">Importer</button>
+                <p class="msg-img">{{ error }}</p>
+                <p class="msg-img">{{ success }}</p>
+            </div>
+
+        <!-- Envoi de la publication -->
         <button class="send-post">Envoyer</button>
     </div>
 </main>
@@ -24,12 +43,57 @@
 <script>
 
 import MenuPage from '../components/MenuPage.vue'
+import { mapState } from 'vuex'
 
 export default {
     name: 'CreatePost',
     components: {
         MenuPage,
-    }
+    },
+    data: function() {
+        return {
+            selectedFile: null,
+            error: "",
+            success: "",
+        }
+    },
+    mounted() {
+        this.$store.dispatch('getUserInfo', this.$store.state.user.userId)
+        .then(function() {
+            //console.log(self.userInfo)
+        })
+    },
+    computed: {
+        ...mapState({
+            user: 'user',
+            userInfo: 'userInfo'
+        })
+    },
+    methods: {
+        onFileSelected(event) {
+            this.selectedFile = event.target.files[0];
+            let reader = new FileReader();
+            reader.onload = () => {
+                this.$refs.filePreview.src = reader.result;
+                this.$refs.photoPublication.style.display = "none";
+            }
+            reader.readAsDataURL(this.selectedFile);
+        },
+        onUpload() {
+            // const self = this;
+            // const fd = new FormData();
+            // fd.append('image_post', this.selectedFile);
+            // this.$store.dispatch('', {
+            //     fdImage: fd,
+            //     userId: this.user.userId
+            // })
+            // .then(function (response) {
+            //     self.success = response.data.message;
+            // }, function (error) {
+            //     self.error = error.response.data.error;
+            // })
+        },
+    },
 }
 
 </script>
