@@ -1,5 +1,4 @@
-<template>
-    
+<template>    
 <div>
     <MenuPage/>
 
@@ -67,10 +66,10 @@
 
 <script>
 
-import MenuPage from '../components/MenuPage.vue'
-import { mapState } from 'vuex'
+import MenuPage from '../components/MenuPage.vue';
+import { mapState } from 'vuex';
 import useValidate from '@vuelidate/core';
-import { required, minLength, helpers, email } from '@vuelidate/validators'
+import { required, minLength, helpers, email } from '@vuelidate/validators';
 import { reactive, computed } from "vue";
 
 export default {
