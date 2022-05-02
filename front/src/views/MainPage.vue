@@ -8,11 +8,16 @@
             <button @click="toCreatePost()" class="createPost">Créer une publication</button>
         </div>
 
-        <PostDisplay />
-
-        <div class="post">Post</div>
+        <div class="displayPost">
+            <PostDisplay />
         <!-- @click="toPostDetail()" -->
-        <div class="post">Avant dernier post créé ici</div>
+        </div>
+
+        <div class="displayPost">
+            <PostDisplay />
+        <!-- @click="toPostDetail()" -->
+        </div>
+        
     </main>
 </div>
 
@@ -43,7 +48,7 @@ export default {
 
 <style scoped>
 
-.post {
+.post, .displayPost {
     background-color: white;
     border: 1px solid black;
     border-radius: 30px;
