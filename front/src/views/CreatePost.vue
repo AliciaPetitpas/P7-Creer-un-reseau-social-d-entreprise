@@ -136,7 +136,21 @@ export default {
             //const self = this;
             this.v$.$validate();
             if (!this.v$.$error) {
-                console.log("Pas d'erreur")
+                const postObjet = {
+                    userId: this.user.userId,
+                    post: {
+                        content: this.state.input.newpost,
+                        //imageUrl: this.state.imageUrl,
+                    }
+                }
+                this.$store.dispatch('createPost', postObjet
+                ).then (function() {
+                    localStorage.setItem('Post', postObjet);
+                    console.log(postObjet);
+                    // self.$router.push('/mainPage');
+                }, function (error) {
+                    self.error = error.response.data.error;
+                })
                 }
         }, 
     },
