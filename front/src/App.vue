@@ -9,9 +9,7 @@
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   text-align: center;
-  justify-content: center;
-  margin: auto;
-  width: 70%;
+  padding: 0;
 }
 
 header {
@@ -23,9 +21,10 @@ header {
     background-color: #fdd7d7;
     border: 1px solid black;
     border-radius: 30px;
-    margin-top: 20px;
+    margin: 20px auto 0 auto;
     display: flex;
-    flex-direction: column;
+    flex-direction: column;    
+    width: 50%;
 }
 
 button {
@@ -33,7 +32,7 @@ button {
     flex-direction: column;
     margin: 10px auto 10px auto;
     padding: 5px;
-    width: 40%;
+    width: 30%;
     align-items: center;
     border-style: none;
     background-color: black;
@@ -53,11 +52,12 @@ span {
 }
 
 div {
-  padding: 20px;
+  padding: 10px auto 0 auto;
 }
 
 input {
-    margin: 5px;
+  width: 50%;
+  margin: 10px auto 0 auto;    
 }
 
 p {
@@ -66,15 +66,14 @@ p {
 
 /* RESPONSIVE MOBILE */
  @media (max-width: 768px) {
-   #app {
+   #main {
      width: 90%;
+     margin: 5px auto 0 auto;
    }
 
    button {
      width: 80%;
    }
-
-   
  }
 
 </style>
