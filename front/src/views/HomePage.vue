@@ -2,6 +2,7 @@
 
 <div>
         <HeaderPage />
+        <Spinner/>
     <main id="main">
         <div id="home-btn">
             <button @click="loginWindow()" class="log-header__nav__login header__btn">
@@ -19,11 +20,13 @@
 <script>
 
 import HeaderPage from '../components/HeaderPage.vue'
+import Spinner from '../components/LoadingSpinner.vue'
 
 export default {
     name: 'HomePage',
     components: {
         HeaderPage,
+        Spinner,
     },
     methods: {
 loginWindow(){
