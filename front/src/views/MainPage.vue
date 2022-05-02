@@ -7,8 +7,12 @@
         <div class="post">
             <button @click="toCreatePost()" class="createPost">Créer une publication</button>
         </div>
-        <div @click="toPostDetail()" class="post">Dernier post créé ici</div>
-        <div @click="toPostDetail()" class="post">Avant dernier post créé ici</div>
+
+        <PostDisplay />
+
+        <div class="post">Post</div>
+        <!-- @click="toPostDetail()" -->
+        <div class="post">Avant dernier post créé ici</div>
     </main>
 </div>
 
@@ -17,19 +21,21 @@
 <script>
 
 import MenuPage from '../components/MenuPage.vue'
+import PostDisplay from '../components/PostDisplay.vue'
 
 export default {
     name: 'MainPage',
     components: {
         MenuPage,
+        PostDisplay,
     },
     methods: {
         toCreatePost() {
             this.$router.push('/createPost')
         },
-        toPostDetail() {
-            this.$router.push('/postDetail')
-        }
+        // toPostDetail() {
+        //     this.$router.push('/postDetail')
+        // }
     }
 }
 
