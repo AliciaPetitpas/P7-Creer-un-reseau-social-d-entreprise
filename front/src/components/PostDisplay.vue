@@ -21,7 +21,7 @@
             <div class="comments">
                 <div class="new-comments">
                     <form @submit.prevent="createComment(post.id)">
-                        <textarea type="text" class="new-comment-input" placeholder="Commenter..." v-model="commentContent" aria-label="Commenter la publication" required></textarea>
+                        <textarea type="text" class="new-comment-input" placeholder="Commenter..." v-model="commentContent" required></textarea>
                         <button type="submit" title="Publier le commentaire">Envoyer</button>
                     </form>
                 </div>

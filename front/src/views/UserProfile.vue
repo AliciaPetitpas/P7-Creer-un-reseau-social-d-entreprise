@@ -22,8 +22,6 @@
                 <img :src="userInfo.imageUrl" ref="photoProfil" alt="Photo de profil" class="user-picture">
                 <img ref="filePreview" src="" alt="">
                 
-                <!-- Bouton modification image SI modification activée -->
-
                 <input 
                     style="display: none"
                     type="file" 
@@ -34,7 +32,6 @@
                 <button @click="onUpload()" class="add-img">Importer</button>
                 <p class="msg-img">{{ error }}</p>
                 <p class="msg-img">{{ success }}</p>
-
             </div>
 
             <!-- Inputs modifications -->
