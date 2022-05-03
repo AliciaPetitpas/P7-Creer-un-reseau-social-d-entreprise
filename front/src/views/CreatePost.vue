@@ -142,14 +142,13 @@ export default {
                         //imageUrl: this.state.imageUrl,
                     }
                 }
-                this.$store.dispatch('createPost', postObjet
-                ).then (function() {
-                    localStorage.setItem('Post', postObjet);
-                    console.log(postObjet);
-                    // self.$router.push('/mainPage');
-                }, function (error) {
-                    self.error = error.response.data.error;
-                })
+                console.log(postObjet);
+                // this.$store.dispatch('createPost', postObjet
+                // ).then (function() {
+                //     // self.$router.push('/mainPage');
+                // }, function (error) {
+                //     self.error = error.response.data.error;
+                // })
                 }
         }, 
     },

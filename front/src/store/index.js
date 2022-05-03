@@ -27,7 +27,8 @@ if (!user) {
 export default createStore({
     state: {
         user: user,
-        userInfo: {}
+        userInfo: {},
+        post: {},
     },
     mutations: {
         LOGIN: function(state, user) {
@@ -48,8 +49,9 @@ export default createStore({
                 enabled: 0,
             }
         },
-        CREATE_POST: function(state, userInfo) {
-            state.userInfo = userInfo;
+        CREATE_POST: function(state, post) {
+            localStorage.setItem('post', post);
+            state.post = post;
         },
     },
     actions: {
