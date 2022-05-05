@@ -110,26 +110,39 @@ exports.desactivateAccount = (req, res) => {
 exports.updateUser = (req, res) => {
     db.User.findOne({ where: { id: req.params.id } })
         .then(user => {
-            bcrypt.genSalt(parseInt(process.env.SALT))
-                .then(salt => {
-                    bcrypt.hash(req.body.user.password, salt)
-                        .then(hash => {
-                            // On met les informations à jour dans la base de données
-                            db.User.update({
-                                    email: req.body.user.email,
-                                    password: hash,
-                                    first_name: req.body.user.first_name,
-                                    last_name: req.body.user.last_name
-                                }, { where: { id: req.params.id } })
-                                .then(() => res.status(201).json({ message: 'Informations modifiées' }))
-                                .catch(error => res.status(500).json({ error }));
-                        })
-                        .catch(error => res.status(500).json({ error }));
-                })
+            // On met les informations à jour dans la base de données
+            db.User.update({
+                    email: req.body.user.email,
+                    first_name: req.body.user.first_name,
+                    last_name: req.body.user.last_name
+                }, { where: { id: req.params.id } })
+                .then(() => res.status(201).json({ message: 'Informations modifiées' }))
                 .catch(error => res.status(500).json({ error }));
         })
         .catch(error => res.status(500).json({ error }));
 };
+
+//Update mdp
+// exports.updateUser = (req, res) => {
+//     db.User.findOne({ where: { id: req.params.id } })
+//         .then(user => {
+//             bcrypt.genSalt(parseInt(process.env.SALT))
+//                 .then(salt => {
+//                     bcrypt.hash(req.body.user.password, salt)
+//                         .then(hash => {
+//                             // On met les informations à jour dans la base de données
+//                             db.User.update({
+//                                     password: hash,
+//                                 }, { where: { id: req.params.id } })
+//                                 .then(() => res.status(201).json({ message: 'Informations modifiées' }))
+//                                 .catch(error => res.status(500).json({ error }));
+//                         })
+//                         .catch(error => res.status(500).json({ error }));
+//                 })
+//                 .catch(error => res.status(500).json({ error }));
+//         })
+//         .catch(error => res.status(500).json({ error }));
+// };
 
 // Fonction administarteur
 exports.goAdmin = (req, res) => {
