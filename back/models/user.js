@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const User = sequelize.define("users", {
+    const User = sequelize.define("User", {
         email: {
             type: Sequelize.STRING,
             allowNull: false,
@@ -28,6 +28,8 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.BOOLEAN,
             defaultValue: false,
         },
+    }, {
+        tableName: 'users',
     });
 
     User.associate = models => {

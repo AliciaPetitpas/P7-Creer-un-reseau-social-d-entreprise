@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Post = sequelize.define('posts', {
+    const Post = sequelize.define('Post', {
         title: {
             type: DataTypes.TEXT,
             allowNull: false
@@ -11,21 +11,8 @@ module.exports = (sequelize, DataTypes) => {
         imageUrl: {
             type: DataTypes.STRING
         },
-        // publicationDate: {
-        //     type: DataTypes.DATE,
-        //     allowNull: false,
-        //     defaultValue: DataTypes.NOW
-        // },
-        // likes: {
-        //     type: DataTypes.INTEGER,
-        //     allowNull: false,
-        //     defaultValue: 0
-        // },
-        // dislikes: {
-        //     type: DataTypes.INTEGER,
-        //     allowNull: false,
-        //     defaultValue: 0
-        // }
+    }, {
+        tableName: 'posts',
     });
 
     Post.associate = models => {
@@ -33,9 +20,9 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: {
                 allowNull: false
             }
-        })
+        });
         Post.hasMany(models.Comment, {
-
+            onDelete: "cascade"
         });
     };
 
