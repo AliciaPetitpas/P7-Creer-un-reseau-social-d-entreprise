@@ -2,6 +2,7 @@
     <div>
         <MenuPage/>
         <main id="main" class="main">
+            
             <div class="modify-password">
                 <!-- BTN NOUVEAU MDP ? -->
                 <input v-model="state.input.newpassword" type="password" class="input-form" placeholder="Nouveau mot de passe"/>
@@ -12,7 +13,9 @@
                 <span v-if="v$.input.newpasswordconfirmed.$error" class="error">
                     {{ v$.input.newpasswordconfirmed.$errors[0].$message }}
                 </span>   
-                <button @click="validatePassword()" >Valider</button>         
+                <button @click="validatePassword()" >Valider</button>
+                <p class="msg">{{ error }}</p>
+                <p class="msg">{{ success }}</p>     
                
             </div>
         </main>
@@ -78,6 +81,7 @@ export default {
     data: function() {
         return {
             error: "",
+            success: "",
         }
     },
     computed: {
@@ -97,9 +101,9 @@ export default {
                         password: this.state.input.newpassword,
                     }
                 }
-                this.$store.dispatch('updateUser', userObjet
-                ).then(function () {
-                self.$router.push('/userProfile');
+                this.$store.dispatch('updatePassword', userObjet
+                ).then(function (response) {
+                self.success = response.data.message;
             }, function (error) {
                 self.error = error.response.data.error;
             })
@@ -110,3 +114,13 @@ export default {
 }
 
 </script>
+
+<style scoped>
+
+.msg {
+    color: red;
+    font-size: 14px;
+    font-style: italic;
+}
+
+</style>

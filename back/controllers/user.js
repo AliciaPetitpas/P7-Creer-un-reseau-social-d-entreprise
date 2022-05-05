@@ -122,27 +122,27 @@ exports.updateUser = (req, res) => {
         .catch(error => res.status(500).json({ error }));
 };
 
-//Update mdp
-// exports.updateUser = (req, res) => {
-//     db.User.findOne({ where: { id: req.params.id } })
-//         .then(user => {
-//             bcrypt.genSalt(parseInt(process.env.SALT))
-//                 .then(salt => {
-//                     bcrypt.hash(req.body.user.password, salt)
-//                         .then(hash => {
-//                             // On met les informations à jour dans la base de données
-//                             db.User.update({
-//                                     password: hash,
-//                                 }, { where: { id: req.params.id } })
-//                                 .then(() => res.status(201).json({ message: 'Informations modifiées' }))
-//                                 .catch(error => res.status(500).json({ error }));
-//                         })
-//                         .catch(error => res.status(500).json({ error }));
-//                 })
-//                 .catch(error => res.status(500).json({ error }));
-//         })
-//         .catch(error => res.status(500).json({ error }));
-// };
+//Update password
+exports.updatePassword = (req, res) => {
+    db.User.findOne({ where: { id: req.params.id } })
+        .then(user => {
+            bcrypt.genSalt(parseInt(process.env.SALT))
+                .then(salt => {
+                    bcrypt.hash(req.body.user.password, salt)
+                        .then(hash => {
+                            // On met les informations à jour dans la base de données
+                            db.User.update({
+                                    password: hash,
+                                }, { where: { id: req.params.id } })
+                                .then(() => res.status(201).json({ message: 'Mot de passe modifié' }))
+                                .catch(error => res.status(500).json({ error }));
+                        })
+                        .catch(error => res.status(500).json({ error }));
+                })
+                .catch(error => res.status(500).json({ error }));
+        })
+        .catch(error => res.status(500).json({ error }));
+};
 
 // Fonction administarteur
 exports.goAdmin = (req, res) => {

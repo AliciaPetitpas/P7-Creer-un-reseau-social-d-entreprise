@@ -133,6 +133,19 @@ export default createStore({
                     })
             });
         },
+        updatePassword: ({ commit }, user) => {
+            commit;
+            return new Promise((resolve, reject) => {
+                instance.put('/auth/updatePassword/' + user.userId, user)
+                    .then(function(response) {
+                        commit('UPDATE_USER_INFO', response.data);
+                        resolve(response);
+                    })
+                    .catch(function(error) {
+                        reject(error);
+                    })
+            });
+        },
         goAdmin: ({ commit }, info) => {
             commit;
             return new Promise((resolve, reject) => {
