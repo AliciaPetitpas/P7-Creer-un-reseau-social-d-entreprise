@@ -5,8 +5,8 @@
 <main id="main" class="main">
 
     <div class="profile">
-        <p class="msg-img">{{ error }}</p>
-        <p class="msg-img">{{ success }}</p>
+        <p class="msg">{{ error }}</p>
+        <p class="msg">{{ success }}</p>
         <!-- User Info -->
         <div class="user">
             <p v-if="statutUser">Ce compte appartient à un chargé de communication</p>
@@ -271,7 +271,7 @@ export default {
     margin: 0;
 }
 
-.msg-img {
+.msg {
     color: red;
     font-size: 14px;
     font-style: italic;
