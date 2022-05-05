@@ -202,6 +202,7 @@ export default {
             })
             .then(function (response) {
                 self.success = response.data.message;
+                window.location.reload();
             }, function (error) {
                 self.error = error.response.data.error;
             })
@@ -221,7 +222,7 @@ export default {
                 this.$store.dispatch('updateUser', userObjet
                 ).then(function (response) {
                     self.success = response.data.message;
-                    // self.$router.push('/userProfile');
+                    window.location.reload();
             }, function (error) {
                 self.error = error.response.data.error;
             })
@@ -247,6 +248,7 @@ export default {
                 this.$store.dispatch('goAdmin', info
                 ).then(function (response) {
                 self.success = response.data.message;
+                window.location.reload();
             }, function (error) {
                 self.error = error.response.data.error;
             })
