@@ -29,7 +29,7 @@
                     @change="onFileSelected"
                     ref="fileInput">
                 <button @click="$refs.fileInput.click()" class="add-file">Choisir une image</button>
-                <button @click="onUpload()" class="add-img">Importer</button>
+                <!-- <button @click="onUpload()" class="add-img">Importer</button> -->
                 <p class="msg-img">{{ error }}</p>
                 <p class="msg-img">{{ success }}</p>
             </div>
@@ -142,13 +142,13 @@ export default {
                         //imageUrl: this.state.imageUrl,
                     }
                 }
-                console.log(postObjet);
-                // this.$store.dispatch('createPost', postObjet
-                // ).then (function() {
-                //     // self.$router.push('/mainPage');
-                // }, function (error) {
-                //     self.error = error.response.data.error;
-                // })
+                // console.log(postObjet);
+                this.$store.dispatch('createPost', postObjet
+                ).then (function() {
+                    // self.$router.push('/mainPage');
+                }, function (error) {
+                    self.error = error.response.data.error;
+                })
                 }
         }, 
     },

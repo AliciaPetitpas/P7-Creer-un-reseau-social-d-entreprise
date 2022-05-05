@@ -50,7 +50,6 @@ export default createStore({
             }
         },
         CREATE_POST: function(state, post) {
-            localStorage.setItem('post', post);
             state.post = post;
         },
     },
@@ -147,10 +146,10 @@ export default createStore({
                     })
             });
         },
-        createPost: ({ commit }) => {
+        createPost: ({ commit }, post) => {
             commit;
             return new Promise((resolve, reject) => {
-                instance.get('/auth/createPost/')
+                instance.post('/posts/createPost/', post)
                     .then(function(response) {
                         commit('CREATE_POST', response.data);
                         resolve(response);
