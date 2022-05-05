@@ -5,6 +5,8 @@
 <main id="main" class="main">
 
     <div class="profile">
+        <p class="msg-img">{{ error }}</p>
+        <p class="msg-img">{{ success }}</p>
         <!-- User Info -->
         <div class="user">
             <p v-if="statutUser">Ce compte appartient à un chargé de communication</p>
@@ -19,7 +21,7 @@
             
             <div class="user-profile-picture">
                 <img :src="userInfo.imageUrl" ref="photoProfil" alt="Photo de profil" class="user-picture">
-                <img ref="filePreview" src="" alt="">
+                <img class="user-picture" style="display:none" ref="filePreview" src="" alt="">
                 
                 <input 
                     style="display: none"
@@ -29,8 +31,6 @@
                     ref="fileInput">
                 <button @click="$refs.fileInput.click()" class="add-file">Choisir une image</button>
                 <button @click="onUpload()" class="add-img">Importer</button>
-                <p class="msg-img">{{ error }}</p>
-                <p class="msg-img">{{ success }}</p>
             </div>
 
             <!-- Inputs modifications -->
@@ -187,6 +187,7 @@ export default {
             let reader = new FileReader();
             reader.onload = () => {
                 this.$refs.filePreview.src = reader.result;
+                this.$refs.filePreview.style.display = "";
                 this.$refs.photoProfil.style.display = "none";
             }
             reader.readAsDataURL(this.selectedFile);
@@ -214,13 +215,13 @@ export default {
                     user: {
                         last_name: this.state.input.newlast_name,
                         first_name: this.state.input.newfirst_name,
-                        email: this.state.input.newemail,
-                        password: this.state.input.newpassword,
+                        email: this.state.input.newemail
                     }
                 }
                 this.$store.dispatch('updateUser', userObjet
-                ).then(function () {
-                self.$router.push('/userProfile');
+                ).then(function (response) {
+                    self.success = response.data.message;
+                    // self.$router.push('/userProfile');
             }, function (error) {
                 self.error = error.response.data.error;
             })
@@ -244,8 +245,8 @@ export default {
                     passwordadmin: this.state.input.passwordadmin,
                 }
                 this.$store.dispatch('goAdmin', info
-                ).then(function () {
-                self.$router.push('/userProfile');
+                ).then(function (response) {
+                self.success = response.data.message;
             }, function (error) {
                 self.error = error.response.data.error;
             })
@@ -253,7 +254,7 @@ export default {
         },
         modifyPassword() {
             this.$router.push('/modifyPassword');
-        }
+        },
 }}
 
 </script>
