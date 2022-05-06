@@ -28,7 +28,7 @@ export default createStore({
     state: {
         user: user,
         userInfo: {},
-        post: {},
+        postInfo: {},
     },
     mutations: {
         LOGIN: function(state, user) {
@@ -159,12 +159,12 @@ export default createStore({
                     })
             });
         },
-        createPost: ({ commit }, post) => {
+        createPost: ({ commit }, postInfo) => {
             commit;
             return new Promise((resolve, reject) => {
-                instance.post('/posts/createPost/', post)
+                instance.post('/posts/createPost/', postInfo)
                     .then(function(response) {
-                        commit('CREATE_POST', response.data);
+                        commit('CREATE_POST');
                         resolve(response);
                     })
                     .catch(function(error) {

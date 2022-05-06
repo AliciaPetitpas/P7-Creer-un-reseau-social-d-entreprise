@@ -12,10 +12,14 @@
             </div>
 
         <!-- Contenu de la publication -->
-        <input type="text" v-model="state.input.newpost" class="new-post" placeholder="Créer une nouvelle publication">
-        <span v-if="v$.input.newpost.$error" class="error">
-                {{ v$.input.newpost.$errors[0].$message }}
-            </span>
+        <input type="text" v-model="state.input.title" class="title" placeholder="Titre de la publication">
+        <span v-if="v$.input.title.$error" class="error">
+                {{ v$.input.title.$errors[0].$message }}
+        </span>
+        <input type="text" v-model="state.input.content" class="content" placeholder="Créer une nouvelle publication">
+        <span v-if="v$.input.content.$error" class="error">
+                {{ v$.input.content.$errors[0].$message }}
+        </span>
         <!-- Ajout média ici -->
         <div class="post-img">
                 <img src="" ref="photoPublication" alt="Photo de la publication" class="post-picture">
@@ -29,7 +33,6 @@
                     @change="onFileSelected"
                     ref="fileInput">
                 <button @click="$refs.fileInput.click()" class="add-file">Choisir une image</button>
-                <!-- <button @click="onUpload()" class="add-img">Importer</button> -->
                 <p class="msg-img">{{ error }}</p>
                 <p class="msg-img">{{ success }}</p>
             </div>
@@ -58,13 +61,29 @@ export default {
     setup() {
         const state = reactive({
             input: {
-                newpost: "",
+                title: "",
+                content: "",
+                imageUrl: "",
             }
         });
         const rules = computed(() => {
             return {
                 input: {
-                    newpost: {
+                    title: {
+                        required: helpers.withMessage(
+                            "Veuillez renseigner ce champ",
+                            required
+                        ),
+                        minLength: helpers.withMessage(
+                            "La publication doit contenir au moins 2 caractères",
+                            minLength(2)
+                        ),
+                        maxLength: helpers.withMessage(
+                            "La publication doit contenir au plus 50 caractères",
+                            maxLength(50)
+                        ),
+                    },
+                    content: {
                         required: helpers.withMessage(
                             "Veuillez renseigner ce champ",
                             required
@@ -117,39 +136,24 @@ export default {
             }
             reader.readAsDataURL(this.selectedFile);
         },
-        onUpload() {
-            // const self = this;
-            // const fd = new FormData();
-            // fd.append('image_post', this.selectedFile);
-            // this.$store.dispatch('', {
-            //     fdImage: fd,
-            //     userId: this.user.userId
-            // })
-            // .then(function (response) {
-            //     self.success = response.data.message;
-            // }, function (error) {
-            //     self.error = error.response.data.error;
-            // })
-        },
         sendPost() {
-            //const self = this;
+            // console.log(this.state.input.content);
+            const self = this;
             this.v$.$validate();
             if (!this.v$.$error) {
-                const postObjet = {
-                    userId: this.user.userId,
-                    post: {
-                        content: this.state.input.newpost,
-                        //imageUrl: this.state.imageUrl,
-                    }
-                }
-                // console.log(postObjet);
-                this.$store.dispatch('createPost', postObjet
-                ).then (function() {
-                    // self.$router.push('/mainPage');
+                const fd = new FormData();
+                // fd.append('title', this.state.input.title);
+                fd.append('image_post', this.state.input.imageUrl);
+                fd.append('post', JSON.stringify(this.state.input.content));
+                this.$store.dispatch('createPost', fd
+                ).then(function (response) {
+                    self.success = response.data.message;
+                    // window.location.reload();
                 }, function (error) {
                     self.error = error.response.data.error;
-                })
                 }
+                )
+            }
         }, 
     },
 }
@@ -186,6 +190,10 @@ export default {
 input {
     width: 95%;
     height: 100px;
+}
+
+.title {
+    height: auto;
 }
 
 </style>

@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 const db = require("../models");
 
-//const multer = require('../middleware/multer-config');
+const multer = require('../middleware/multer-config');
+const postCtrl = require('../controllers/post');
 const auth = require('../middleware/auth');
-const postCtrl = require('../controllers/post')
 
 // Routes publications
-router.post('/createPost', auth, postCtrl.createPost);
+router.post('/createPost', auth, multer.single('image_post'), postCtrl.createPost);
 //router.delete('/post/:id', postCtrl.deletePost);
 //router.get('/getPost', postCtrl.getAllPosts);
 
