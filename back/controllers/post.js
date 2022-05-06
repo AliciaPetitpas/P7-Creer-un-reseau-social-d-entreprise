@@ -5,7 +5,8 @@ const fs = require('fs');
 
 // Fonction création publication
 exports.createPost = (req, res, next) => {
-    const postObject = JSON.parse(req.body.post);
+
+    const postObject = JSON.parse(req.body.postInfo);
     db.Post.create({
             userId: postObject.userId,
             title: postObject.title,

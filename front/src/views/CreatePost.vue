@@ -137,22 +137,20 @@ export default {
             reader.readAsDataURL(this.selectedFile);
         },
         sendPost() {
-            // console.log(this.state.input.content);
             const self = this;
             this.v$.$validate();
             if (!this.v$.$error) {
                 const fd = new FormData();
                 // fd.append('title', this.state.input.title);
                 fd.append('image_post', this.state.input.imageUrl);
-                fd.append('post', JSON.stringify(this.state.input.content));
+                fd.append('content', JSON.stringify(this.state.input.content));
                 this.$store.dispatch('createPost', fd
                 ).then(function (response) {
                     self.success = response.data.message;
                     // window.location.reload();
                 }, function (error) {
                     self.error = error.response.data.error;
-                }
-                )
+                })
             }
         }, 
     },
