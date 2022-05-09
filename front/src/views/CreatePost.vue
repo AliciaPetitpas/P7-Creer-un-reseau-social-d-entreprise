@@ -34,12 +34,12 @@
                     @change="onFileSelected"
                     ref="fileInput">
                 <button @click="$refs.fileInput.click()" class="add-file">Choisir une image</button>
-                <p class="msg">{{ error }}</p>
-                <p class="msg">{{ success }}</p>
             </div>
 
         <!-- Envoi de la publication -->
         <button @click="sendPost()" class="send-post">Envoyer</button>
+        <p class="msg">{{ error }}</p>
+        <p class="msg">{{ success }}</p>
     </div>
 </main>
 </div>
