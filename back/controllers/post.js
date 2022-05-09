@@ -1,12 +1,12 @@
 const db = require("../models");
 // const { Op } = require('sequelize');
 const fs = require('fs');
+const { User } = require("../models");
 
 // Fonction création publication
 exports.createPost = (req, res, next) => {
     const postObject = req.body;
     db.Post.create({
-            userId: postObject.userId,
             title: postObject.title,
             // postImg: `${req.protocol}://${req.get('host')}/images/posts/${req.file.filename}`,
             content: JSON.parse(postObject.content),
@@ -15,6 +15,23 @@ exports.createPost = (req, res, next) => {
             message: 'Publication enregistrée'
         }))
         .catch(error => res.status(400).json({ error }));
+};
+
+// Fonction récupération de toutes les publications
+exports.getPost = (req, res, next) => {
+    db.Post.findAll({
+            // Onn y inclue les informations de l'user
+            include: [
+                { model: User, as: 'User', attributes: ['first_name', 'last_name', 'imageUrl'] },
+            ],
+            // Les résulats sont classés par ordre décroissant des dates
+            order: [
+                ['postDate', 'DESC'],
+                // [Comment, 'createdAt', 'DESC']
+            ],
+        })
+        .then(post => res.status(200).json(post))
+        .catch(error => res.status(500).json({ error }));
 };
 
 // Fonction suppression publication
@@ -36,28 +53,5 @@ exports.createPost = (req, res, next) => {
 //         .catch(error => res.status(500).json({ error }));
 // };
 
-
-// Fonction récupération de toutes les publications
-// exports.getAllPosts = (req, res) => {
-//     // On recherche toutes les publications
-//     db.Post.scope('formated_date').findAll({
-//             // On y inclue les utilisateurs, likes et commentaires
-//             include: [
-//                 { model: User, as: 'User', attributes: ['firstname', 'lastname', 'imageUrl'] },
-//                 { model: Like },
-//                 { model: Comment, include: [
-//                     { model: User, attributes: ['firstname', 'lastname', 'imageUrl'] }
-//                 ]}
-//             ],
-
-//             // Les résulats sont classés par ordre décroissant des dates
-//             order: [
-//                 ['postDate', 'DESC'],
-//                 [Comment, 'createdAt', 'DESC']
-//             ]
-//         })
-//         .then(post => res.status(200).json(post))
-//         .catch(error => res.status(500).json({ error }));
-// };
 
 // Fonction like/dislike

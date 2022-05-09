@@ -7,8 +7,12 @@
             <div class="post">
                 <div class="profile-info">
                     <p class="pofile-info-img"><img src="" alt="photo de profil"></p>
-                    <p class="profile-info-user">Information de l'utilisateur qui a créé le post</p>
+                    <p class="profile-info-user">Informations user</p>
                     <!-- {{ post.user.first_name }}{{ post.user.last_name }} -->
+                </div>
+
+                <div class="post-title">
+                    <p class="title-text">{{ post.title }}</p>
                 </div>
 
                 <div class="post-content">
@@ -66,10 +70,13 @@ export default {
         })
     },
     mounted() {
-        // if(this.$store.state.user.userId == -1) {
-        //     this.$router.push('/');
-        //     return; 
-        // }
+        // const self = this; 
+        this.$store.dispatch('getPost', this.$store.state.postInfo)
+        .then(function() {
+            console.log(this.$store.state.postInfo);
+        }, function () {
+            // self.logout();
+        })
     },
 }
 

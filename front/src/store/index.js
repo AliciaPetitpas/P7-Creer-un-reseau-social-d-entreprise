@@ -52,6 +52,9 @@ export default createStore({
         CREATE_POST: function(state, post) {
             state.post = post;
         },
+        UPDATE_POST_INFO: function(state, postInfo) {
+            state.postInfo = postInfo
+        },
     },
     actions: {
         //Récupère les données du formulaire d'inscription dans le store
@@ -165,6 +168,19 @@ export default createStore({
                 instance.post('/posts/createPost/', postInfo)
                     .then(function(response) {
                         commit('CREATE_POST');
+                        resolve(response);
+                    })
+                    .catch(function(error) {
+                        reject(error);
+                    })
+            });
+        },
+        getPost: ({ commit }, postInfo) => {
+            commit;
+            return new Promise((resolve, reject) => {
+                instance.get('/posts/getPost/', postInfo)
+                    .then(function(response) {
+                        commit('UPDATE_POST_INFO', response.data);
                         resolve(response);
                     })
                     .catch(function(error) {
