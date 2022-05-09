@@ -16,7 +16,8 @@
         <span v-if="v$.input.title.$error" class="error">
                 {{ v$.input.title.$errors[0].$message }}
         </span>
-        <input type="text" v-model="state.input.content" class="content" placeholder="Créer une nouvelle publication">
+
+        <textarea id="content" v-model="state.input.content" name="textMessage" placeholder="Créer une nouvelle publication" class="content" aria-describedby="contenu-publication"></textarea>
         <span v-if="v$.input.content.$error" class="error">
                 {{ v$.input.content.$errors[0].$message }}
         </span>
@@ -141,9 +142,9 @@ export default {
             this.v$.$validate();
             if (!this.v$.$error) {
                 const fd = new FormData();
-                // fd.append('title', this.state.input.title);
-                fd.append('image_post', this.state.input.imageUrl);
+                fd.append('title', this.state.input.title);
                 fd.append('content', JSON.stringify(this.state.input.content));
+                // fd.append('image_post', this.state.input.imageUrl);
                 this.$store.dispatch('createPost', fd
                 ).then(function (response) {
                     self.success = response.data.message;
@@ -181,8 +182,10 @@ export default {
     margin: 10px;
 }
 
-::placeholder {
-    position: absolute;
+#content {
+    height: 200px; 
+    width: 95%;
+    margin-top: 10px;
 }
 
 input {

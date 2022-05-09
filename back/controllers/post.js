@@ -1,37 +1,20 @@
 const db = require("../models");
 // const { Op } = require('sequelize');
 const fs = require('fs');
-// const post = require("../models/post");
 
 // Fonction création publication
 exports.createPost = (req, res, next) => {
-
-    const postObject = JSON.parse(req.body.postInfo);
+    const postObject = req.body;
     db.Post.create({
             userId: postObject.userId,
             title: postObject.title,
             // postImg: `${req.protocol}://${req.get('host')}/images/posts/${req.file.filename}`,
-            content: postObject.content,
+            content: JSON.parse(postObject.content),
         })
-        .then(() => res.status(201).json({ message: 'Publication enregistrée' }))
+        .then(() => res.status(201).json({
+            message: 'Publication enregistrée'
+        }))
         .catch(error => res.status(400).json({ error }));
-
-    // let  postImg;
-    // // Si l'utilisateur publie une image
-    // if (req.file) {
-    //     postImg = 
-    // };
-    // // Création de l'objet publication
-    // const newPost = {
-    //     userId: req.body.userId,
-    //     title: req.body.title,
-    //     content: req.body.content,
-    //     imageUrl: postImg
-    // };
-    // // Création de la publication
-    // db.Post.create(newPost)
-    //     .then(post => res.status(201).json(post))
-    //     .catch(error => res.status(500).json({ error }));
 };
 
 // Fonction suppression publication
