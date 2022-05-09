@@ -60,6 +60,11 @@ input {
   margin: 10px auto 0 auto;    
 }
 
+::placeholder {
+    /* position: absolute; */
+    font-family: 'Courier New', Courier, monospace;
+}
+
 p {
     margin: 5px;
 } 
