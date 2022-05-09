@@ -34,8 +34,8 @@
                     @change="onFileSelected"
                     ref="fileInput">
                 <button @click="$refs.fileInput.click()" class="add-file">Choisir une image</button>
-                <p class="msg-img">{{ error }}</p>
-                <p class="msg-img">{{ success }}</p>
+                <p class="msg">{{ error }}</p>
+                <p class="msg">{{ success }}</p>
             </div>
 
         <!-- Envoi de la publication -->
@@ -148,7 +148,7 @@ export default {
                 this.$store.dispatch('createPost', fd
                 ).then(function (response) {
                     self.success = response.data.message;
-                    // window.location.reload();
+                    window.location.reload();
                 }, function (error) {
                     self.error = error.response.data.error;
                 })

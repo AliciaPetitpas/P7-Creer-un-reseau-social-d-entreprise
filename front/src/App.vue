@@ -69,6 +69,12 @@ p {
     margin: 5px;
 } 
 
+.msg {
+    color: red;
+    font-size: 14px;
+    font-style: italic;
+}
+
 /* RESPONSIVE MOBILE */
  @media (max-width: 768px) {
    #main {

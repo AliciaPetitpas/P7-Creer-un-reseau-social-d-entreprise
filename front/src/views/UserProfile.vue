@@ -271,12 +271,6 @@ export default {
     margin: 0;
 }
 
-.msg {
-    color: red;
-    font-size: 14px;
-    font-style: italic;
-}
-
 /* RESPONSIVE MOBILE */
 @media (max-width: 768px) {
     .user-picture {
