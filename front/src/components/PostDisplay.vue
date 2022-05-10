@@ -24,6 +24,16 @@
                     <p class="content-text">{{ posts.content }}</p>
                     <!-- btn delete si user à créé le post ou si admin -->
                 </div>
+
+                <div class="btn-update">
+                    <!-- bouton modification si l'user à créé la publication -->
+                    <!-- <button class="update">Modifier</button> -->
+                </div>
+
+                <div class="btn-delte">
+                    <!-- bouton delete si créateur de la publication ou admin -->
+                    <button v-if="statutUser" class="delete">Supprimer</button>
+                </div>
             </div>
 
             <!-- Affichage commentaires -->
@@ -41,7 +51,7 @@
             </div>
 
             <!-- Nouveaux commentaires de publiication -->
-            <div class="comments">
+            <!-- <div class="comments">
                 <div class="new-comments">
                     <form @submit.prevent="createComment(posts.id)">
                         <textarea type="text" class="new-comment-input" placeholder="Commenter..." v-model="commentContent" required></textarea>
@@ -49,7 +59,7 @@
                     </form>
                 </div>
             </div>
-            
+             -->
            </div>
 
         </main>
@@ -73,13 +83,18 @@ export default {
             user:'user',
             userInfo: 'userInfo',
             post: '',
-        })
+        }),
+        statutUser: function() {
+            // console.log(this.userInfo.admin);
+            return this.userInfo.admin;
+        },
     },
+
     mounted() {
         // const self = this; 
         this.$store.dispatch('getPost', this.$store.state.postInfo)
         .then(function() {
-            // self.post.title = self.$store.state.postInfo.title;
+            // self.posts.title = self.postInfo.title;
         }, function () {
             // self.logout();
         })
