@@ -21,14 +21,12 @@ exports.createPost = (req, res, next) => {
 exports.getPost = (req, res, next) => {
     db.Post.findAll({
             // On y inclue les informations de l'user
-            include: [
-                { model: User, as: 'User', attributes: ['first_name', 'last_name', 'imageUrl'] },
-            ],
+            include: {
+                model: User,
+                attributes: ['first_name', 'last_name', 'imageUrl'],
+            },
             // Les résulats sont classés par ordre décroissant des dates
-            // order: [
-            //     ['postDate', 'DESC'],
-            // [Comment, 'createdAt', 'DESC']
-            // ],
+            // order: [['createdAt', 'DESC']],
         })
         .then(post => res.status(200).json(post))
         .catch(error => res.status(500).json({ error }));
