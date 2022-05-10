@@ -11,6 +11,11 @@
                     <!-- {{ post.user.first_name }}{{ post.user.last_name }} -->
                 </div>
 
+                <div class="post-img">
+                    <img src="" alt="photo de publication">
+                    <!-- :src="post.imageUrl" -->
+                </div>
+
                 <div class="post-title">
                     <p class="title-text">{{ post.title }}</p>
                 </div>
@@ -21,16 +26,6 @@
                 </div>
             </div>
 
-            <!-- Nouveaux commentaires de publiication -->
-            <div class="comments">
-                <div class="new-comments">
-                    <form @submit.prevent="createComment(post.id)">
-                        <textarea type="text" class="new-comment-input" placeholder="Commenter..." v-model="commentContent" required></textarea>
-                        <button type="submit" title="Publier le commentaire">Envoyer</button>
-                    </form>
-                </div>
-            </div>
-            
             <!-- Affichage commentaires -->
             <div class="post-comments">
                 <!-- v-for="comment in publication.Comments" :key="comment.id" -->
@@ -44,6 +39,17 @@
                     <p>Contenu du commentaire</p>
                     <!--  -->
             </div>
+
+            <!-- Nouveaux commentaires de publiication -->
+            <div class="comments">
+                <div class="new-comments">
+                    <form @submit.prevent="createComment(post.id)">
+                        <textarea type="text" class="new-comment-input" placeholder="Commenter..." v-model="commentContent" required></textarea>
+                        <button type="submit" title="Publier le commentaire">Envoyer</button>
+                    </form>
+                </div>
+            </div>
+            
            </div>
 
         </main>
@@ -66,14 +72,14 @@ export default {
         ...mapState({
             user:'user',
             userInfo: 'userInfo',
-            post: ''
+            post: '',
         })
     },
     mounted() {
-        // const self = this; 
+        const self = this; 
         this.$store.dispatch('getPost', this.$store.state.postInfo)
         .then(function() {
-            console.log(this.$store.state.postInfo);
+            self.post.title = self.$store.state.postInfo.title;
         }, function () {
             // self.logout();
         })

@@ -20,15 +20,15 @@ exports.createPost = (req, res, next) => {
 // Fonction récupération de toutes les publications
 exports.getPost = (req, res, next) => {
     db.Post.findAll({
-            // Onn y inclue les informations de l'user
+            // On y inclue les informations de l'user
             include: [
                 { model: User, as: 'User', attributes: ['first_name', 'last_name', 'imageUrl'] },
             ],
             // Les résulats sont classés par ordre décroissant des dates
-            order: [
-                ['postDate', 'DESC'],
-                // [Comment, 'createdAt', 'DESC']
-            ],
+            // order: [
+            //     ['postDate', 'DESC'],
+            // [Comment, 'createdAt', 'DESC']
+            // ],
         })
         .then(post => res.status(200).json(post))
         .catch(error => res.status(500).json({ error }));
