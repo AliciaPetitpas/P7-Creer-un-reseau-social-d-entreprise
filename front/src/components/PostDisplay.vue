@@ -27,12 +27,12 @@
 
                 <div class="btn-update">
                     <!-- bouton modification si l'user à créé la publication -->
-                    <!-- <button class="update">Modifier</button> -->
+                    <!-- <button v-if="postUser" @click="updatePost()" class="update">Modifier</button> -->
                 </div>
 
                 <div class="btn-delte">
                     <!-- bouton delete si créateur de la publication ou admin -->
-                    <button v-if="statutUser" class="delete">Supprimer</button>
+                    <button v-if="statutUser" @click="deletePost()" class="delete">Supprimer</button>
                 </div>
             </div>
 
@@ -45,6 +45,7 @@
                         <!-- {{ comment.user.first_name }} {{ comment.user.last_name }} -->
                         
                         <!-- btn delete si user à créé le commentaire ou si admin -->
+                        <button v-if="statutUser" @click="deleteComment()" class="delete">Supprimer</button>
                     </div>
                     <p>Contenu du commentaire</p>
                     <!--  -->
@@ -85,11 +86,12 @@ export default {
             post: '',
         }),
         statutUser: function() {
-            // console.log(this.userInfo.admin);
             return this.userInfo.admin;
         },
+        // postUser: function() {
+        //     return this.postInfo.userId;
+        // },
     },
-
     mounted() {
         // const self = this; 
         this.$store.dispatch('getPost', this.$store.state.postInfo)
@@ -99,6 +101,17 @@ export default {
             // self.logout();
         })
     },
+    methods: {
+        deletePost() {
+            console.log("Le bouton delete fonctionne !");
+        },
+        // updatePost() {
+        //     console.log("Le bouton update fonctionne !");
+        // },
+        deleteComment() {
+            console.log("Ok!")
+        }
+    }
 }
 
 </script>
