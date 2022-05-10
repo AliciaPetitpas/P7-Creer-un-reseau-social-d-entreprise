@@ -8,20 +8,20 @@
                 <div class="profile-info">
                     <p class="pofile-info-img"><img src="" alt="photo de profil"></p>
                     <p class="profile-info-user">Informations user</p>
-                    <!-- {{ post.user.first_name }}{{ post.user.last_name }} -->
+                    <!-- {{ posts.user.first_name }}{{ posts.user.last_name }} -->
                 </div>
 
                 <div class="post-img">
                     <img src="" alt="photo de publication">
-                    <!-- :src="post.imageUrl" -->
+                    <!-- :src="posts.imageUrl" -->
                 </div>
 
                 <div class="post-title">
-                    <p class="title-text">{{ post.title }}</p>
+                    <p class="title-text">{{ posts.title }}</p>
                 </div>
 
                 <div class="post-content">
-                    <p class="content-text">{{ post.content }}</p>
+                    <p class="content-text">{{ posts.content }}</p>
                     <!-- btn delete si user à créé le post ou si admin -->
                 </div>
             </div>
@@ -43,7 +43,7 @@
             <!-- Nouveaux commentaires de publiication -->
             <div class="comments">
                 <div class="new-comments">
-                    <form @submit.prevent="createComment(post.id)">
+                    <form @submit.prevent="createComment(posts.id)">
                         <textarea type="text" class="new-comment-input" placeholder="Commenter..." v-model="commentContent" required></textarea>
                         <button type="submit" title="Publier le commentaire">Envoyer</button>
                     </form>
@@ -64,7 +64,7 @@ export default {
     name: 'PostDisplay',
     data() {
         return {
-            post: [],
+            posts: [],
             commentContent: null,
         }
     },
@@ -76,10 +76,10 @@ export default {
         })
     },
     mounted() {
-        const self = this; 
+        // const self = this; 
         this.$store.dispatch('getPost', this.$store.state.postInfo)
         .then(function() {
-            self.post.title = self.$store.state.postInfo.title;
+            // self.post.title = self.$store.state.postInfo.title;
         }, function () {
             // self.logout();
         })
