@@ -7,7 +7,7 @@ const { User } = require("../models");
 exports.createPost = (req, res, next) => {
     const postObject = req.file ? {
         ...JSON.parse(req.body.post),
-        imageUrl: `${req.protocol }: //${req.get('host')}/images/posts/${req.file.filename}`,
+        imageUrl: `${req.protocol}://${req.get('host')}/images/posts/${req.file.filename}`,
     } : {...JSON.parse(req.body.post) };
 
     db.Post.create(
