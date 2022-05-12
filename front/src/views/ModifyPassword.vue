@@ -114,13 +114,3 @@ export default {
 }
 
 </script>
-
-<style scoped>
-
-.msg {
-    color: red;
-    font-size: 14px;
-    font-style: italic;
-}
-
-</style>

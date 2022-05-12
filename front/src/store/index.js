@@ -184,18 +184,18 @@ export default createStore({
                     })
             });
         },
-        getPost: ({ commit }, postInfo) => {
-            commit;
-            return new Promise((resolve, reject) => {
-                instance.get('/posts/getPost/', postInfo)
-                    .then(function(response) {
-                        commit('UPDATE_POST_INFO', response.data);
-                        resolve(response);
-                    })
-                    .catch(function(error) {
-                        reject(error);
-                    })
-            });
-        },
+        // getPost: ({ commit }, postInfo) => {
+        //     commit;
+        //     return new Promise((resolve, reject) => {
+        //         instance.get('/posts/getPost/', postInfo)
+        //             .then(function(response) {
+        //                 commit('UPDATE_POST_INFO', response.data);
+        //                 resolve(response);
+        //             })
+        //             .catch(function(error) {
+        //                 reject(error);
+        //             })
+        //     });
+        // },
     }
 })
