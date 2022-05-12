@@ -133,7 +133,8 @@ export default {
             let reader = new FileReader();
             reader.onload = () => {
                 this.$refs.filePreview.src = reader.result;
-                this.$refs.photoPublication.style.display = "none";
+                this.$refs.filePreview.style.display = "";
+                this.$refs.photoProfil.style.display = "none";
             }
             reader.readAsDataURL(this.selectedFile);
         },
