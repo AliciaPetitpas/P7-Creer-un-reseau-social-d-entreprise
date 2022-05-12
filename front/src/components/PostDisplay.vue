@@ -18,22 +18,23 @@
 
                     <div class="post-img">
                         <img :src="post.imageUrl" alt="photo de publication">
+                        <!-- v-if="!postImg()" -->
                     </div>
 
                     <div class="post-content">
                         <p class="content-text">{{ post.content }}</p>
                         <!-- btn delete si user à créé le post ou si admin -->
                     </div>
+                </div>
 
-                    <div class="btn-update">
-                        <!-- bouton modification si l'user à créé la publication -->
-                        <!-- <button v-if="postUser" @click="updatePost()" class="update">Modifier</button> -->
-                    </div>
-
-                    <div class="btn-delte">
-                        <!-- bouton delete si créateur de la publication ou admin -->
-                        <button v-if="statutUser" @click="deletePost()" class="delete">Supprimer</button>
-                    </div>
+                <div class="btn-update">
+                    <!-- bouton modification si l'user à créé la publication -->
+                    <button @click="modifyPost()" class="update">Modifier</button>
+                </div>
+                
+                <div class="btn-delete">
+                    <!-- bouton delete si créateur de la publication ou admin -->
+                    <button v-if="userInfo.admin" @click="deletePost()" class="delete">Supprimer</button>
                 </div>
 
                 <!-- Affichage commentaires -->
@@ -99,6 +100,11 @@ export default {
         // })
     },
     methods: {
+        // postUser() {
+        //     if(this.user.userId === this.post.userId) {
+        //         return
+        //     }
+        // },
         deletePost() {
             console.log("Le bouton delete fonctionne !");
         },
@@ -107,6 +113,9 @@ export default {
         // },
         deleteComment() {
             console.log("Ok!")
+        },
+        modifyPost() {
+            this.$router.push('/modifyPost');
         }
     }
 }
