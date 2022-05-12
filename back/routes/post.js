@@ -8,6 +8,7 @@ const auth = require('../middleware/auth');
 
 // Routes publications
 router.post('/createPost', auth, multer.single('image_post'), postCtrl.createPost);
+router.get('/getPosts', auth, postCtrl.getPosts);
 router.get('/getPost', auth, postCtrl.getPost);
 //router.delete('/post/:id', postCtrl.deletePost);
 

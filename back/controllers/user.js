@@ -21,11 +21,20 @@ exports.signup = (req, res, next) => {
                         .then(() => res.status(201).json({ message: 'User created !' }))
                         // Erreur à catch sequelize (email unique)
                         //return res.status(400).json({ error: "Email déjà utilisée !" })
-                        .catch(error => res.status(400).json({ error }));
+                        .catch(error => {
+                            let message = error.errors[0].message;
+                            return res.status(500).json({ error: message });
+                        })
                 })
-                .catch(error => res.status(500).json({ error }));
+                .catch(error => {
+                    let message = error.errors[0].message;
+                    return res.status(500).json({ error: message });
+                })
         })
-        .catch(error => res.status(500).json({ error }));
+        .catch(error => {
+            let message = error.errors[0].message;
+            return res.status(500).json({ error: message });
+        })
 };
 
 // Connexion à un compte
@@ -56,16 +65,25 @@ exports.login = (req, res, next) => {
                         )
                     });
                 })
-                .catch(error => res.status(500).json({ error }));
+                .catch(error => {
+                    let message = error.errors[0].message;
+                    return res.status(500).json({ error: message });
+                })
         })
-        .catch(error => res.status(500).json({ error }));
+        .catch(error => {
+            let message = error.errors[0].message;
+            return res.status(500).json({ error: message });
+        })
 };
 
 // Récupérer information utilisateur
 exports.getUserInfo = (req, res, next) => {
     db.User.findOne({ where: { id: req.params.id } })
         .then(user => res.status(200).json(user))
-        .catch(error => res.status(500).json({ error }));
+        .catch(error => {
+            let message = error.errors[0].message;
+            return res.status(500).json({ error: message });
+        })
 };
 
 // Mdification image utilisateur
@@ -88,10 +106,16 @@ exports.updateImage = (req, res) => {
                 // On ajoute la nouvelle image et on met à jour la DB
                 db.User.update({ imageUrl: imageUrl }, { where: { id: req.params.id } })
                     .then(() => res.status(201).json({ message: 'Image modifiée' }))
-                    .catch(error => res.status(500).json({ error }));
+                    .catch(error => {
+                        let message = error.errors[0].message;
+                        return res.status(500).json({ error: message });
+                    })
             };
         })
-        .catch(error => res.status(500).json({ error }));
+        .catch(error => {
+            let message = error.errors[0].message;
+            return res.status(500).json({ error: message });
+        })
 }
 
 // Désactivation de compte
@@ -101,9 +125,15 @@ exports.desactivateAccount = (req, res) => {
             // Rend la valeur 0 à enabled
             db.User.update({ enabled: 0 }, { where: { id: req.params.id } })
                 .then(() => res.status(201).json({ message: 'Compte désactivé' }))
-                .catch(error => res.status(500).json({ error }));
+                .catch(error => {
+                    let message = error.errors[0].message;
+                    return res.status(500).json({ error: message });
+                })
         })
-        .catch(error => res.status(500).json({ error }));
+        .catch(error => {
+            let message = error.errors[0].message;
+            return res.status(500).json({ error: message });
+        })
 }
 
 // Update les information de l'utilisateur 
@@ -117,9 +147,15 @@ exports.updateUser = (req, res) => {
                     last_name: req.body.user.last_name
                 }, { where: { id: req.params.id } })
                 .then(() => res.status(201).json({ message: 'Informations modifiées' }))
-                .catch(error => res.status(500).json({ error }));
+                .catch(error => {
+                    let message = error.errors[0].message;
+                    return res.status(500).json({ error: message });
+                })
         })
-        .catch(error => res.status(500).json({ error }));
+        .catch(error => {
+            let message = error.errors[0].message;
+            return res.status(500).json({ error: message });
+        })
 };
 
 //Update password
@@ -135,13 +171,25 @@ exports.updatePassword = (req, res) => {
                                     password: hash,
                                 }, { where: { id: req.params.id } })
                                 .then(() => res.status(201).json({ message: 'Mot de passe modifié' }))
-                                .catch(error => res.status(500).json({ error }));
+                                .catch(error => {
+                                    let message = error.errors[0].message;
+                                    return res.status(500).json({ error: message });
+                                })
                         })
-                        .catch(error => res.status(500).json({ error }));
+                        .catch(error => {
+                            let message = error.errors[0].message;
+                            return res.status(500).json({ error: message });
+                        })
                 })
-                .catch(error => res.status(500).json({ error }));
+                .catch(error => {
+                    let message = error.errors[0].message;
+                    return res.status(500).json({ error: message });
+                })
         })
-        .catch(error => res.status(500).json({ error }));
+        .catch(error => {
+            let message = error.errors[0].message;
+            return res.status(500).json({ error: message });
+        })
 };
 
 // Fonction administarteur
@@ -153,10 +201,16 @@ exports.goAdmin = (req, res) => {
                 // Rend la valeur 1 à admin
                 db.User.update({ admin: 1 }, { where: { id: req.params.id } })
                     .then(() => res.status(201).json({ message: 'Vous êtes désormais en compte chargé de communciation' }))
-                    .catch(error => res.status(500).json({ error }));
+                    .catch(error => {
+                        let message = error.errors[0].message;
+                        return res.status(500).json({ error: message });
+                    })
             } else {
                 return res.status(401).json({ error: 'Mot de passe administrateur incorrect' });
             }
         })
-        .catch(error => res.status(500).json({ error }));
+        .catch(error => {
+            let message = error.errors[0].message;
+            return res.status(500).json({ error: message });
+        })
 };

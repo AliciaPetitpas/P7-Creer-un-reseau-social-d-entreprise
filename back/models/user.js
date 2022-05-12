@@ -3,7 +3,10 @@ module.exports = (sequelize, Sequelize) => {
         email: {
             type: Sequelize.STRING,
             allowNull: false,
-            unique: true,
+            unique: {
+                args: true,
+                msg: "Adresse email déjà utilisée"
+            },
         },
         password: {
             type: Sequelize.STRING,

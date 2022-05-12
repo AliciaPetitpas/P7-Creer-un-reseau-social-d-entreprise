@@ -9,9 +9,9 @@
         <p class="msg">{{ success }}</p>
         <!-- User Info -->
         <div class="user">
-            <p v-if="statutUser">Ce compte appartient à un chargé de communication</p>
+            <p v-if="userInfo.admin">Ce compte appartient à un chargé de communication</p>
             <p v-else>Ce compte appartient à un employé</p>
-            <div v-if="!statutUser">
+            <div v-if="!userInfo.admin">
                 <input v-model="state.input.passwordadmin" type="password" class="input-form" placeholder="Mot de passe admin"/>
                 <span v-if="v$admin.input.passwordadmin.$error" class="error">
                     {{ v$admin.input.passwordadmin.$errors[0].$message }}
@@ -167,10 +167,6 @@ export default {
         })
     },
     computed: {
-        statutUser: function() {
-            // console.log(this.userInfo.admin);
-            return this.userInfo.admin;
-        },
         ...mapState({
             user:'user',
             userInfo: 'userInfo'
@@ -202,7 +198,7 @@ export default {
             })
             .then(function (response) {
                 self.success = response.data.message;
-                window.location.reload();
+                self.refreshData();
             }, function (error) {
                 self.error = error.response.data.error;
             })
@@ -222,7 +218,7 @@ export default {
                 this.$store.dispatch('updateUser', userObjet
                 ).then(function (response) {
                     self.success = response.data.message;
-                    window.location.reload();
+                    self.refreshData();
             }, function (error) {
                 self.error = error.response.data.error;
             })
@@ -248,7 +244,7 @@ export default {
                 this.$store.dispatch('goAdmin', info
                 ).then(function (response) {
                 self.success = response.data.message;
-                window.location.reload();
+                self.refreshData();
             }, function (error) {
                 self.error = error.response.data.error;
             })
@@ -257,6 +253,14 @@ export default {
         modifyPassword() {
             this.$router.push('/modifyPassword');
         },
+        refreshData: function() {
+            const self = this;
+            this.$store.dispatch('getUserInfo', this.user.userId)
+            .then(function () {
+            }, function (error) {
+                self.error = error.response.data.error;
+            })
+        }
 }}
 
 </script>

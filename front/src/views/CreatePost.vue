@@ -64,7 +64,6 @@ export default {
             input: {
                 title: "",
                 content: "",
-                imageUrl: "",
             }
         });
         const rules = computed(() => {
@@ -116,10 +115,11 @@ export default {
         }
     },
     mounted() {
+        if(this.$store.state.user.userId == -1) {
+        this.$router.push('/');
+        return; 
+        }
         this.$store.dispatch('getUserInfo', this.$store.state.user.userId)
-        .then(function() {
-            //console.log(self.userInfo)
-        })
     },
     computed: {
         ...mapState({
@@ -142,13 +142,17 @@ export default {
             this.v$.$validate();
             if (!this.v$.$error) {
                 const fd = new FormData();
-                fd.append('title', this.state.input.title);
-                fd.append('content', JSON.stringify(this.state.input.content));
-                // fd.append('image_post', this.state.input.imageUrl);
+                let postData = {
+                    title: this.state.input.title,
+                    content: this.state.input.content,
+                    UserId: this.user.userId
+                }
+                console.log(postData);
+                fd.append('post', JSON.stringify(postData));
+                fd.append('image_post', this.selectedFile);
                 this.$store.dispatch('createPost', fd
-                ).then(function (response) {
-                    self.success = response.data.message;
-                    window.location.reload();
+                ).then(function () {
+                    self.$router.push('/mainPage');
                 }, function (error) {
                     self.error = error.response.data.error;
                 })

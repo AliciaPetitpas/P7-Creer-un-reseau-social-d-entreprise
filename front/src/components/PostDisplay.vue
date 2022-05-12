@@ -1,6 +1,7 @@
 <template>
     <div>
         <main id="main" class="main">
+            <p>{{post}}</p>
 
            <div class="displayPost">
                 <!-- Affichage publication -->
@@ -73,9 +74,13 @@ import { mapState } from 'vuex'
 
 export default {
     name: 'PostDisplay',
+    props: {
+        post: {
+            type: Object
+        }
+    },
     data() {
         return {
-            posts: [],
             commentContent: null,
         }
     },
@@ -83,23 +88,20 @@ export default {
         ...mapState({
             user:'user',
             userInfo: 'userInfo',
-            post: '',
+            posts: 'posts',
         }),
-        statutUser: function() {
-            return this.userInfo.admin;
-        },
         // postUser: function() {
         //     return this.postInfo.userId;
         // },
     },
     mounted() {
         // const self = this; 
-        this.$store.dispatch('getPost', this.$store.state.postInfo)
-        .then(function() {
-            // self.posts.title = self.postInfo.title;
-        }, function () {
-            // self.logout();
-        })
+        // this.$store.dispatch('getPost', this.$store.state.postInfo)
+        // .then(function() {
+        //     // self.posts.title = self.postInfo.title;
+        // }, function () {
+        //     // self.logout();
+        // })
     },
     methods: {
         deletePost() {

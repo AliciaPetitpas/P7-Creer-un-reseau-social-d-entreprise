@@ -28,6 +28,7 @@ export default createStore({
     state: {
         user: user,
         userInfo: {},
+        posts: [],
         postInfo: {},
     },
     mutations: {
@@ -39,18 +40,14 @@ export default createStore({
         UPDATE_USER_INFO: function(state, userInfo) {
             state.userInfo = userInfo;
         },
-        UPDATE_IMAGE: function(state, user) {
-            state.user.fdImage = user;
-            //REVOIR
-        },
         DELETE_USER: function(state) {
             state.userInfo = {
                 ...state.userInfo,
                 enabled: 0,
             }
         },
-        CREATE_POST: function(state, post) {
-            state.post = post;
+        SET_POSTS: function(state, posts) {
+            state.posts = posts
         },
         UPDATE_POST_INFO: function(state, postInfo) {
             state.postInfo = postInfo
@@ -101,7 +98,7 @@ export default createStore({
             return new Promise((resolve, reject) => {
                 instance.put('/auth/updateImage/' + user.userId, user.fdImage)
                     .then(function(response) {
-                        commit('UPDATE_IMAGE', response.data);
+                        commit('UPDATE_USER_INFO', response.data);
                         resolve(response);
                     })
                     .catch(function(error) {
@@ -167,7 +164,19 @@ export default createStore({
             return new Promise((resolve, reject) => {
                 instance.post('/posts/createPost/', postInfo)
                     .then(function(response) {
-                        commit('CREATE_POST');
+                        resolve(response);
+                    })
+                    .catch(function(error) {
+                        reject(error);
+                    })
+            });
+        },
+        getPosts: ({ commit }) => {
+            commit;
+            return new Promise((resolve, reject) => {
+                instance.get('/posts/getPosts/')
+                    .then(function(response) {
+                        commit('SET_POSTS', response.data);
                         resolve(response);
                     })
                     .catch(function(error) {
