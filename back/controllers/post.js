@@ -38,18 +38,32 @@ exports.getPosts = (req, res, next) => {
 
 // Fonction récupération d'une publication'
 exports.getPost = (req, res, next) => {
-    // db.Post.findAll({
-    //         // On y inclue les informations de l'user
-    //         include: {
-    //             model: User,
-    //             attributes: ['first_name', 'last_name', 'imageUrl'],
-    //         },
-    //         // Les résulats sont classés par ordre décroissant des dates
-    //         // order: [['createdAt', 'DESC']],
-    //     })
-    //     .then(post => res.status(200).json(post))
-    //     .catch(error => res.status(500).json({ error }));
+    db.Post.findOne({ where: { id: req.params.id } })
+        .then(post => res.status(200).json(post))
+        .catch(error => res.status(500).json({ error }));
 };
+
+// Update les information d'une publication 
+exports.updatePost = (req, res) => {
+    db.Post.findOne({ where: { id: req.params.id } })
+        .then(post => {
+            // On met les informations à jour dans la base de données
+            db.Post.update({
+                    title: req.body.post.title,
+                    content: req.body.post.content,
+                }, { where: { id: req.params.id } })
+                .then(() => res.status(201).json({ message: 'Informations modifiées' }))
+                .catch(error => {
+                    let message = error.errors[0].message;
+                    return res.status(500).json({ error: message });
+                })
+        })
+        .catch(error => {
+            let message = error.errors[0].message;
+            return res.status(500).json({ error: message });
+        })
+};
+
 
 // Fonction suppression publication
 exports.deletePost = (req, res) => {
