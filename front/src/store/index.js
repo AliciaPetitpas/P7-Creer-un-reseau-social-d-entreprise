@@ -186,10 +186,10 @@ export default createStore({
                     })
             });
         },
-        getPost: ({ commit }, postInfo) => {
+        getPostInfo: ({ commit }, postId) => {
             commit;
             return new Promise((resolve, reject) => {
-                instance.get('/posts/modifyPost/', postInfo)
+                instance.get('/posts/postInfo/' + postId)
                     .then(function(response) {
                         commit('UPDATE_POST_INFO', response.data);
                         resolve(response);

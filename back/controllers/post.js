@@ -37,7 +37,7 @@ exports.getPosts = (req, res, next) => {
 };
 
 // Fonction récupération d'une publication'
-exports.getPost = (req, res, next) => {
+exports.getPostInfo = (req, res, next) => {
     db.Post.findOne({ where: { id: req.params.id } })
         .then(post => res.status(200).json(post))
         .catch(error => res.status(500).json({ error }));

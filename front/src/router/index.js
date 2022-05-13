@@ -7,7 +7,7 @@ import MainPage from '../views/MainPage.vue'
 import PostDetail from '../views/PostDetail.vue'
 import CreatePost from '../views/CreatePost.vue'
 import ModifyPassword from '../views/ModifyPassword.vue'
-import ModifyPost from '../views/ModifyPost.vue'
+import UpdatePost from '../views/UpdatePost.vue'
 
 const routes = [{
         path: '/',
@@ -50,9 +50,9 @@ const routes = [{
         component: ModifyPassword
     },
     {
-        path: '/modifyPost',
-        name: 'modifyPost',
-        component: ModifyPost
+        path: '/updatePost',
+        name: 'updatePost',
+        component: UpdatePost
     },
 ]
 
