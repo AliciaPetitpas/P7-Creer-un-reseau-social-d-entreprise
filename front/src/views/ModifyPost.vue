@@ -4,6 +4,8 @@
         <main id="main" class="main">
             <div class="modify-post">
                 <p>This is where we update the post</p>
+                <p>{{ userInfo }}</p>
+                <p>{{ postInfo }}</p>
                 <!-- <p>{{ posts }}</p> -->
             </div>
         </main>
@@ -24,7 +26,7 @@ export default {
         ...mapState({
             user:'user',
             userInfo: 'userInfo',
-            // posts: 'posts',
+            postInfo: 'postInfo',
         }),
     },
 }
