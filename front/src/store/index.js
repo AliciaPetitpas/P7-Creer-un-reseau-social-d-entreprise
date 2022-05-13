@@ -52,6 +52,9 @@ export default createStore({
         UPDATE_POST_INFO: function(state, postInfo) {
             state.postInfo = postInfo
         },
+        DELETE_POST: function(state, post) {
+            state.postInfo = post
+        },
     },
     actions: {
         //Récupère les données du formulaire d'inscription dans le store
@@ -107,7 +110,6 @@ export default createStore({
             });
         },
         deactivateAccount: ({ commit }, userId) => {
-            // console.log(userId);
             commit;
             return new Promise((resolve, reject) => {
                 instance.put('/auth/deactivateAccount/' + userId)
@@ -184,18 +186,31 @@ export default createStore({
                     })
             });
         },
-        // getPost: ({ commit }, postInfo) => {
-        //     commit;
-        //     return new Promise((resolve, reject) => {
-        //         instance.get('/posts/getPost/', postInfo)
-        //             .then(function(response) {
-        //                 commit('UPDATE_POST_INFO', response.data);
-        //                 resolve(response);
-        //             })
-        //             .catch(function(error) {
-        //                 reject(error);
-        //             })
-        //     });
-        // },
+        getPost: ({ commit }, postInfo) => {
+            commit;
+            return new Promise((resolve, reject) => {
+                instance.get('/posts/modifyPost/', postInfo)
+                    .then(function(response) {
+                        commit('UPDATE_POST_INFO', response.data);
+                        resolve(response);
+                    })
+                    .catch(function(error) {
+                        reject(error);
+                    })
+            });
+        },
+        deletePost: ({ commit }, postId) => {
+            commit;
+            return new Promise((resolve, reject) => {
+                instance.put('/auth/deletePost/' + postId)
+                    .then(function(response) {
+                        commit('DELETE_POST', response.data);
+                        resolve(response);
+                    })
+                    .catch(function(error) {
+                        reject(error);
+                    })
+            });
+        },
     }
 })
