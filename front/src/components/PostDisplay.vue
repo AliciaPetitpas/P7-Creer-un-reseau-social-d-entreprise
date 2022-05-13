@@ -29,7 +29,8 @@
 
                 <div class="btn-update">
                     <!-- bouton modification si l'user à créé la publication -->
-                    <button v-if="user.userId === post.UserId" @click="modifyPost()" class="update">Modifier</button>
+                    <button v-if="user.userId === post.UserId" @click="updatePost()" class="update">Modifier</button>
+                    <p>{{ post.id }}</p>
                 </div>
                 
                 <div class="btn-delete">
@@ -85,28 +86,11 @@ export default {
             user:'user',
             userInfo: 'userInfo',
             posts: 'posts',
+            postInfo: 'postInfo',
         }),
-        // postUser: function() {
-        //     return this.postInfo.userId;
-        // },
-    },
-    mounted() {
-        // const self = this; 
-        // this.$store.dispatch('getPost', this.$store.state.postInfo)
-        // .then(function() {
-        //     // self.posts.title = self.postInfo.title;
-        // }, function () {
-        //     // self.logout();
-        // })
     },
     methods: {
-        // postUser() {
-        //     if(this.user.userId === this.post.userId) {
-        //         return
-        //     }
-        // },
         deletePost() {
-            // console.log("Le bouton delete fonctionne !");
             // const self = this;
             this.$store.dispatch('deletePost')
             .then(function() {
@@ -115,14 +99,9 @@ export default {
                 
             })
         },
-        // updatePost() {
-        //     console.log("Le bouton update fonctionne !");
-        // },
-        deleteComment() {
-            console.log("Ok!")
-        },
-        modifyPost() {
-            this.$router.push('/modifyPost');
+        updatePost() {
+            this.$router.push('/updatePost', this.post.id);
+            // console.log(this.post)
         }
     }
 }
