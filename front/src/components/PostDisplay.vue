@@ -29,7 +29,7 @@
 
                 <div class="btn-update">
                     <!-- bouton modification si l'user à créé la publication -->
-                    <button @click="modifyPost()" class="update">Modifier</button>
+                    <button v-if="user.userId === post.UserId" @click="modifyPost()" class="update">Modifier</button>
                 </div>
                 
                 <div class="btn-delete">
@@ -106,7 +106,14 @@ export default {
         //     }
         // },
         deletePost() {
-            console.log("Le bouton delete fonctionne !");
+            // console.log("Le bouton delete fonctionne !");
+            // const self = this;
+            this.$store.dispatch('deletePost')
+            .then(function() {
+                console.log('ok')
+            }, function () {
+                
+            })
         },
         // updatePost() {
         //     console.log("Le bouton update fonctionne !");
