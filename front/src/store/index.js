@@ -199,10 +199,10 @@ export default createStore({
                     })
             });
         },
-        deletePost: ({ commit }, post) => {
+        deletePost: ({ commit }, postId) => {
             commit;
             return new Promise((resolve, reject) => {
-                instance.put('/auth/deletePost/', post)
+                instance.put('/posts/deletePost/' + postId)
                     .then(function(response) {
                         commit('DELETE_POST', response.data);
                         resolve(response);

@@ -48,17 +48,17 @@ exports.updatePost = (req, res) => {
     db.Post.findOne({ where: { id: req.params.id } })
         .then(post => {
             // On met les informations à jour dans la base de données
-            // db.Post.update({
-            //         title: req.body.post.title,
-            //         content: req.body.post.content,
-            //     }, { where: { id: req.params.id } })
-            //     .then(() => res.status(201).json({ message: 'Informations modifiées' }))
-            //     .catch(error => {
-            //         let message = error.errors[0].message;
-            //         return res.status(500).json({ error: message });
-            //     })
+            db.Post.update({
+                    title: req.body.post.title,
+                    content: req.body.post.content,
+                }, { where: { id: req.params.id } })
+                .then(() => res.status(201).json({ message: 'Informations modifiées' }))
+                .catch(error => {
+                    let message = error.errors[0].message;
+                    return res.status(500).json({ error: message });
+                })
         })
-        .catch(error => res.status(500).json({ error: 'No' }));
+        .catch(error => res.status(500).json({ error }));
     // .catch(error => {
     //     let message = error.errors[0].message;
     //     return res.status(500).json({ error: message });

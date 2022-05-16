@@ -9,8 +9,8 @@ const auth = require('../middleware/auth');
 // Routes publications
 router.post('/createPost', auth, multer.single('image_post'), postCtrl.createPost);
 router.get('/getPosts', auth, postCtrl.getPosts);
-// router.get('/getPostInfo/:id', auth, postCtrl.getPostInfo);
 router.get('/updatePost/:id', auth, postCtrl.updatePost);
 router.delete('/post/:id', postCtrl.deletePost);
+router.put('/deletePost/:id', auth, postCtrl.deletePost);
 
 module.exports = router;
