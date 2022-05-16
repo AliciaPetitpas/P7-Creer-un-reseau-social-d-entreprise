@@ -34,6 +34,11 @@ app.use('/api/auth', usersRoutes);
 app.use('/api/posts', postsRoutes);
 app.use('/api/comments', commentsRoutes);
 
+//id post
+app.get('/api/posts/:id', function(req, res) {
+    res.send();
+})
+
 app.get("/", (req, res) => {
     res.json({ message: "Welcome to my application!" })
 });
