@@ -27,7 +27,7 @@ export default {
         }
     },
     mounted() {
-        this.$store.dispatch('getPostInfo')
+        this.$store.dispatch('updatePost')
     },
     computed: {
         ...mapState({

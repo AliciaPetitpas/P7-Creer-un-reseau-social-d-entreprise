@@ -186,7 +186,7 @@ export default createStore({
                     })
             });
         },
-        getPostInfo: ({ commit }, postId) => {
+        updatePost: ({ commit }, postId) => {
             commit;
             return new Promise((resolve, reject) => {
                 instance.get('/posts/updatePost/' + postId)
