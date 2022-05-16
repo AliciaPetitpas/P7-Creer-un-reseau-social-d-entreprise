@@ -37,8 +37,15 @@ exports.getPosts = (req, res, next) => {
 };
 
 // Fonction récupération d'une publication'
-exports.getPostInfo = (req, res, next) => {
-    db.Post.findOne({ where: { id: req.params.id } })
+exports.getPost = (req, res, next) => {
+    db.Post.findOne({
+            // On y inclue les informations de l'user
+            include: {
+                model: User,
+                attributes: ['first_name', 'last_name', 'imageUrl'],
+            },
+            where: { id: req.params.id }
+        })
         .then(post => res.status(200).json(post))
         .catch(error => res.status(500).json({ error }));
 };

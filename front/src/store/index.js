@@ -30,6 +30,8 @@ export default createStore({
         userInfo: {},
         posts: [],
         postInfo: {},
+        comments: [],
+        commentInfo: {},
     },
     mutations: {
         LOGIN: function(state, user) {
@@ -52,8 +54,11 @@ export default createStore({
         UPDATE_POST_INFO: function(state, postInfo) {
             state.postInfo = postInfo
         },
-        DELETE_POST: function(state, post) {
-            state.postInfo = post
+        SET_COMMENTS: function(state, comments) {
+            state.comments = comments
+        },
+        UPDATE_COMMENT_INFO: function(state, commentInfo) {
+            state.commentInfo = commentInfo
         },
     },
     actions: {
@@ -173,6 +178,19 @@ export default createStore({
                     })
             });
         },
+        getPost: ({ commit }, postId) => {
+            commit;
+            return new Promise((resolve, reject) => {
+                instance.get('/posts/getPost/' + postId)
+                    .then(function(response) {
+                        commit('UPDATE_POST_INFO', response.data);
+                        resolve(response);
+                    })
+                    .catch(function(error) {
+                        reject(error);
+                    })
+            });
+        },
         getPosts: ({ commit }) => {
             commit;
             return new Promise((resolve, reject) => {
@@ -204,7 +222,31 @@ export default createStore({
             return new Promise((resolve, reject) => {
                 instance.put('/posts/deletePost/' + postId)
                     .then(function(response) {
-                        commit('DELETE_POST', response.data);
+                        resolve(response);
+                    })
+                    .catch(function(error) {
+                        reject(error);
+                    })
+            });
+        },
+        getComments: ({ commit }, postId) => {
+            commit;
+            return new Promise((resolve, reject) => {
+                instance.get('/comments/getComments/' + postId)
+                    .then(function(response) {
+                        commit('SET_COMMENTS', response.data);
+                        resolve(response);
+                    })
+                    .catch(function(error) {
+                        reject(error);
+                    })
+            });
+        },
+        createComment: ({ commit }, postInfo) => {
+            commit;
+            return new Promise((resolve, reject) => {
+                instance.post('/comments/createComment', postInfo)
+                    .then(function(response) {
                         resolve(response);
                     })
                     .catch(function(error) {

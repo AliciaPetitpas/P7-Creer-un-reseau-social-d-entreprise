@@ -30,7 +30,6 @@
                 <div class="btn-update">
                     <!-- bouton modification si l'user à créé la publication -->
                     <button v-if="user.userId === post.UserId" @click="updatePost()" class="update">Modifier</button>
-                    <p>POST ID {{ post.id }}</p>
                 </div>
                 
                 <div class="btn-delete">
@@ -38,39 +37,50 @@
                     <button v-if="userInfo.admin || user.userId === post.UserId" @click="deletePost()" class="delete">Supprimer</button>
                 </div>
 
-                <!-- Affichage commentaires -->
-                <!-- <div class="post-comments"> -->
-                    <!-- v-for="comment in publication.Comments" :key="comment.id" -->
-                    <!-- <div class="user-info">
-                            <p class="user-info-img"><img src="" alt="photo de profil"></p>
-                            <p>Commentaire de l'utilisateur</p> -->
-                            <!-- {{ comment.user.first_name }} {{ comment.user.last_name }} -->
-                            
-                            <!-- btn delete si user à créé le commentaire ou si admin -->
-                            <!-- <button v-if="statutUser" @click="deleteComment()" class="delete">Supprimer</button>
-                        </div>
-                        <p>Contenu du commentaire</p>
-                </div> -->
-
                 <!-- Nouveaux commentaires de publiication -->
-                <!-- <div class="comments">
+                <div class="comments">
                     <div class="new-comments">
-                        <form @submit.prevent="createComment(posts.id)">
+                        <form @submit.prevent="createComment()">
                             <textarea type="text" class="new-comment-input" placeholder="Commenter..." v-model="commentContent" required></textarea>
                             <button type="submit" title="Publier le commentaire">Envoyer</button>
                         </form>
                     </div>
-                </div>-->
+                </div>
+
+                <!-- Affichage commentaires -->
+                <!-- <p>{{ comments }}</p> -->
+
+                <div v-for="item in comments" v-bind:key="item" class="displayComment">
+                    <CommentDisplay :comment="item" />
+                </div>
+
+                <!-- <div class="post-comments">
+                    v-for="comment in publication.Comments" :key="comment.id"
+                    <div class="user-info">
+                            <p class="user-info-img"><img src="" alt="photo de profil"></p>
+                            <p>Commentaire de l'utilisateur</p>
+                            {{ comment.user.first_name }} {{ comment.user.last_name }}
+                            
+                            btn delete si user à créé le commentaire ou si admin
+                            <button v-if="statutUser" @click="deleteComment()" class="delete">Supprimer</button>
+                        </div>
+                        <p>Contenu du commentaire</p>
+                </div> -->
+
             </div>
     </div>
 </template>
 
 <script>
 
+import CommentDisplay from '../components/CommentDisplay.vue'
 import { mapState } from 'vuex'
 
 export default {
     name: 'PostDisplay',
+    components: {
+        CommentDisplay,
+    },
     props: {
         post: {
             type: Object
@@ -79,6 +89,7 @@ export default {
     data() {
         return {
             commentContent: null,
+            comments: [],
         }
     },
     computed: {
@@ -89,21 +100,55 @@ export default {
             postInfo: 'postInfo',
         }),
     },
+    mounted() {
+        this.refreshComments();
+    },
     methods: {
         deletePost() {
-            // const self = this;
-            this.$store.dispatch('deletePost')
+            const self = this;
+            this.$store.dispatch('deletePost', this.post.id)
             .then(function() {
-                console.log('ok')
+                self.refreshData();
             }, function () {
                 
             })
         },
         updatePost() {
             this.$router.push('/updatePost/' + this.post.id);
-            // console.log(this.post)
-        }
-    }
+        },
+        refreshData: function() {
+            const self = this;
+            this.$store.dispatch('getPosts')
+            .then(function () {
+            }, function (error) {
+                self.error = error.response.data.error;
+            })
+        },
+        createComment() {
+            const self = this;
+            let commentData = {
+                content : this.commentContent,
+                UserId : this.user.userId,
+                PostId : this.post.id,
+            }
+            this.$store.dispatch('createComment', commentData)
+            .then(function () {
+                self.commentContent = "";
+                self.refreshComments();
+            }, function (error) {
+                self.error = error.response.data.error;
+            })
+        },
+        refreshComments: function() {
+            const self = this;
+            this.$store.dispatch('getComments', this.post.id)
+            .then(function (response) {
+                self.comments = response.data;
+            }, function (error) {
+                self.error = error.response.data.error;
+            })
+        },
+    },
 }
 
 </script>

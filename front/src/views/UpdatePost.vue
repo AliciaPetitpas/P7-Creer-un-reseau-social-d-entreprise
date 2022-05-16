@@ -3,9 +3,7 @@
         <MenuPage/>
         <main id="main" class="main">
             <div class="update-post">
-                <p>This is where we update the post</p>
-                <p>USER {{ userInfo }}</p>
-                <p>POST {{ post }}</p>
+                <p>POST {{ postInfo }}</p>
             </div>
         </main>
     </div>
@@ -21,18 +19,19 @@ export default {
     components: {
         MenuPage,
     },
-    props: {
-        post: {
-            type: Object
-        }
-    },
     mounted() {
-        this.$store.dispatch('updatePost')
+        //Controle user du post
+        if(this.$store.state.user.userId == -1) {
+        this.$router.push('/');
+        return; 
+        }
+        const urlId = this.$route.params.id;
+        console.log(urlId);
+        this.$store.dispatch('getPost', urlId);
     },
     computed: {
         ...mapState({
             user:'user',
-            userInfo: 'userInfo',
             postInfo: 'postInfo',
         }),
     },
