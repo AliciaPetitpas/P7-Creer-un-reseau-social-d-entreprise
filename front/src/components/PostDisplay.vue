@@ -27,14 +27,16 @@
                     </div>
                 </div>
 
-                <div class="btn-update">
-                    <!-- bouton modification si l'user à créé la publication -->
-                    <button v-if="user.userId === post.UserId" @click="updatePost()" class="update">Modifier</button>
-                </div>
+                <div class="btns">
+                    <div class="btn-update">
+                        <!-- bouton modification si l'user à créé la publication -->
+                        <img src="../assets/pen-icon.png" @click="updatePost()" v-if="user.userId === post.UserId" class="update icon" alt="update" />
+                    </div>
                 
-                <div class="btn-delete">
-                    <!-- bouton delete si créateur de la publication ou admin -->
-                    <button v-if="userInfo.admin || user.userId === post.UserId" @click="deletePost()" class="delete">Supprimer</button>
+                    <div class="btn-delete">
+                        <!-- bouton delete si créateur de la publication ou admin -->
+                        <img src="../assets/bin-icon.png" @click="deletePost()" v-if="userInfo.admin || user.userId === post.UserId" class="delete icon" alt="update" />
+                    </div>
                 </div>
 
                 <!-- Nouveaux commentaires de publiication -->
@@ -48,24 +50,9 @@
                 </div>
 
                 <!-- Affichage commentaires -->
-                <!-- <p>{{ comments }}</p> -->
-
                 <div v-for="item in comments" v-bind:key="item" class="displayComment">
                     <CommentDisplay :comment="item" />
                 </div>
-
-                <!-- <div class="post-comments">
-                    v-for="comment in publication.Comments" :key="comment.id"
-                    <div class="user-info">
-                            <p class="user-info-img"><img src="" alt="photo de profil"></p>
-                            <p>Commentaire de l'utilisateur</p>
-                            {{ comment.user.first_name }} {{ comment.user.last_name }}
-                            
-                            btn delete si user à créé le commentaire ou si admin
-                            <button v-if="statutUser" @click="deleteComment()" class="delete">Supprimer</button>
-                        </div>
-                        <p>Contenu du commentaire</p>
-                </div> -->
 
             </div>
     </div>
@@ -187,6 +174,24 @@ export default {
 
 .post-img img {
     width: 90%;
+}
+
+.displayPost {
+    position: relative;
+}
+
+.btns {
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    position: absolute;
+    top: 60px;
+    right: 0;
+}
+
+.icon {
+    width: 25px;
+    height: 25px;
 }
 
 </style>
