@@ -189,7 +189,7 @@ export default createStore({
         getPostInfo: ({ commit }, postId) => {
             commit;
             return new Promise((resolve, reject) => {
-                instance.get('/posts/postInfo/' + postId)
+                instance.get('/posts/updatePost/' + postId)
                     .then(function(response) {
                         commit('UPDATE_POST_INFO', response.data);
                         resolve(response);
@@ -199,10 +199,10 @@ export default createStore({
                     })
             });
         },
-        deletePost: ({ commit }, postId) => {
+        deletePost: ({ commit }, post) => {
             commit;
             return new Promise((resolve, reject) => {
-                instance.put('/auth/deletePost/' + postId)
+                instance.put('/auth/deletePost/', post)
                     .then(function(response) {
                         commit('DELETE_POST', response.data);
                         resolve(response);

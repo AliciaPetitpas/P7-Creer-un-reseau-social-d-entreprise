@@ -30,7 +30,7 @@
                 <div class="btn-update">
                     <!-- bouton modification si l'user à créé la publication -->
                     <button v-if="user.userId === post.UserId" @click="updatePost()" class="update">Modifier</button>
-                    <p>{{ post.id }}</p>
+                    <p>POST ID {{ post.id }}</p>
                 </div>
                 
                 <div class="btn-delete">
@@ -100,7 +100,7 @@ export default {
             })
         },
         updatePost() {
-            this.$router.push('/updatePost', this.post.id);
+            this.$router.push('/updatePost/' + this.post.id);
             // console.log(this.post)
         }
     }

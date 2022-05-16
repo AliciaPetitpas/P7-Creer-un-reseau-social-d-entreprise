@@ -50,7 +50,7 @@ const routes = [{
         component: ModifyPassword
     },
     {
-        path: '/updatePost',
+        path: '/updatePost/:id',
         name: 'updatePost',
         component: UpdatePost
     },

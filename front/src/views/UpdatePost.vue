@@ -26,6 +26,9 @@ export default {
             type: Object
         }
     },
+    mounted() {
+        this.$store.dispatch('getPostInfo')
+    },
     computed: {
         ...mapState({
             user:'user',

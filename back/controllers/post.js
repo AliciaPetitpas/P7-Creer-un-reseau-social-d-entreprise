@@ -58,10 +58,11 @@ exports.updatePost = (req, res) => {
                     return res.status(500).json({ error: message });
                 })
         })
-        .catch(error => {
-            let message = error.errors[0].message;
-            return res.status(500).json({ error: message });
-        })
+        .catch(error => res.status(500).json({ error }));
+    // .catch(error => {
+    // let message = error.errors[0].message;
+    // return res.status(500).json({ error: message });
+    // })
 };
 
 
