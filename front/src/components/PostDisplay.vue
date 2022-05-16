@@ -35,7 +35,7 @@
                 
                 <div class="btn-delete">
                     <!-- bouton delete si créateur de la publication ou admin -->
-                    <button v-if="userInfo.admin" @click="deletePost()" class="delete">Supprimer</button>
+                    <button v-if="userInfo.admin || user.userId === post.UserId" @click="deletePost()" class="delete">Supprimer</button>
                 </div>
 
                 <!-- Affichage commentaires -->
