@@ -47,9 +47,6 @@ export default {
         toCreatePost() {
             this.$router.push('/createPost')
         },
-        // toPostDetail() {
-        //     this.$router.push('/postDetail')
-        // }
     }
 }
 
