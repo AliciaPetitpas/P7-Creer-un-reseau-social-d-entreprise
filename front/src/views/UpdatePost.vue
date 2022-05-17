@@ -74,8 +74,7 @@ export default {
         MenuPage,
     },
     mounted() {
-        //Controle user du post
-        if(this.$store.state.user.userId == -1) {
+        if(this.$store.state.user.userId == -1 || this.user.userId != this.postInfo.User.id) {
         this.$router.push('/');
         return; 
         }
