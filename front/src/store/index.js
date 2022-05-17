@@ -254,5 +254,30 @@ export default createStore({
                     })
             });
         },
+        updateComment: ({ commit }, commentId) => {
+            commit;
+            return new Promise((resolve, reject) => {
+                instance.get('/comments/updateComment/' + commentId)
+                    .then(function(response) {
+                        commit('UPDATE_COMMENT_INFO', response.data);
+                        resolve(response);
+                    })
+                    .catch(function(error) {
+                        reject(error);
+                    })
+            });
+        },
+        deleteComment: ({ commit }, commentId) => {
+            commit;
+            return new Promise((resolve, reject) => {
+                instance.put('/comments/deleteComment/' + commentId)
+                    .then(function(response) {
+                        resolve(response);
+                    })
+                    .catch(function(error) {
+                        reject(error);
+                    })
+            });
+        },
     }
 })

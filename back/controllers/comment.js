@@ -35,5 +35,34 @@ exports.getComments = (req, res, next) => {
 };
 
 // Modification comment
+exports.updateComment = (req, res) => {
+    db.Comment.findOne({ where: { id: req.params.id } })
+        .then(comment => {
+            // On met les informations à jour dans la base de données
+            db.Comment.update({
+                    content: req.body.comment.content,
+                }, { where: { id: req.params.id } })
+                .then(() => res.status(201).json({ message: 'Commentaire modifié' }))
+                .catch(error => {
+                    let message = error.errors[0].message;
+                    return res.status(500).json({ error: message });
+                })
+        })
+        .catch(error => res.status(500).json({ error }));
+    // .catch(error => {
+    //     let message = error.errors[0].message;
+    //     return res.status(500).json({ error: message });
+    // })
+};
 
 // Suppression comment
+exports.deleteComment = (req, res) => {
+    db.Comment.findOne({ where: { id: req.params.id } })
+        .then(comment => {
+            // La publication est supprimée de la DB
+            db.Comment.destroy({ where: { id: req.params.id } })
+                .then(() => res.status(201).json({ message: "Commentaire supprimé" }))
+                .catch(error => res.status(500).json({ error }));
+        })
+        .catch(error => res.status(500).json({ error }));
+};
