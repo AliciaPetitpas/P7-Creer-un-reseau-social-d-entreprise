@@ -11,7 +11,6 @@
         <div v-for="item in posts" v-bind:key="item" class="displayPost">
             <PostDisplay :post="item" />
         </div>
-        
     </main>
 </div>
 
