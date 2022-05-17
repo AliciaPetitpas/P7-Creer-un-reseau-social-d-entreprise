@@ -23,7 +23,7 @@
         </span>
         <!-- Ajout média ici -->
         <div class="post-img">
-                <img ref="filePreview" src="" alt="">
+                <img class="filePreview" ref="filePreview" src="" alt="">
                 
                 <input 
                     style="display: none"
@@ -183,6 +183,10 @@ export default {
     border: 1px solid black;
     border-radius: 30px;
     margin: 10px;
+}
+
+.filePreview {
+    max-width: 90%;
 }
 
 #content {
