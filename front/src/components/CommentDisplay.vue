@@ -16,6 +16,14 @@
                     <div class="comment-content">
                         <p class="text">{{ comment.content }}</p>
                     </div>
+
+                    <div v-if="update()" class="update-comment">
+                        <form @submit.prevent="createComment()">
+                            <input class="update-comment-input" type="text" placeholder="Nouveau commentaire" required>
+                            <button type="submit" title="Publier le commentaire">Envoyer</button>
+                        </form>
+                    </div>
+
                 </div>
 
                 <div class="btns">
@@ -65,54 +73,29 @@ export default {
     // },
     methods: {
         updateComment() {
-            console.log('Ok')
+            console.log('Ok', this.comment.id)
         },
         deleteComment() {
-            console.log('Ok2')
+            const self = this;
+            this.$store.dispatch('deleteComment', this.comment.id)
+            .then(function() {
+                self.refreshComments();
+                console.log('Comment deleted')
+            }, function () {
+                console.log('not ok')
+            })
         },
-    //     deletePost() {
-    //         const self = this;
-    //         this.$store.dispatch('deletePost', this.post.id)
-    //         .then(function() {
-    //             self.refreshData();
-    //         }, function () {
-                
-    //         })
-    //     },
+        refreshComments: function() {
+            const self = this;
+            this.$store.dispatch('getComments')
+            .then(function (response) {
+                self.comments = response.data;
+            }, function (error) {
+                self.error = error.response.data.error;
+            })
+        },
     //     updatePost() {
     //         this.$router.push('/updatePost/' + this.post.id);
-    //     },
-    //     refreshData: function() {
-    //         const self = this;
-    //         this.$store.dispatch('getPosts')
-    //         .then(function () {
-    //         }, function (error) {
-    //             self.error = error.response.data.error;
-    //         })
-    //     },
-    //     createComment() {
-    //         const self = this;
-    //         let commentData = {
-    //             content : this.commentContent,
-    //             UserId : this.user.userId,
-    //             PostId : this.post.id,
-    //         }
-    //         this.$store.dispatch('createComment', commentData)
-    //         .then(function () {
-    //             self.commentContent = "";
-    //             self.refreshComments();
-    //         }, function (error) {
-    //             self.error = error.response.data.error;
-    //         })
-    //     },
-    //     refreshComments: function() {
-    //         const self = this;
-    //         this.$store.dispatch('getComments', this.post.id)
-    //         .then(function (response) {
-    //             self.comments = response.data;
-    //         }, function (error) {
-    //             self.error = error.response.data.error;
-    //         })
     //     },
     },
 }
@@ -130,6 +113,7 @@ export default {
     align-items: center;
     display: flex;
     flex-direction: row;
+    font-weight: bold;
 }
 
 .user-info img {
@@ -147,24 +131,33 @@ export default {
 
 .displayComment {
     position: relative;
-    height: 80px;
+    height: 170px;
 }
 
 .comment {
+    border: 1px solid black;
+    background-color: black;
+    color: white;
     position: absolute;
-    width: 90%;
-    height: 150px;
-    left: 50px;
-    top: 40px;
-    /* overflow-y: scroll; */
+    text-align: left;
+    height: 80px;
+    width: 95%;
+    margin: 5px;
 }
 
-.comment-content {
-    /* background-color: white; */
-    border: 1px solid black;
-    box-shadow: inset 0px 0px 20px 10px rgba(0,0,0,0.3);
-    /* border-radius: 20px; */
-    text-align: left;
+.comment-content {   
+    width: auto;
+    height: 90%;
+    margin: 0;
+    overflow-y: scroll;
+}
+
+.update-comment-input {
+    position: absolute;
+    top: 0;
+    margin: 5px;
+    height: 80%; 
+    width: 93%;
 }
 
 .btns {
@@ -183,9 +176,9 @@ export default {
 
 /* RESPONSIVE MOBILE */
  @media (max-width: 768px) {
-     .comment {
-        width: 70%;
-     }
+     /* .comment {
+        width: 80%;
+     } */
  }
 
 </style>
