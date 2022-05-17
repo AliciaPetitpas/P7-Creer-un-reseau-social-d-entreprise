@@ -4,7 +4,6 @@ import HomeLogin from '../views/HomeLogin.vue'
 import HomeRegister from '../views/HomeRegister.vue'
 import UserProfile from '../views/UserProfile.vue'
 import MainPage from '../views/MainPage.vue'
-import PostDetail from '../views/PostDetail.vue'
 import CreatePost from '../views/CreatePost.vue'
 import ModifyPassword from '../views/ModifyPassword.vue'
 import UpdatePost from '../views/UpdatePost.vue'
@@ -33,11 +32,6 @@ const routes = [{
         path: '/mainPage',
         name: 'mainPage',
         component: MainPage
-    },
-    {
-        path: '/postDetail',
-        name: 'postDetail',
-        component: PostDetail
     },
     {
         path: '/createPost',
