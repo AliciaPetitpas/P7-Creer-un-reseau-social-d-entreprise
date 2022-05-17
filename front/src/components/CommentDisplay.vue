@@ -1,44 +1,42 @@
 <template>
     <div class="commentBox"> 
 
-            <div class="displayComment">
+        <div class="displayComment">
 
-                <!-- <p>{{ comment }}</p> -->
-
-                <!-- Affichage info user -->
-                <div class="user-info">
-                    <img :src="comment.User.imageUrl" alt="user-picture">
-                    <p class="user_name">{{comment.User.first_name}} {{comment.User.last_name}}</p>
-                </div>
-
-                <!-- Affichage commentaires -->
-                <div class="comment">
-                    <div class="comment-content">
-                        <p class="text">{{ comment.content }}</p>
-                    </div>
-
-                    <div v-if="update()" class="update-comment">
-                        <form @submit.prevent="createComment()">
-                            <input class="update-comment-input" type="text" placeholder="Nouveau commentaire" required>
-                            <button type="submit" title="Publier le commentaire">Envoyer</button>
-                        </form>
-                    </div>
-
-                </div>
-
-                <div class="btns">
-                    <div class="btn-update">
-                        <!-- bouton modification si l'user à créé la publication -->
-                        <img src="../assets/pen-icon.png" @click="updateComment()" v-if="user.userId === comment.UserId" class="update icon" alt="update" />
-                    </div>
-                
-                    <div class="btn-delete">
-                        <!-- bouton delete si créateur de la publication ou admin -->
-                        <img src="../assets/bin-icon.png" @click="deleteComment()" v-if="userInfo.admin || user.userId === comment.UserId" class="delete icon" alt="update" />
-                    </div>
-                </div>
-
+            <!-- Affichage info user -->
+            <div class="user-info">
+                <img :src="comment.User.imageUrl" alt="user-picture">
+                <p class="user_name">{{comment.User.first_name}} {{comment.User.last_name}}</p>
             </div>
+
+            <!-- Affichage commentaires -->
+            <div class="comment">
+                <div class="comment-content">
+                    <p class="text">{{ comment.content }}</p>
+                </div>
+
+                <div  class="update-comment"> 
+                    <!-- v-if="update()" -->
+                    <!-- <form @submit.prevent="createComment()">
+                        <input class="update-comment-input" type="text" placeholder="Nouveau commentaire" required>
+                        <button type="submit" title="Publier le commentaire">Envoyer</button>
+                    </form> -->
+                </div>
+            </div>
+
+            <div class="btns">
+                <div class="btn-update">
+                    <!-- bouton modification si l'user à créé la publication -->
+                    <img src="../assets/pen-icon.png" @click="updateComment()" v-if="user.userId === comment.UserId" class="update icon" alt="update" />
+                </div>
+                
+                <div class="btn-delete">
+                    <!-- bouton delete si créateur de la publication ou admin -->
+                    <img src="../assets/bin-icon.png" @click="deleteComment()" v-if="userInfo.admin || user.userId === comment.UserId" class="delete icon" alt="update" />
+                 </div>
+            </div>
+
+        </div>
 
     </div>
 </template>
@@ -136,8 +134,6 @@ export default {
 
 .comment {
     border: 1px solid black;
-    background-color: black;
-    color: white;
     position: absolute;
     text-align: left;
     height: 80px;
