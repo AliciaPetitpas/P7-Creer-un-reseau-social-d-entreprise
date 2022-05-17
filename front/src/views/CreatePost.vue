@@ -23,8 +23,6 @@
         </span>
         <!-- Ajout média ici -->
         <div class="post-img">
-                <img src="" ref="photoPublication" alt="Photo de la publication" class="post-picture">
-                <!-- :src="post.imageUrl" -->
                 <img ref="filePreview" src="" alt="">
                 
                 <input 

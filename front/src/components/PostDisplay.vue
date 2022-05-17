@@ -17,8 +17,7 @@
                     </div>
 
                     <div class="post-img">
-                        <img :src="post.imageUrl" alt="photo de publication">
-                        <!-- v-if="!postImg()" -->
+                        <img v-if="post.imageUrl != null" :src="post.imageUrl" alt="photo de publication">
                     </div>
 
                     <div class="post-content">
