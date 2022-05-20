@@ -275,6 +275,17 @@ export default {
     margin: 0;
 }
 
+.deactivate {
+    font-size: 12px;
+    color: red;
+    border: none;
+    background-color: unset;
+}
+
+.deactivate:hover {
+    color: black;
+}
+
 /* RESPONSIVE MOBILE */
 @media (max-width: 768px) {
     .user-picture {

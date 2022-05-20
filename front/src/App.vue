@@ -45,6 +45,11 @@ button {
 button:hover {
   background-color: white;
   color: black;
+  cursor: pointer;
+}
+
+.icon:hover {
+  cursor: pointer;
 }
 
 span {

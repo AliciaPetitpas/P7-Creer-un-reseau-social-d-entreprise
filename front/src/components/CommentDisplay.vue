@@ -92,9 +92,6 @@ export default {
                 self.error = error.response.data.error;
             })
         },
-    //     updatePost() {
-    //         this.$router.push('/updatePost/' + this.post.id);
-    //     },
     },
 }
 

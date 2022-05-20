@@ -168,6 +168,7 @@ export default {
     align-items: center;
     display: flex;
     flex-direction: row;
+    font-weight: bold;
 }
 
 .user-info img {

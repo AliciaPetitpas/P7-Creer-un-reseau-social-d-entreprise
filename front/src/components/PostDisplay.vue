@@ -194,4 +194,9 @@ export default {
     height: 25px;
 }
 
+textarea {
+    width: 90%;
+    height: 50px;
+}
+
 </style>
