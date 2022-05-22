@@ -46,6 +46,7 @@ button:hover {
   background-color: white;
   color: black;
   cursor: pointer;
+  transform: scale(1.1);
 }
 
 .icon:hover {
