@@ -16,11 +16,11 @@
                 </div>
 
                 <div  class="update-comment"> 
-                    <!-- v-if="update()" -->
-                    <!-- <form @submit.prevent="createComment()">
+                    <!-- v-if="updateComment()" -->
+                    <form @submit.prevent="createComment()">
                         <input class="update-comment-input" type="text" placeholder="Nouveau commentaire" required>
                         <button type="submit" title="Publier le commentaire">Envoyer</button>
-                    </form> -->
+                    </form>
                 </div>
             </div>
 
@@ -71,7 +71,7 @@ export default {
     // },
     methods: {
         updateComment() {
-            console.log('Ok', this.comment.id)
+            console.log('Comment id:', this.comment.id)
         },
         deleteComment() {
             const self = this;

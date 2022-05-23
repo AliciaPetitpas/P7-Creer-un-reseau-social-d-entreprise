@@ -5,8 +5,6 @@
             <div>
                 <div class="update-post">
 
-                <!-- <p>{{ postInfo }}</p> -->
-
                 <!-- Information user -->
                 <div class="user-info">
                     <img :src="postInfo.User.imageUrl" alt="user-picture">
@@ -74,13 +72,13 @@ export default {
         MenuPage,
     },
     mounted() {
+        const urlId = this.$route.params.id;
+        // console.log(urlId);
+        this.$store.dispatch('getPost', urlId);
         if(this.$store.state.user.userId == -1 || this.user.userId != this.postInfo.UserId) {
         this.$router.push('/');
         return; 
         }
-        const urlId = this.$route.params.id;
-        // console.log(urlId);
-        this.$store.dispatch('getPost', urlId);
     },
     computed: {
         ...mapState({
