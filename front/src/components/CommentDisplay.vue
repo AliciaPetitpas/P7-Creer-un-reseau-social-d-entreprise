@@ -11,14 +11,9 @@
 
             <!-- Affichage commentaires -->
             <div class="comment">
-                <div class="comment-content">
-                    <p class="text">{{ comment.content }}</p>
-                </div>
-
-                <div  class="update-comment"> 
-                    <!-- v-if="updateComment()" -->
+                <div class="update-comment"> 
                     <form @submit.prevent="createComment()">
-                        <input class="update-comment-input" type="text" placeholder="Nouveau commentaire" required>
+                        <input id="comment_input" v-model="this.commentContent" class="update-comment-input" type="text" required disabled>
                         <button type="submit" title="Publier le commentaire">Envoyer</button>
                     </form>
                 </div>
@@ -66,12 +61,14 @@ export default {
             commentInfo: 'commentInfo',
         }),
     },
-    // mounted() {
+    mounted() {
+        this.commentContent = this.comment.content;
     //     this.refreshComments();
-    // },
+    },
     methods: {
         updateComment() {
             console.log('Comment id:', this.comment.id)
+            document.getElementById("comment_input").disabled = false;
         },
         deleteComment() {
             const self = this;

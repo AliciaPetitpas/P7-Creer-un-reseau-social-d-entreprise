@@ -204,10 +204,10 @@ export default createStore({
                     })
             });
         },
-        updatePost: ({ commit }, postId) => {
+        updatePost: ({ commit }, post) => {
             commit;
             return new Promise((resolve, reject) => {
-                instance.get('/posts/updatePost/' + postId)
+                instance.put('/posts/updatePost/' + post.postId, post.postInfos)
                     .then(function(response) {
                         commit('UPDATE_POST_INFO', response.data);
                         resolve(response);

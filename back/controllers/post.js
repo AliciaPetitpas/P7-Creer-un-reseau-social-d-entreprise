@@ -36,7 +36,7 @@ exports.getPosts = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
-// Fonction récupération d'une publication'
+// Fonction récupération d'une publication
 exports.getPost = (req, res, next) => {
     db.Post.findOne({
             // On y inclue les informations de l'user
@@ -51,13 +51,28 @@ exports.getPost = (req, res, next) => {
 };
 
 // Update les information d'une publication 
-exports.updatePost = (req, res) => {
+exports.updatePost = (req, res, next) => {
+    const postObject = req.file ? {
+        ...JSON.parse(req.body.post),
+        imageUrl: `${req.protocol}://${req.get('host')}/images/posts/${req.file.filename}`,
+    } : {...JSON.parse(req.body.post) };
+
     db.Post.findOne({ where: { id: req.params.id } })
         .then(post => {
-            // On met les informations à jour dans la base de données
+            if (req.file) {
+                if (post.imageUrl != "" && post.imageUrl != null) {
+                    const filename = post.imageUrl.split('/images/posts/')[1];
+                    if (filename != "") {
+                        fs.unlink(`images/posts/${filename}`, (err) => {
+                            if (err) throw err;
+                        });
+                    }
+                }
+            }
+            // // On met les informations à jour dans la base de données
+            console.debug(postObject);
             db.Post.update({
-                    title: req.body.post.title,
-                    content: req.body.post.content,
+                    ...postObject,
                 }, { where: { id: req.params.id } })
                 .then(() => res.status(201).json({ message: 'Informations modifiées' }))
                 .catch(error => {
@@ -71,7 +86,6 @@ exports.updatePost = (req, res) => {
     //     return res.status(500).json({ error: message });
     // })
 };
-
 
 // Fonction suppression publication
 exports.deletePost = (req, res) => {

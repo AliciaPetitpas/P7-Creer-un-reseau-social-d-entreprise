@@ -5,26 +5,26 @@
             <div>
                 <div class="update-post">
 
+                    <!-- <p>{{ postInfo}}</p> -->
+
                 <!-- Information user -->
                 <div class="user-info">
-                    <img :src="postInfo.User.imageUrl" alt="user-picture">
-                    <p class="user_name">{{ postInfo.User.first_name }} {{ postInfo.User.last_name }}</p>
+                    <!-- <img :src="postInfo.User.imageUrl" alt="user-picture"> -->
+                    <!-- <p class="user_name">{{ postInfo.User.first_name }} {{ postInfo.User.last_name }}</p> -->
                 </div>
 
                 <!-- Affichage publication -->
                 <div class="post">
                     <div class="post-title">
-                        <p class="title-text">{{ postInfo.title }}</p>
                         <input type="text" v-model="state.input.title" class="title" placeholder='Nouveau titre' >
-                        <!-- <span v-if="v$.input.title.$error" class="error">
+                        <span v-if="v$.input.title.$error" class="error">
                             {{ v$.input.title.$errors[0].$message }}
-                        </span> -->
+                        </span>
                     </div>
 
                     <div class="post-img">
-                        <img :src="postInfo.imageUrl" alt="photo de publication">
-                        <div class="post-img">
-                            <img src="" ref="photoPublication" alt="Photo de la publication" class="post-picture" style="display: none">
+                        <img :src="postInfo.imageUrl" ref="photoPublication" alt="photo de publication">
+                        <div class="post-newimg">                            
                             <img class="filePreview" ref="filePreview" src="" alt="">
                                 
                             <input 
@@ -38,11 +38,10 @@
                     </div>
 
                     <div class="post-content">
-                        <p class="content-text">{{ postInfo.content }}</p>
                         <textarea id="content" v-model="state.input.content" name="textMessage" placeholder="Nouveau contenu" class="content" aria-describedby="contenu-publication"></textarea>
-                        <!-- <span v-if="v$.input.content.$error" class="error">
+                        <span v-if="v$.input.content.$error" class="error">
                             {{ v$.input.content.$errors[0].$message }}
-                        </span> -->
+                        </span>
                     </div>
 
                 </div>
@@ -73,9 +72,15 @@ export default {
     },
     mounted() {
         const urlId = this.$route.params.id;
-        // console.log(urlId);
-        this.$store.dispatch('getPost', urlId);
-        if(this.$store.state.user.userId == -1 || this.user.userId != this.postInfo.UserId) {
+        const self = this; 
+        this.$store.dispatch('getPost', urlId)
+        .then(function() {
+            self.state.input.title = self.postInfo.title;
+            self.state.input.content = self.postInfo.content;
+        }, function () {
+        });
+        // || this.user.userId != this.postInfo.UserId
+        if(this.$store.state.user.userId == -1) {
         this.$router.push('/');
         return; 
         }
@@ -132,7 +137,6 @@ export default {
                         ),
                     },
                 }
-                
             }
         });
         const v$ = useValidate(rules, state);
@@ -141,6 +145,38 @@ export default {
             v$,
         };
     },
+     methods: {
+        onFileSelected(event) {
+            this.selectedFile = event.target.files[0];
+            let reader = new FileReader();
+            reader.onload = () => {
+                this.$refs.filePreview.src = reader.result;
+                this.$refs.filePreview.style.display = "";
+                this.$refs.photoPublication.style.display = "none";
+            }
+            reader.readAsDataURL(this.selectedFile);
+        },
+        sendPost() {
+            const self = this;
+            this.v$.$validate();
+            if (!this.v$.$error) {
+                const fd = new FormData();
+                let postData = {
+                    title: this.state.input.title,
+                    content: this.state.input.content
+                }
+                console.log(postData);
+                fd.append('post', JSON.stringify(postData));
+                fd.append('image_post', this.selectedFile);
+                this.$store.dispatch('updatePost', {postInfos: fd, postId: this.postInfo.id}
+                ).then(function () {
+                    self.$router.push('/mainPage');
+                }, function (error) {
+                    self.error = error.response.data.error;
+                })
+            }
+        }, 
+     },
 }
 </script>
 
@@ -155,6 +191,7 @@ export default {
     align-items: center;
     display: flex;
     flex-direction: row;
+    font-weight: bold;
 }
 
 .user-info img {

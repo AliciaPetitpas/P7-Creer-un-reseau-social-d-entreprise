@@ -132,7 +132,6 @@ export default {
             reader.onload = () => {
                 this.$refs.filePreview.src = reader.result;
                 this.$refs.filePreview.style.display = "";
-                this.$refs.fileInput.style.display = "none";
             }
             reader.readAsDataURL(this.selectedFile);
         },
