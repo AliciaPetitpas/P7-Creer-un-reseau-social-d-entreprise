@@ -12,10 +12,10 @@
             <!-- Affichage commentaires -->
             <div class="comment">
                 <div class="update-comment"> 
-                    <form @submit.prevent="createComment()">
+                    <form>
                         <!-- <input id="comment_input" v-model="this.commentContent" class="update-comment-input" type="text" required disabled> -->
                         <textarea name="comment" id="comment_input" v-model="this.commentContent" class="update-comment-input" disabled required></textarea>
-                        <button class="update-comment-btn" type="submit" title="Publier le commentaire">Envoyer</button>
+                        <button @click="sendComment()" class="update-comment-btn" id="comment-btn" type="submit" title="Publier le commentaire" style="display:none">Modifier</button>
                     </form>
                 </div>
             </div>
@@ -69,7 +69,22 @@ export default {
     methods: {
         updateComment() {
             document.getElementById("comment_input").disabled = false;
+            document.getElementById("comment-btn").style.display= "";
             console.log('Comment id:', this.comment.id)
+        },
+        sendComment() {
+            // const self = this;
+            const newComment = {
+                commentId: this.comment.id,
+                content: this.commentContent,
+            }
+            this.$store.dispatch("updateComment", newComment)
+            .then(function (response) {
+                    self.success = response.data.message;
+                    self.refreshComments();
+            }, function (error) {
+                self.error = error.response.data.error;
+            })
         },
         deleteComment() {
             const self = this;
