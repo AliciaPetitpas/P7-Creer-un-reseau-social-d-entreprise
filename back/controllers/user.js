@@ -206,7 +206,7 @@ exports.goAdmin = (req, res) => {
             if (req.body.passwordadmin == process.env.ADMIN_PASSWORD) {
                 // Rend la valeur 1 à admin
                 db.User.update({ admin: 1 }, { where: { id: req.params.id } })
-                    .then(() => res.status(201).json({ message: 'Vous êtes désormais en compte chargé de communciation' }))
+                    .then(() => res.status(201).json({ message: 'Vous êtes désormais chargé de communciation' }))
                     .catch(error => {
                         let message = error.errors[0].message;
                         return res.status(500).json({ error: message });

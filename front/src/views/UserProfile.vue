@@ -9,8 +9,8 @@
         <p class="msg">{{ success }}</p>
         <!-- User Info -->
         <div class="user">
-            <p v-if="userInfo.admin">Ce compte appartient à un chargé de communication</p>
-            <p v-else>Ce compte appartient à un employé</p>
+            <p class="text-admin" v-if="userInfo.admin">Ce compte appartient à un chargé de communication</p>
+            <p class="text-admin" v-else>Ce compte appartient à un employé</p>
             <div v-if="!userInfo.admin">
                 <input v-model="state.input.passwordadmin" type="password" class="input-form" placeholder="Mot de passe admin"/>
                 <span v-if="v$admin.input.passwordadmin.$error" class="error">
@@ -29,6 +29,8 @@
                     accept=".png, .jpg, .jpeg"
                     @change="onFileSelected"
                     ref="fileInput">
+
+                <p class="text-profile-picture">Pour ajouter une photo de profil cliquez d'abord sur "choisir une image" pour sélectionner votre photo, ensuite cliquez sur "importer" pour la valider</p>
                 <button @click="$refs.fileInput.click()" class="add-file">Choisir une image</button>
                 <button @click="onUpload()" class="add-img">Importer</button>
             </div>
@@ -273,6 +275,16 @@ export default {
     border: 1px solid black;
     border-radius: 150px;
     margin: 0;
+}
+
+.text-profile-picture {
+    font-size: 14px;
+    font-style: italic;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.text-admin {
+    font-weight: bold;
 }
 
 .deactivate {
