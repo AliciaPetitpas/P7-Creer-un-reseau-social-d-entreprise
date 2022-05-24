@@ -13,8 +13,9 @@
             <div class="comment">
                 <div class="update-comment"> 
                     <form @submit.prevent="createComment()">
-                        <input id="comment_input" v-model="this.commentContent" class="update-comment-input" type="text" required disabled>
-                        <button type="submit" title="Publier le commentaire">Envoyer</button>
+                        <!-- <input id="comment_input" v-model="this.commentContent" class="update-comment-input" type="text" required disabled> -->
+                        <textarea name="comment" id="comment_input" v-model="this.commentContent" class="update-comment-input" disabled required></textarea>
+                        <button class="update-comment-btn" type="submit" title="Publier le commentaire">Envoyer</button>
                     </form>
                 </div>
             </div>
@@ -63,12 +64,12 @@ export default {
     },
     mounted() {
         this.commentContent = this.comment.content;
-    //     this.refreshComments();
+        this.refreshComments();
     },
     methods: {
         updateComment() {
-            console.log('Comment id:', this.comment.id)
             document.getElementById("comment_input").disabled = false;
+            console.log('Comment id:', this.comment.id)
         },
         deleteComment() {
             const self = this;
@@ -82,7 +83,7 @@ export default {
         },
         refreshComments: function() {
             const self = this;
-            this.$store.dispatch('getComments')
+            this.$store.dispatch('getComments', this.comment.PostId)
             .then(function (response) {
                 self.comments = response.data;
             }, function (error) {
@@ -128,26 +129,35 @@ export default {
 
 .comment {
     border: 1px solid black;
-    position: absolute;
-    text-align: left;
     height: 80px;
     width: 95%;
     margin: 5px;
 }
 
-.comment-content {   
-    width: auto;
+.update-comment { 
+    width: 100%;
     height: 90%;
     margin: 0;
-    overflow-y: scroll;
 }
 
 .update-comment-input {
-    position: absolute;
-    top: 0;
-    margin: 5px;
-    height: 80%; 
-    width: 93%;
+    margin: 5px 5px 0 5px;
+    height: 50px; 
+    width: 98%;
+    text-overflow: ellipsis;
+}
+
+.update-comment-btn {
+    color: red;
+    background: none;
+    border: none;
+    margin: 0 0 0 5px;
+    padding: 0;
+    width: auto;
+}
+
+.update-comment-btn:hover {
+    color: black;
 }
 
 .btns {
@@ -166,9 +176,10 @@ export default {
 
 /* RESPONSIVE MOBILE */
  @media (max-width: 768px) {
-     /* .comment {
-        width: 80%;
-     } */
- }
+
+    .update-comment-input{
+        width: 93%;
+    }
+}
 
 </style>
