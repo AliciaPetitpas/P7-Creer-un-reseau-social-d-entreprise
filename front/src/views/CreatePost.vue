@@ -145,7 +145,7 @@ export default {
                     content: this.state.input.content,
                     UserId: this.user.userId
                 }
-                console.log(postData);
+                // console.log(postData);
                 fd.append('post', JSON.stringify(postData));
                 fd.append('image_post', this.selectedFile);
                 this.$store.dispatch('createPost', fd

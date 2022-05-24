@@ -79,8 +79,11 @@ export default {
             self.state.input.content = self.postInfo.content;
         }, function () {
         });
-        // || this.user.userId != this.postInfo.UserId
-        if(this.$store.state.user.userId == -1) {
+        this.$store.dispatch('getUserInfo', this.$store.state.user.userId)
+        console.log(this.$store.state.user.userId)
+        console.log(this.postInfo) //vide
+        console.log(this.postInfo.UserId) //undefined
+        if(this.$store.state.user.userId == -1 || this.$store.state.user.userId != this.postInfo.UserId) {
         this.$router.push('/');
         return; 
         }

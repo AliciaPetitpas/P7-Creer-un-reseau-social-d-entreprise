@@ -39,6 +39,8 @@ exports.signup = (req, res, next) => {
 
 // Connexion à un compte
 exports.login = (req, res, next) => {
+    // console.log(limitMax.limiter);
+
     db.User.findOne({ where: { email: req.body.email } })
         .then(user => {
             // Si l'utilisateur n'est pas trouvé
@@ -57,6 +59,10 @@ exports.login = (req, res, next) => {
                     if (!valid) {
                         return res.status(401).json({ error: 'Le mot de passe ne correspond pas' });
                     }
+                    // Si limiteur
+                    // if (limitMax.limiter) {
+                    //     return res.status(429).json({ error: message });
+                    // }
                     res.status(200).json({
                         userId: user.id,
                         // Création d'un token de connexion

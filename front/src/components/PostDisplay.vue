@@ -199,4 +199,12 @@ textarea {
     height: 50px;
 }
 
+/* RESPONSIVE MOBILE */
+ @media (max-width: 768px) {
+
+    textarea {
+        width: 80%;
+    }
+}
+
 </style>
