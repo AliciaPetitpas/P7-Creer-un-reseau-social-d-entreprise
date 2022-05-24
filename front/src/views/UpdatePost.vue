@@ -23,7 +23,7 @@
                     </div>
 
                     <div class="post-img">
-                        <img :src="postInfo.imageUrl" ref="photoPublication" alt="photo de publication">
+                        <img v-if="postInfo.imageUrl != null" :src="postInfo.imageUrl" ref="photoPublication" alt="photo de publication">
                         <div class="post-newimg">                            
                             <img class="filePreview" ref="filePreview" src="" alt="">
                                 
