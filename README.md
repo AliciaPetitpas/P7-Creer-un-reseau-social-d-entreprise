@@ -7,6 +7,8 @@ Pour installer ce projet, vous devez d'abord installer Node.js & MySQL
 
 *La base de données*
 Ouvrir la console MySQL et créer un compte ou se connecter si vous en avez déjà un
+Créer une base de données nommée "groupomania"
+Importer le fichier "bdd_groupomania.sql"  qui se trouve à la racine du repo du projet
 
 *Installation du Backend*
 Dans le terminal, se placer dans le dossier /Back/
@@ -23,3 +25,6 @@ Lancer la construction du Frontend avec la commande => *npm run serve*
 
 *Lancer l'application*
 Ouvrir l'application en cliquant sur "http://localhost:8080/"
+
+*Compte administrateur*
+Le mot de passe pour passer un compte normal en compte administrateur est "admin"
