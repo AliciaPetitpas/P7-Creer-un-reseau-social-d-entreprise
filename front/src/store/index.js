@@ -254,10 +254,10 @@ export default createStore({
                     })
             });
         },
-        updateComment: ({ commit }, commentId) => {
+        updateComment: ({ commit }, comment) => {
             commit;
             return new Promise((resolve, reject) => {
-                instance.get('/comments/updateComment/' + commentId)
+                instance.put('/comments/updateComment/' + comment.commentId, comment)
                     .then(function(response) {
                         commit('UPDATE_COMMENT_INFO', response.data);
                         resolve(response);

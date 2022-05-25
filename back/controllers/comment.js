@@ -4,7 +4,7 @@ const { User } = require("../models");
 
 // Fonction création publication
 exports.createComment = (req, res, next) => {
-    console.log(req.body);
+    // console.log(req.body);
     const commentObject = {...req.body };
 
     db.Comment.create(
@@ -36,12 +36,15 @@ exports.getComments = (req, res, next) => {
 
 // Modification comment
 exports.updateComment = (req, res) => {
+    // console.debug(req.body.content)
     db.Comment.findOne({ where: { id: req.params.id } })
         .then(comment => {
             // On met les informations à jour dans la base de données
             db.Comment.update({
-                    content: req.body.comment.content,
-                }, { where: { id: req.params.id } })
+                    content: req.body.content,
+                }, {
+                    where: { id: req.params.id }
+                })
                 .then(() => res.status(201).json({ message: 'Commentaire modifié' }))
                 .catch(error => {
                     let message = error.errors[0].message;

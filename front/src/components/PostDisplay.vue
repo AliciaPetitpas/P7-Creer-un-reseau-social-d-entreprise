@@ -8,6 +8,7 @@
                 <div class="user-info">
                     <img :src="post.User.imageUrl" alt="user-picture">
                     <p class="user_name">{{post.User.first_name}} {{post.User.last_name}}</p>
+                    <!-- <p class="post-time">{{ post.createdAt }}</p> -->
                 </div>
 
                 <!-- Affichage publication -->
@@ -50,7 +51,7 @@
 
                 <!-- Affichage commentaires -->
                 <div v-for="item in comments" v-bind:key="item" class="displayComment">
-                    <CommentDisplay :comment="item" />
+                    <CommentDisplay :comment="item" @refresh="refreshComments()"/>
                 </div>
 
             </div>

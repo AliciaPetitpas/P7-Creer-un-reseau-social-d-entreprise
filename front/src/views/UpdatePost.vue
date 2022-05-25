@@ -9,8 +9,8 @@
 
                 <!-- Information user -->
                 <div class="user-info">
-                    <!-- <img :src="postInfo.User.imageUrl" alt="user-picture"> -->
-                    <!-- <p class="user_name">{{ postInfo.User.first_name }} {{ postInfo.User.last_name }}</p> -->
+                    <img :src="userInfo.imageUrl" alt="user-picture">
+                    <p class="user_name">{{ userInfo.first_name }} {{ userInfo.last_name }}</p>
                 </div>
 
                 <!-- Affichage publication -->
@@ -77,16 +77,12 @@ export default {
         .then(function() {
             self.state.input.title = self.postInfo.title;
             self.state.input.content = self.postInfo.content;
-        }, function () {
-        });
-        this.$store.dispatch('getUserInfo', this.$store.state.user.userId)
-        console.log(this.$store.state.user.userId)
-        console.log(this.postInfo) //vide
-        console.log(this.postInfo.UserId) //undefined
-        if(this.$store.state.user.userId == -1 || this.$store.state.user.userId != this.postInfo.UserId) {
-        this.$router.push('/');
-        return; 
+            self.userInfo = self.postInfo.User;
+            if(self.$store.state.user.userId == -1 || self.$store.state.user.userId != self.postInfo.UserId) {
+            self.$router.push('/');
+            return; 
         }
+        });
     },
     computed: {
         ...mapState({
@@ -99,6 +95,7 @@ export default {
             selectedFile: null,
             error: "",
             success: "",
+            userInfo: {},
         }
     },
     setup() {

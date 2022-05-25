@@ -7,15 +7,16 @@
             <div class="user-info">
                 <img :src="comment.User.imageUrl" alt="user-picture">
                 <p class="user_name">{{comment.User.first_name}} {{comment.User.last_name}}</p>
+                <!-- <p class="comment-time">{{ comment.createdAt }}</p> -->
             </div>
 
             <!-- Affichage commentaires -->
             <div class="comment">
-                <div class="update-comment"> 
-                    <form>
-                        <!-- <input id="comment_input" v-model="this.commentContent" class="update-comment-input" type="text" required disabled> -->
-                        <textarea name="comment" id="comment_input" v-model="this.commentContent" class="update-comment-input" disabled required></textarea>
-                        <button @click="sendComment()" class="update-comment-btn" id="comment-btn" type="submit" title="Publier le commentaire" style="display:none">Modifier</button>
+                <div class="update-comment">
+                    <!-- <input id="comment_input" v-model="this.commentContent" class="update-comment-input" type="text" required disabled> -->
+                    <form @submit.prevent="sendComment()">
+                    <textarea name="comment" ref="comment_input" v-model="this.commentContent" class="update-comment-input" disabled required></textarea>
+                    <button type="submit" class="update-comment-btn" ref="comment_btn" title="Publier le commentaire" style="display:none">Modifier</button>
                     </form>
                 </div>
             </div>
@@ -46,7 +47,6 @@ export default {
     data() {
         return {
             commentContent: null,
-            comments: [],
         }
     },
     props: {
@@ -58,51 +58,37 @@ export default {
         ...mapState({
             user:'user',
             userInfo: 'userInfo',
-            comments: 'comments',
             commentInfo: 'commentInfo',
         }),
     },
     mounted() {
         this.commentContent = this.comment.content;
-        this.refreshComments();
     },
     methods: {
         updateComment() {
-            document.getElementById("comment_input").disabled = false;
-            document.getElementById("comment-btn").style.display= "";
-            console.log('Comment id:', this.comment.id)
+            this.$refs.comment_input.disabled = false;
+            this.$refs.comment_btn.style.display= "";
         },
         sendComment() {
-            // const self = this;
+            const self = this;
             const newComment = {
                 commentId: this.comment.id,
                 content: this.commentContent,
             }
             this.$store.dispatch("updateComment", newComment)
-            .then(function (response) {
-                    self.success = response.data.message;
-                    self.refreshComments();
-            }, function (error) {
-                self.error = error.response.data.error;
+            .then(function () {
+                self.$emit("refresh");
+            }, function () {
             })
         },
         deleteComment() {
             const self = this;
             this.$store.dispatch('deleteComment', this.comment.id)
             .then(function() {
-                self.refreshComments();
+                self.$emit("refresh");
                 console.log('Comment deleted')
             }, function () {
                 console.log('not ok')
-            })
-        },
-        refreshComments: function() {
-            const self = this;
-            this.$store.dispatch('getComments', this.comment.PostId)
-            .then(function (response) {
-                self.comments = response.data;
-            }, function (error) {
-                self.error = error.response.data.error;
             })
         },
     },
