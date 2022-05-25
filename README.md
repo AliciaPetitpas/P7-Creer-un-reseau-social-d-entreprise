@@ -6,7 +6,7 @@
 ## Cloner le repo du projet
 
 ## La base de données
-> Ouvrir la console MySQL et créer un compte ou se connecter si vous en avez déjà un
+> Ouvrir la console MySQL et créer un compte ou se connecter si vous en avez déjà un <br />
 > Créer une base de données nommée `groupomania`
 > Importer le fichier `bdd_groupomania.sql`  qui se trouve à la racine du repo du projet
 
