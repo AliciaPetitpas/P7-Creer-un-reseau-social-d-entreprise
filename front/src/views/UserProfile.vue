@@ -36,7 +36,7 @@
             </div>
 
             <!-- Inputs modifications -->
-            <p>Informations utilisateur</p>
+            <p class="infos">Informations utilisateur :</p>
             <input v-model="state.input.newlast_name" type="text" class="input-form" placeholder="Nom"/>
             <span v-if="v$.input.newlast_name.$error" class="error">
                 {{ v$.input.newlast_name.$errors[0].$message }}
@@ -285,6 +285,11 @@ export default {
 
 .text-admin {
     font-weight: bold;
+}
+
+.infos {
+    font-weight: bold;
+    text-decoration: underline;
 }
 
 .deactivate {

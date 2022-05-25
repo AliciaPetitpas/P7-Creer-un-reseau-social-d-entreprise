@@ -121,6 +121,8 @@ export default {
 .commentBox {
     margin: 0 10px 10px 10px;
     border: 1px solid black;
+    border-radius: 15px;
+    background-color: #fdd7d7;
 }
 
 .displayComment {
@@ -129,7 +131,7 @@ export default {
 }
 
 .comment {
-    border: 1px solid black;
+    /* border: 1px solid black; */
     height: 80px;
     width: 95%;
     margin: 5px;

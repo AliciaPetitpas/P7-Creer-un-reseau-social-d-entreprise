@@ -50,8 +50,10 @@
                 </div>
 
                 <!-- Affichage commentaires -->
-                <div v-for="item in comments" v-bind:key="item" class="displayComment">
+                <div class="comments-display">
+                    <div v-for="item in comments" v-bind:key="item" class="displayComment">
                     <CommentDisplay :comment="item" @refresh="refreshComments()"/>
+                    </div>
                 </div>
 
             </div>
@@ -179,6 +181,12 @@ export default {
 
 .displayPost {
     position: relative;
+}
+
+.comments-display {
+    margin: 15px;
+    max-height: 300px;
+    overflow-y: scroll;
 }
 
 .btns {

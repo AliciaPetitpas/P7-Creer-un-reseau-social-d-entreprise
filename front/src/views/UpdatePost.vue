@@ -182,11 +182,6 @@ export default {
 
 <style scoped>
 
-/* #main {
-    border: none;
-    background-color: white;
-} */
-
 .user-info {
     align-items: center;
     display: flex;
@@ -203,7 +198,9 @@ export default {
 }
 
 .post {
+    background-color: white;
     border: 1px solid black;
+    border-radius: 15px;
     margin: 15px;
 }
 
