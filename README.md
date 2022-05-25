@@ -8,7 +8,7 @@
 ## La base de données
 > Ouvrir la console MySQL et créer un compte ou se connecter si vous en avez déjà un <br />
 > Créer une base de données nommée `groupomania` <br />
-> Importer le fichier `bdd_groupomania.sql`  qui se trouve à la racine du repo du projet
+> Importer le fichier `bdd_groupomania.sql` qui se trouve à la racine du repo du projet
 
 ## Installation du Backend
 > Dans le terminal, se placer dans le dossier /Back/ <br />
@@ -24,5 +24,3 @@
 ## Lancer l'application
 > Ouvrir l'application en cliquant sur `http://localhost:8080/`
 
-## Compte administrateur
-> Le mot de passe pour passer un compte normal en compte administrateur est `admin`
