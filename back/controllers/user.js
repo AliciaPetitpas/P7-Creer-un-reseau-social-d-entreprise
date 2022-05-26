@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require('../models');
-const limitMax = require('../middleware/limit');
 const fs = require('fs');
 
 // Création d'un compte, en hashage et salage du password
@@ -19,8 +18,6 @@ exports.signup = (req, res, next) => {
                             last_name: req.body.last_name
                         })
                         .then(() => res.status(201).json({ message: 'User created !' }))
-                        // Erreur à catch sequelize (email unique)
-                        //return res.status(400).json({ error: "Email déjà utilisée !" })
                         .catch(error => {
                             let message = error.errors[0].message;
                             return res.status(500).json({ error: message });
@@ -40,7 +37,6 @@ exports.signup = (req, res, next) => {
 // Connexion à un compte
 exports.login = (req, res, next) => {
     // console.log(limitMax.limiter);
-
     db.User.findOne({ where: { email: req.body.email } })
         .then(user => {
             // Si l'utilisateur n'est pas trouvé
@@ -59,10 +55,6 @@ exports.login = (req, res, next) => {
                     if (!valid) {
                         return res.status(401).json({ error: 'Le mot de passe ne correspond pas' });
                     }
-                    // Si limiteur
-                    // if (limitMax.limiter) {
-                    //     return res.status(429).json({ error: message });
-                    // }
                     res.status(200).json({
                         userId: user.id,
                         // Création d'un token de connexion
@@ -82,7 +74,7 @@ exports.login = (req, res, next) => {
         })
 };
 
-// Récupérer information utilisateur
+// Récupérer informations utilisateur
 exports.getUserInfo = (req, res, next) => {
     db.User.findOne({ where: { id: req.params.id } })
         .then(user => res.status(200).json(user))
@@ -142,7 +134,7 @@ exports.desactivateAccount = (req, res) => {
         })
 }
 
-// Update les information de l'utilisateur 
+// Update les informations de l'utilisateur 
 exports.updateUser = (req, res) => {
     db.User.findOne({ where: { id: req.params.id } })
         .then(user => {
@@ -164,7 +156,7 @@ exports.updateUser = (req, res) => {
         })
 };
 
-//Update password
+// Update password
 exports.updatePassword = (req, res) => {
     db.User.findOne({ where: { id: req.params.id } })
         .then(user => {
@@ -198,11 +190,12 @@ exports.updatePassword = (req, res) => {
         })
 };
 
-// Fonction administarteur
+// Fonction administrateur
 exports.goAdmin = (req, res) => {
     db.User.findOne({ where: { id: req.params.id } })
         .then(user => {
-            console.log()
+            // console.log()
+            // Mot de passe administrateur
             if (req.body.passwordadmin == process.env.ADMIN_PASSWORD) {
                 // Rend la valeur 1 à admin
                 db.User.update({ admin: 1 }, { where: { id: req.params.id } })

@@ -62,7 +62,6 @@ export default createStore({
         },
     },
     actions: {
-        //Récupère les données du formulaire d'inscription dans le store
         createAccount: ({ commit }, userInfo) => {
             commit;
             return new Promise((resolve, reject) => {

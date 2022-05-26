@@ -2,7 +2,7 @@ const db = require("../models");
 const fs = require('fs');
 const { User } = require("../models");
 
-// Fonction création publication
+// Création d'un commentaire
 exports.createComment = (req, res, next) => {
     // console.log(req.body);
     const commentObject = {...req.body };
@@ -16,7 +16,7 @@ exports.createComment = (req, res, next) => {
         .catch(error => res.status(400).json({ error }));
 };
 
-// Fonction récupération de toutes les publications
+// Récupération de tous les commentaires
 exports.getComments = (req, res, next) => {
     db.Comment.findAll({
             // On y inclue les informations de l'user
@@ -52,10 +52,6 @@ exports.updateComment = (req, res) => {
                 })
         })
         .catch(error => res.status(500).json({ error }));
-    // .catch(error => {
-    //     let message = error.errors[0].message;
-    //     return res.status(500).json({ error: message });
-    // })
 };
 
 // Suppression comment

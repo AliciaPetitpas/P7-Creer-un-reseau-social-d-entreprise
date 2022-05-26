@@ -7,6 +7,7 @@ const limitMax = require('../middleware/limit');
 const userCtrl = require('../controllers/user');
 const auth = require('../middleware/auth');
 
+// Routes utilisateurs
 router.post('/signup', userCtrl.signup);
 router.post('/login', limitMax.limiter, userCtrl.login);
 router.get('/getUserInfo/:id', auth, userCtrl.getUserInfo);

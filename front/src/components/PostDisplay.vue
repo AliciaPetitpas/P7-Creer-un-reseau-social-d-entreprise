@@ -1,7 +1,5 @@
 <template>
     <div>
-            <!-- <p>{{post}}</p> -->
-
             <div class="displayPost">
 
                 <!-- Affichage info user -->

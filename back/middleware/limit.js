@@ -3,9 +3,9 @@ const rateLimit = require("express-rate-limit");
 
 //On bloque les connexions répétitives
 const limiter = rateLimit({
-    windowMs: 1 * 20 * 1000, //Interval de connexion en MS
-    max: 2, //Maximum de connexion
-    message: { error: "Trop de tentatives de connexion : compte bloqué pendant 2 minutes." }
+    windowMs: 1 * 20 * 1000, // Interval de connexion en MS
+    max: 2, // Maximum de connexion
+    message: { error: "Trop de tentatives de connexion : compte bloqué pendant 2 minutes." } // Message d'erreur
 });
 
 module.exports = { limiter };

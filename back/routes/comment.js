@@ -5,6 +5,7 @@ const db = require('../models');
 const commentCtrl = require('../controllers/comment');
 const auth = require('../middleware/auth');
 
+// Routes commentaires
 router.post('/createComment', auth, commentCtrl.createComment);
 router.get('/getComments/:postId', auth, commentCtrl.getComments);
 router.put('/updateComment/:id', auth, commentCtrl.updateComment);

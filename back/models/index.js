@@ -9,7 +9,7 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 
 const db = {};
 
-//MODELS
+// MODELS
 db.User = require("../models/user")(sequelize, Sequelize.DataTypes);
 db.Post = require("../models/post")(sequelize, Sequelize.DataTypes);
 db.Comment = require("../models/comment")(sequelize, Sequelize.DataTypes);

@@ -3,7 +3,7 @@ const db = require("../models");
 const fs = require('fs');
 const { User } = require("../models");
 
-// Fonction création publication
+// Création publication
 exports.createPost = (req, res, next) => {
     const postObject = req.file ? {
         ...JSON.parse(req.body.post),
@@ -19,7 +19,7 @@ exports.createPost = (req, res, next) => {
         .catch(error => res.status(400).json({ error }));
 };
 
-// Fonction récupération de toutes les publications
+// Récupération de toutes les publications
 exports.getPosts = (req, res, next) => {
     db.Post.findAll({
             // On y inclue les informations de l'user
@@ -36,7 +36,7 @@ exports.getPosts = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
-// Fonction récupération d'une publication
+// Récupération d'une publication
 exports.getPost = (req, res, next) => {
     db.Post.findOne({
             // On y inclue les informations de l'user
@@ -50,7 +50,7 @@ exports.getPost = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
-// Update les information d'une publication 
+// Update les informations d'une publication 
 exports.updatePost = (req, res, next) => {
     const postObject = req.file ? {
         ...JSON.parse(req.body.post),
@@ -69,7 +69,7 @@ exports.updatePost = (req, res, next) => {
                     }
                 }
             }
-            // // On met les informations à jour dans la base de données
+            // On met les informations à jour dans la base de données
             console.debug(postObject);
             db.Post.update({
                     ...postObject,
@@ -81,13 +81,9 @@ exports.updatePost = (req, res, next) => {
                 })
         })
         .catch(error => res.status(500).json({ error }));
-    // .catch(error => {
-    //     let message = error.errors[0].message;
-    //     return res.status(500).json({ error: message });
-    // })
 };
 
-// Fonction suppression publication
+// Supression publication
 exports.deletePost = (req, res) => {
     db.Post.findOne({ where: { id: req.params.id } })
         .then(post => {
@@ -105,5 +101,3 @@ exports.deletePost = (req, res) => {
         })
         .catch(error => res.status(500).json({ error }));
 };
-
-// Fonction like/dislike

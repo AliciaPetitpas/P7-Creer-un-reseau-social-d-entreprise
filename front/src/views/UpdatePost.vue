@@ -5,8 +5,6 @@
             <div>
                 <div class="update-post">
 
-                    <!-- <p>{{ postInfo}}</p> -->
-
                 <!-- Information user -->
                 <div class="user-info">
                     <img :src="userInfo.imageUrl" alt="user-picture">

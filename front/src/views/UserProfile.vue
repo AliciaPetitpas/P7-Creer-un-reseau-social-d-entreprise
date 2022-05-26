@@ -7,6 +7,7 @@
     <div class="profile">
         <p class="msg">{{ error }}</p>
         <p class="msg">{{ success }}</p>
+        
         <!-- User Info -->
         <div class="user">
             <p class="text-admin" v-if="userInfo.admin">Ce compte appartient à un chargé de communication</p>
@@ -56,7 +57,6 @@
             <button @click="modifyPassword()" class="modify-password">Changer le mot de passe ici</button>
             
             <button @click="deactivate()" class="deactivate">Désactiver mon compte</button>
-            <!-- span erreur -->
 
         </div>
     </div>
@@ -177,7 +177,6 @@ export default {
     methods: {
         logout: function() {
         localStorage.removeItem('user')
-        // console.log(localStorage.getItem('user'))
         this.$router.push('/');
         },
         onFileSelected(event) {

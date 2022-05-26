@@ -142,7 +142,6 @@ export default {
         createAccount: function () {
             const self = this;
             this.v$.$validate();
-            // console.log(this.state.input.last_name, this.state.input.first_name, this.state.input.email, this.state.input.password);
             if (!this.v$.$error) {
             this.$store.dispatch('createAccount', {           
                 last_name: this.state.input.last_name,

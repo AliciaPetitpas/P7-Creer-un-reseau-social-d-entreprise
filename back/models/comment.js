@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'comments'
     });
 
+    // Associations Comment
     Comment.associate = models => {
         Comment.belongsTo(models.User, {
             foreignKey: {

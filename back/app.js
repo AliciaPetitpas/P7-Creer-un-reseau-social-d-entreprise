@@ -5,14 +5,14 @@ const helmet = require('helmet');
 const app = express();
 require('dotenv').config();
 
-//ROUTES
+// ROUTES
 const usersRoutes = require('./routes/user');
 const postsRoutes = require('./routes/post');
 const commentsRoutes = require('./routes/comment')
 
 app.use(helmet())
 
-//CORS
+// CORS
 var corsOptions = {
     origin: "*"
 };
@@ -22,13 +22,10 @@ app.use((req, res, next) => {
     next();
 });
 
-//parse requests of content-type - application/json
 app.use(express.json());
-
-//parse requests of content-type application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-//Accès principaux
+// Accès principaux
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/auth', usersRoutes);
 app.use('/api/posts', postsRoutes);

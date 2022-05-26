@@ -11,20 +11,20 @@
                 <p class="user_name">{{ userInfo.first_name }} {{ userInfo.last_name }}</p>
             </div>
 
-        <!-- Contenu de la publication -->
-        <input type="text" v-model="state.input.title" class="title" placeholder="Titre de la publication">
-        <span v-if="v$.input.title.$error" class="error">
-                {{ v$.input.title.$errors[0].$message }}
-        </span>
+            <!-- Contenu de la publication -->
+            <input type="text" v-model="state.input.title" class="title" placeholder="Titre de la publication">
+            <span v-if="v$.input.title.$error" class="error">
+                    {{ v$.input.title.$errors[0].$message }}
+            </span>
 
-        <textarea id="content" v-model="state.input.content" name="textMessage" placeholder="Créer une nouvelle publication" class="content" aria-describedby="contenu-publication"></textarea>
-        <span v-if="v$.input.content.$error" class="error">
-                {{ v$.input.content.$errors[0].$message }}
-        </span>
-        <!-- Ajout média ici -->
-        <div class="post-img">
+            <textarea id="content" v-model="state.input.content" name="textMessage" placeholder="Créer une nouvelle publication" class="content" aria-describedby="contenu-publication"></textarea>
+            <span v-if="v$.input.content.$error" class="error">
+                    {{ v$.input.content.$errors[0].$message }}
+            </span>
+            <!-- Ajout média ici -->
+            <div class="post-img">
                 <img class="filePreview" ref="filePreview" src="" alt="">
-                
+                    
                 <input 
                     style="display: none"
                     type="file" 
@@ -34,10 +34,10 @@
                 <button @click="$refs.fileInput.click()" class="add-file">Choisir une image</button>
             </div>
 
-        <!-- Envoi de la publication -->
-        <button @click="sendPost()" class="send-post">Envoyer</button>
-        <p class="msg">{{ error }}</p>
-        <p class="msg">{{ success }}</p>
+            <!-- Envoi de la publication -->
+            <button @click="sendPost()" class="send-post">Envoyer</button>
+            <p class="msg">{{ error }}</p>
+            <p class="msg">{{ success }}</p>
     </div>
 </main>
 </div>

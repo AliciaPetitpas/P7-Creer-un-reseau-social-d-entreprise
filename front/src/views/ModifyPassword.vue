@@ -4,7 +4,6 @@
         <main id="main" class="main">
             
             <div class="modify-password">
-                <!-- BTN NOUVEAU MDP ? -->
                 <input v-model="state.input.newpassword" type="password" class="input-form" placeholder="Nouveau mot de passe"/>
                 <span v-if="v$.input.newpassword.$error" class="error">
                     {{ v$.input.newpassword.$errors[0].$message }}

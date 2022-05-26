@@ -67,7 +67,6 @@ input {
 }
 
 ::placeholder {
-    /* position: absolute; */
     font-family: 'Courier New', Courier, monospace;
 }
 

@@ -13,10 +13,9 @@
             <!-- Affichage commentaires -->
             <div class="comment">
                 <div class="update-comment">
-                    <!-- <input id="comment_input" v-model="this.commentContent" class="update-comment-input" type="text" required disabled> -->
                     <form @submit.prevent="sendComment()">
-                    <textarea name="comment" ref="comment_input" v-model="this.commentContent" class="update-comment-input" disabled required></textarea>
-                    <button type="submit" class="update-comment-btn" ref="comment_btn" title="Publier le commentaire" style="display:none">Modifier</button>
+                        <textarea name="comment" ref="comment_input" v-model="this.commentContent" class="update-comment-input" disabled required></textarea>
+                        <button type="submit" class="update-comment-btn" ref="comment_btn" title="Publier le commentaire" style="display:none">Modifier</button>
                     </form>
                 </div>
             </div>
@@ -131,7 +130,6 @@ export default {
 }
 
 .comment {
-    /* border: 1px solid black; */
     height: 80px;
     width: 95%;
     margin: 5px;

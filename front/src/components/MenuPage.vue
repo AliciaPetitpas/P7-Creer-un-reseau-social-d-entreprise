@@ -26,7 +26,6 @@ export default {
         },
         logout: function() {
             localStorage.removeItem('user')
-            // console.log(localStorage.getItem('user'))
             this.$router.push('/');
         }
 }

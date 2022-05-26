@@ -27,3 +27,6 @@
 
 ## API
 > Le document API se trouve à la racine du repository
+
+## Administrateur
+> L'administrateur à la possibilité de pouvoir supprimer les publications et/ou commentaires qui ne respectent pas la charte d'utilisation de l'application

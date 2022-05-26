@@ -3,7 +3,7 @@
 
     <HeaderPage />
 
-            <!-- Connexion -->
+        <!-- Connexion -->
 
         <div id="main" class="form">
             <input v-model="state.input.email" type="email" class="input-form" placeholder="Adresse mail"/>
