@@ -220,7 +220,7 @@ export default createStore({
         deletePost: ({ commit }, postId) => {
             commit;
             return new Promise((resolve, reject) => {
-                instance.put('/posts/deletePost/' + postId)
+                instance.delete('/posts/deletePost/' + postId)
                     .then(function(response) {
                         resolve(response);
                     })
@@ -270,7 +270,7 @@ export default createStore({
         deleteComment: ({ commit }, commentId) => {
             commit;
             return new Promise((resolve, reject) => {
-                instance.put('/comments/deleteComment/' + commentId)
+                instance.delete('/comments/deleteComment/' + commentId)
                     .then(function(response) {
                         resolve(response);
                     })

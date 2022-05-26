@@ -11,7 +11,6 @@ router.post('/createPost', auth, multer.single('image_post'), postCtrl.createPos
 router.get('/getPosts', auth, postCtrl.getPosts);
 router.get('/getPost/:id', auth, postCtrl.getPost);
 router.put('/updatePost/:id', auth, multer.single('image_post'), postCtrl.updatePost);
-router.delete('/post/:id', postCtrl.deletePost);
-router.put('/deletePost/:id', auth, postCtrl.deletePost);
+router.delete('/deletePost/:id', auth, postCtrl.deletePost);
 
 module.exports = router;
