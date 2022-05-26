@@ -7,7 +7,7 @@
 
 ## La base de données
 > Ouvrir la console MySQL et créer un compte ou se connecter si vous en avez déjà un <br />
-> Créer une base de données nommée `groupomania`
+> Récupérer la base de données sous le nom `Petitpas_Alicia_2_bdd_052022` et importer le script dans MySQL
 
 ## Installation du Backend
 > Dans le terminal, se placer dans le dossier /Back/ <br />
@@ -17,11 +17,10 @@
     - DB_PASSWORD="VOTRE_MOT_DE_PASSE_MYSQL" <br />
 > Lancer le serveur de développement avec la commande => `nodemon server`
 
-## Instalation du Frontend
+## Installation du Frontend
 > Dans un autre terminal, se placer dans le dossier /Front/ <br />
 > Executer la commande `npm install` <br />
 > Lancer la construction du Frontend avec la commande => `npm run serve`
 
 ## Lancer l'application
 > Ouvrir l'application en cliquant sur `http://localhost:8080/`
-
