@@ -185,7 +185,7 @@ export default {
 
 .comments-display {
     margin: 15px;
-    max-height: 300px;
+    max-height: 360px;
     overflow-y: scroll;
 }
 
