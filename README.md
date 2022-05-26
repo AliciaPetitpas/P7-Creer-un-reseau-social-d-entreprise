@@ -24,3 +24,6 @@
 
 ## Lancer l'application
 > Ouvrir l'application en cliquant sur `http://localhost:8080/`
+
+## API
+> Le document API se trouve à la racine du repository
